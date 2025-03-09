@@ -1,0 +1,80 @@
+
+import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from 'lucide-react';
+
+const Hero = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const scrollToContent = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section 
+      id="home" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: "url('https://images.unsplash.com/photo-1473177104440-ffee2f376098?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40"></div>
+      
+      {/* Golden gradient divider */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/20 to-transparent"></div>
+      
+      <div className="container relative z-10 px-6 py-32 mx-auto text-center">
+        <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/30">
+            <p className="font-serif text-temple-gold">पधारो म्हारे देश</p>
+          </div>
+          
+          <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white hero-text-stroke">
+            श्री नरसिंह मंदिर
+          </h1>
+          
+          <h2 className={`font-serif text-2xl md:text-3xl text-white mb-8 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            हसमपुर का प्राचीन मंदिर
+          </h2>
+          
+          <div className={`transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg"
+                onClick={scrollToContent}
+              >
+                आज के दर्शन
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-white hover:bg-white/20 text-white font-medium px-8 py-6 text-lg backdrop-blur-sm"
+              >
+                मंदिर समय
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Scroll down indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-float" onClick={scrollToContent}>
+        <div className="flex flex-col items-center">
+          <span className="text-white text-sm mb-2">Scroll Down</span>
+          <ChevronDown className="text-white w-6 h-6" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
