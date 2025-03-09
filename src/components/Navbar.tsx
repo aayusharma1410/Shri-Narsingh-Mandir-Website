@@ -1,13 +1,17 @@
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Home, Info, Video, Image, Clock, User, Menu, X } from 'lucide-react';
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Home, Info, Video, Image, Clock, User, Menu, X, Globe } from 'lucide-react';
 import LoginDialog from './LoginDialog';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,12 +24,16 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', icon: <Home className="w-4 h-4" />, href: '#home' },
-    { name: 'About', icon: <Info className="w-4 h-4" />, href: '#about' },
-    { name: 'Live Aarti', icon: <Video className="w-4 h-4" />, href: '#live-aarti' },
-    { name: 'Gallery', icon: <Image className="w-4 h-4" />, href: '#gallery' },
-    { name: 'Timings', icon: <Clock className="w-4 h-4" />, href: '#timings' }
+    { name: t('nav.home'), icon: <Home className="w-4 h-4" />, href: '/' },
+    { name: t('nav.about'), icon: <Info className="w-4 h-4" />, href: '/about' },
+    { name: t('nav.liveAarti'), icon: <Video className="w-4 h-4" />, href: '/live-aarti' },
+    { name: t('nav.gallery'), icon: <Image className="w-4 h-4" />, href: '/gallery' },
+    { name: t('nav.timings'), icon: <Clock className="w-4 h-4" />, href: '/timings' }
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'hi' : 'en');
+  };
 
   return (
     <header
@@ -36,28 +44,40 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <span className={`font-serif text-2xl font-bold transition-colors ${
             isScrolled ? 'text-temple-maroon' : 'text-white hero-text-stroke'
           }`}>
-            श्री नरसिंह मंदिर
+            {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नरसिंह मंदिर'}
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
+              to={item.href}
               className={`px-3 py-2 rounded-md flex items-center space-x-1 transition-all hover:bg-temple-lightgold/20 ${
                 isScrolled ? 'text-foreground' : 'text-white'
               }`}
             >
               {item.icon}
               <span>{item.name}</span>
-            </a>
+            </Link>
           ))}
+          
+          {/* Language Switch */}
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={toggleLanguage}
+            className={`ml-1 ${
+              isScrolled ? 'text-temple-maroon hover:bg-temple-lightgold/20' : 'text-white hover:bg-white/20'
+            }`}
+          >
+            <Globe className="w-4 h-4" />
+          </Button>
           
           <Dialog>
             <DialogTrigger asChild>
@@ -68,7 +88,7 @@ const Navbar = () => {
                 }`}
               >
                 <User className="w-4 h-4 mr-2" />
-                Login
+                {t('nav.login')}
               </Button>
             </DialogTrigger>
             <LoginDialog />
@@ -76,15 +96,28 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden p-2 rounded-full bg-temple-lightgold/20"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? 
-            <X className={`w-6 h-6 ${isScrolled ? 'text-temple-maroon' : 'text-white'}`} /> : 
-            <Menu className={`w-6 h-6 ${isScrolled ? 'text-temple-maroon' : 'text-white'}`} />
-          }
-        </button>
+        <div className="md:hidden flex items-center space-x-2">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={toggleLanguage}
+            className={`${
+              isScrolled ? 'text-temple-maroon hover:bg-temple-lightgold/20' : 'text-white hover:bg-white/20'
+            }`}
+          >
+            <Globe className="w-5 h-5" />
+          </Button>
+          
+          <button 
+            className="p-2 rounded-full bg-temple-lightgold/20"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? 
+              <X className={`w-6 h-6 ${isScrolled ? 'text-temple-maroon' : 'text-white'}`} /> : 
+              <Menu className={`w-6 h-6 ${isScrolled ? 'text-temple-maroon' : 'text-white'}`} />
+            }
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -92,15 +125,15 @@ const Navbar = () => {
         <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-temple-gold/30 shadow-lg animate-fade-in">
           <div className="container mx-auto py-4 px-4 flex flex-col space-y-3">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="px-4 py-3 rounded-md flex items-center space-x-3 transition-all hover:bg-temple-lightgold"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.icon}
                 <span>{item.name}</span>
-              </a>
+              </Link>
             ))}
             
             <Dialog>
@@ -110,7 +143,7 @@ const Navbar = () => {
                   className="w-full justify-start border-temple-gold text-temple-maroon"
                 >
                   <User className="w-4 h-4 mr-2" />
-                  Login
+                  {t('nav.login')}
                 </Button>
               </DialogTrigger>
               <LoginDialog />

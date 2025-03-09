@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const LoginDialog = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     email: '',
@@ -36,7 +38,7 @@ const LoginDialog = () => {
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
         <DialogTitle className="text-center text-2xl font-serif text-temple-maroon">
-          Login to Shri Narsingh Mandir
+          {t('login.title')}
         </DialogTitle>
       </DialogHeader>
       
@@ -49,7 +51,7 @@ const LoginDialog = () => {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('login.email')}</Label>
             <Input
               id="email"
               name="email"
@@ -63,7 +65,7 @@ const LoginDialog = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('login.password')}</Label>
             <Input
               id="password"
               name="password"
@@ -81,12 +83,12 @@ const LoginDialog = () => {
               className="w-full bg-temple-gold hover:bg-temple-gold/80 text-white"
               disabled={isLoading}
             >
-              {isLoading ? 'Logging in...' : 'Login'}
+              {isLoading ? t('login.loggingIn') : t('login.loginButton')}
             </Button>
           </div>
           
           <div className="text-center text-sm text-muted-foreground">
-            <a href="#" className="hover:text-temple-maroon">Forgot password?</a>
+            <a href="#" className="hover:text-temple-maroon">{t('login.forgotPassword')}</a>
           </div>
         </form>
       </div>
