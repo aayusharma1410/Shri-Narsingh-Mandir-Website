@@ -2,10 +2,6 @@
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import AboutSection from '@/components/AboutSection';
-import LiveAarti from '@/components/LiveAarti';
-import GallerySection from '@/components/GallerySection';
-import TimingsSection from '@/components/TimingsSection';
 import Footer from '@/components/Footer';
 
 const HomePage = () => {
@@ -40,10 +36,6 @@ const HomePage = () => {
       <Navbar />
       <main>
         <Hero />
-        <AboutSection />
-        <LiveAarti />
-        <GallerySection />
-        <TimingsSection />
       </main>
       <Footer />
     </div>
