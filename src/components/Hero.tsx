@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Hero = () => {
@@ -11,13 +10,6 @@ const Hero = () => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-
-  const scrollToContent = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section 
@@ -53,7 +45,6 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg"
-                onClick={scrollToContent}
               >
                 {t('hero.viewDarshan')}
               </Button>
@@ -65,14 +56,6 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-        </div>
-      </div>
-      
-      {/* Scroll down indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-float" onClick={scrollToContent}>
-        <div className="flex flex-col items-center">
-          <span className="text-white text-sm mb-2">{t('hero.scrollDown')}</span>
-          <ChevronDown className="text-white w-6 h-6" />
         </div>
       </div>
     </section>
