@@ -2,6 +2,7 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import DarshanSlideshow from '@/components/DarshanSlideshow';
 
 const HomePage = () => {
   return (
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Navbar />
       <main>
         <Hero />
+        <DarshanSlideshow />
       </main>
       <Footer />
     </div>
