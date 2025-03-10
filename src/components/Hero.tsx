@@ -2,14 +2,28 @@
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const { t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const handleTimingsClick = () => {
+    navigate('/timings');
+  };
+
+  const handleDarshanClick = () => {
+    // Scroll to darshan slideshow section on the homepage
+    const darshanSection = document.getElementById('darshan-slideshow');
+    if (darshanSection) {
+      darshanSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section 
@@ -45,12 +59,14 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg"
+                onClick={handleDarshanClick}
               >
                 {t('hero.viewDarshan')}
               </Button>
               <Button 
                 variant="outline" 
-                className="border-white hover:bg-white/20 text-white font-medium px-8 py-6 text-lg backdrop-blur-sm"
+                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm"
+                onClick={handleTimingsClick}
               >
                 {t('hero.templeTimings')}
               </Button>

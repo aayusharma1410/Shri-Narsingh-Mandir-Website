@@ -108,7 +108,7 @@ const DarshanSlideshow = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-background to-muted">
+    <section id="darshan-slideshow" className="py-16 bg-gradient-to-b from-background to-muted">
       <div className="container px-6 mx-auto">
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="section-heading mb-4 text-4xl text-center">
