@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { History, MapPin, Heart, Users, Clock, Flame } from 'lucide-react';
+import { History, MapPin, Heart, Users, Clock, Music } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const AboutSection = () => {
@@ -55,13 +55,6 @@ const AboutSection = () => {
     }
   ];
 
-  const aartiTimings = [
-    { name: "प्रातः आरती", time: "सुबह 5:30 बजे", english: "Morning Aarti - 5:30 AM" },
-    { name: "भोग आरती", time: "दोपहर 12:00 बजे", english: "Bhog Aarti - 12:00 PM" },
-    { name: "संध्या आरती", time: "शाम 7:00 बजे", english: "Evening Aarti - 7:00 PM" },
-    { name: "शयन आरती", time: "रात 8:30 बजे", english: "Night Aarti - 8:30 PM" }
-  ];
-
   return (
     <section id="about" className="section-container bg-temple-lightgold/30" ref={sectionRef}>
       <div className="max-w-4xl mx-auto text-center mb-12">
@@ -90,25 +83,42 @@ const AboutSection = () => {
         ))}
       </div>
 
-      {/* Aarti Schedule Section */}
+      {/* Aarti in Written Form */}
       <div className="mt-12 bg-white/70 backdrop-blur-sm rounded-xl p-8 border border-temple-gold/20 shadow-xl opacity-0 animate-on-scroll">
         <div className="flex items-center mb-6">
-          <Flame className="w-8 h-8 text-temple-maroon mr-3" />
-          <h3 className="font-serif text-2xl font-bold text-temple-maroon">आरती समय सूची / Aarti Schedule</h3>
+          <Music className="w-8 h-8 text-temple-maroon mr-3" />
+          <h3 className="font-serif text-2xl font-bold text-temple-maroon">आरती</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {aartiTimings.map((aarti, index) => (
-            <div key={index} className="flex items-center p-4 border border-temple-gold/30 rounded-lg bg-temple-gold/5">
-              <Clock className="w-6 h-6 text-temple-maroon mr-3" />
-              <div>
-                <p className="font-semibold text-temple-maroon">{aarti.name}</p>
-                <p className="text-gray-700">{aarti.time}</p>
-                <p className="text-sm text-gray-600">{aarti.english}</p>
-              </div>
-            </div>
-          ))}
+        <div className="mb-8">
+          <h4 className="font-serif text-xl font-bold mb-3 text-temple-maroon">आरती - ॐ जय जगदीश हरे</h4>
+          <div className="bg-temple-gold/5 p-6 rounded-lg border border-temple-gold/30">
+            <p className="mb-2 leading-relaxed text-gray-800">ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">भक्त जनों के संकट, क्षण में दूर करे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">जो ध्यावे फल पावे, दुःख बिनसे मन का</p>
+            <p className="mb-2 leading-relaxed text-gray-800">स्वामी दुःख बिनसे मन का</p>
+            <p className="mb-2 leading-relaxed text-gray-800">ॐ जय जगदीश हरे...</p>
+            <p className="mt-4 text-sm text-gray-600 italic">Om Jai Jagdish Hare, Swami Jai Jagdish Hare <br />
+            Victory to the Lord of the universe, O Lord, victory to You, the Lord of the universe <br />
+            The troubles of Your devotees are removed in a moment... </p>
+          </div>
         </div>
-        <div className="mt-4 text-sm text-gray-600 text-center">
+
+        <div>
+          <h4 className="font-serif text-xl font-bold mb-3 text-temple-maroon">भोग आरती - आओ भोग लगाओ</h4>
+          <div className="bg-temple-gold/5 p-6 rounded-lg border border-temple-gold/30">
+            <p className="mb-2 leading-relaxed text-gray-800">आओ भोग लगाओ जगत के पालनहारे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">दया करो अब स्वामी दीन दयालु हमारे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">नाना व्यंजन सजे हैं भोग धरे हम प्यारे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">ग्रहण करो भगवंत श्री आनंद मंगलकारे</p>
+            <p className="mb-2 leading-relaxed text-gray-800">आओ भोग लगाओ...</p>
+            <p className="mt-4 text-sm text-gray-600 italic">Come, let us offer bhog to the Sustainer of the world <br />
+            Have mercy now, O Lord, our merciful protector <br />
+            Various dishes have been prepared, we offer this food with love <br />
+            Please accept it, O Lord, bringer of joy and auspiciousness</p>
+          </div>
+        </div>
+
+        <div className="mt-6 text-sm text-gray-600 text-center">
           <p>भोग आरती के समय भगवान को विशेष भोग अर्पित किया जाता है। सभी भक्तों से अनुरोध है कि वे इस पवित्र समय में उपस्थित होकर प्रसाद ग्रहण करें।</p>
           <p className="mt-2">During Bhog Aarti, special offerings are made to the deity. All devotees are requested to attend and receive prasad during this auspicious time.</p>
         </div>
