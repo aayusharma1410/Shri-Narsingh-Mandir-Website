@@ -1,9 +1,11 @@
 
 import { useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { History, MapPin, Heart, Users } from 'lucide-react';
+import { History, MapPin, Heart, Users, Clock, Flame } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const AboutSection = () => {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -53,6 +55,13 @@ const AboutSection = () => {
     }
   ];
 
+  const aartiTimings = [
+    { name: "प्रातः आरती", time: "सुबह 5:30 बजे", english: "Morning Aarti - 5:30 AM" },
+    { name: "भोग आरती", time: "दोपहर 12:00 बजे", english: "Bhog Aarti - 12:00 PM" },
+    { name: "संध्या आरती", time: "शाम 7:00 बजे", english: "Evening Aarti - 7:00 PM" },
+    { name: "शयन आरती", time: "रात 8:30 बजे", english: "Night Aarti - 8:30 PM" }
+  ];
+
   return (
     <section id="about" className="section-container bg-temple-lightgold/30" ref={sectionRef}>
       <div className="max-w-4xl mx-auto text-center mb-12">
@@ -79,6 +88,30 @@ const AboutSection = () => {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Aarti Schedule Section */}
+      <div className="mt-12 bg-white/70 backdrop-blur-sm rounded-xl p-8 border border-temple-gold/20 shadow-xl opacity-0 animate-on-scroll">
+        <div className="flex items-center mb-6">
+          <Flame className="w-8 h-8 text-temple-maroon mr-3" />
+          <h3 className="font-serif text-2xl font-bold text-temple-maroon">आरती समय सूची / Aarti Schedule</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {aartiTimings.map((aarti, index) => (
+            <div key={index} className="flex items-center p-4 border border-temple-gold/30 rounded-lg bg-temple-gold/5">
+              <Clock className="w-6 h-6 text-temple-maroon mr-3" />
+              <div>
+                <p className="font-semibold text-temple-maroon">{aarti.name}</p>
+                <p className="text-gray-700">{aarti.time}</p>
+                <p className="text-sm text-gray-600">{aarti.english}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 text-sm text-gray-600 text-center">
+          <p>भोग आरती के समय भगवान को विशेष भोग अर्पित किया जाता है। सभी भक्तों से अनुरोध है कि वे इस पवित्र समय में उपस्थित होकर प्रसाद ग्रहण करें।</p>
+          <p className="mt-2">During Bhog Aarti, special offerings are made to the deity. All devotees are requested to attend and receive prasad during this auspicious time.</p>
+        </div>
       </div>
 
       <div className="mt-16 bg-white/70 backdrop-blur-sm rounded-xl p-8 border border-temple-gold/20 shadow-xl opacity-0 animate-on-scroll">
