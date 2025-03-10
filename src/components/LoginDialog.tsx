@@ -4,93 +4,146 @@ import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import SignUpForm from './SignUpForm';
 
 const LoginDialog = () => {
   const { t } = useLanguage();
+  const { signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!loginData.email.trim()) {
+      newErrors.email = 'Email is required';
+    }
+    
+    if (!loginData.password) {
+      newErrors.password = 'Password is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) return;
+    
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      await signIn(loginData.email, loginData.password);
+    } catch (error) {
+      console.error('Login failed:', error);
+    } finally {
       setIsLoading(false);
-      toast({
-        title: "Login Attempted",
-        description: "This is a demo. Login functionality will be implemented in the future.",
-      });
-    }, 1500);
+    }
+  };
+
+  const toggleForm = () => {
+    setShowSignUp(!showSignUp);
+    setErrors({});
   };
 
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
         <DialogTitle className="text-center text-2xl font-serif text-temple-maroon">
-          {t('login.title')}
+          {showSignUp ? t('signup.title') : t('login.title')}
         </DialogTitle>
       </DialogHeader>
       
       <div className="py-6">
-        <div className="flex items-center justify-center mb-6">
-          <div className="h-20 w-20 rounded-full bg-temple-gold/20 flex items-center justify-center">
-            <span className="text-3xl font-serif text-temple-gold">ॐ</span>
+        {showSignUp ? (
+          <SignUpForm onToggleForm={toggleForm} />
+        ) : (
+          <div className="space-y-6">
+            <div className="flex items-center justify-center mb-6">
+              <div className="h-20 w-20 rounded-full bg-temple-gold/20 flex items-center justify-center">
+                <span className="text-3xl font-serif text-temple-gold">ॐ</span>
+              </div>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">{t('login.email')}</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  required
+                  value={loginData.email}
+                  onChange={handleChange}
+                  className="border-temple-gold/30 focus:border-temple-gold"
+                  aria-invalid={!!errors.email}
+                />
+                {errors.email && (
+                  <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="password">{t('login.password')}</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={loginData.password}
+                  onChange={handleChange}
+                  className="border-temple-gold/30 focus:border-temple-gold"
+                  aria-invalid={!!errors.password}
+                />
+                {errors.password && (
+                  <p className="text-xs text-red-500 mt-1">{errors.password}</p>
+                )}
+              </div>
+              
+              <div className="pt-2">
+                <Button 
+                  type="submit" 
+                  className="w-full bg-temple-gold hover:bg-temple-gold/80 text-white"
+                  disabled={isLoading}
+                >
+                  {isLoading ? t('login.loggingIn') : t('login.loginButton')}
+                </Button>
+              </div>
+              
+              <div className="text-center text-sm text-muted-foreground">
+                <div className="flex justify-between">
+                  <a href="#" className="hover:text-temple-maroon">{t('login.forgotPassword')}</a>
+                  <button 
+                    type="button"
+                    onClick={toggleForm}
+                    className="text-temple-maroon hover:underline"
+                  >
+                    {t('login.signupLink')}
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </div>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('login.email')}</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="your.email@example.com"
-              required
-              value={loginData.email}
-              onChange={handleChange}
-              className="border-temple-gold/30 focus:border-temple-gold"
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="password">{t('login.password')}</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={loginData.password}
-              onChange={handleChange}
-              className="border-temple-gold/30 focus:border-temple-gold"
-            />
-          </div>
-          
-          <div className="pt-2">
-            <Button 
-              type="submit" 
-              className="w-full bg-temple-gold hover:bg-temple-gold/80 text-white"
-              disabled={isLoading}
-            >
-              {isLoading ? t('login.loggingIn') : t('login.loginButton')}
-            </Button>
-          </div>
-          
-          <div className="text-center text-sm text-muted-foreground">
-            <a href="#" className="hover:text-temple-maroon">{t('login.forgotPassword')}</a>
-          </div>
-        </form>
+        )}
       </div>
     </DialogContent>
   );

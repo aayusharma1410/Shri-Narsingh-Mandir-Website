@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Info, Video, Image, Clock, User, Menu, X, Globe } from 'lucide-react';
+import { Home, Info, Video, Image, Clock, User, Menu, X, Globe, LogOut } from 'lucide-react';
 import LoginDialog from './LoginDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +35,11 @@ const Navbar = () => {
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -79,20 +86,33 @@ const Navbar = () => {
             <Globe className="w-4 h-4" />
           </Button>
           
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button 
-                variant="outline" 
-                className={`ml-2 border-temple-gold ${
-                  isScrolled ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
-                }`}
-              >
-                <User className="w-4 h-4 mr-2" />
-                {t('nav.login')}
-              </Button>
-            </DialogTrigger>
-            <LoginDialog />
-          </Dialog>
+          {user ? (
+            <Button 
+              variant="outline" 
+              className={`ml-2 border-temple-gold ${
+                isScrolled ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
+              }`}
+              onClick={handleSignOut}
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              {t('nav.logout')}
+            </Button>
+          ) : (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className={`ml-2 border-temple-gold ${
+                    isScrolled ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
+                  }`}
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  {t('nav.login')}
+                </Button>
+              </DialogTrigger>
+              <LoginDialog />
+            </Dialog>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -136,18 +156,29 @@ const Navbar = () => {
               </Link>
             ))}
             
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start border-temple-gold text-temple-maroon"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  {t('nav.login')}
-                </Button>
-              </DialogTrigger>
-              <LoginDialog />
-            </Dialog>
+            {user ? (
+              <Button 
+                variant="outline" 
+                className="w-full justify-start border-temple-gold text-temple-maroon"
+                onClick={handleSignOut}
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                {t('nav.logout')}
+              </Button>
+            ) : (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start border-temple-gold text-temple-maroon"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    {t('nav.login')}
+                  </Button>
+                </DialogTrigger>
+                <LoginDialog />
+              </Dialog>
+            )}
           </div>
         </div>
       )}
