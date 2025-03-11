@@ -17,6 +17,7 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [signupError, setSignupError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,6 +25,10 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
     // Clear error when user types
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+    // Clear general signup error when user makes changes
+    if (signupError) {
+      setSignupError('');
     }
   };
 
@@ -60,10 +65,12 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
     if (!validateForm()) return;
     
     setIsLoading(true);
+    setSignupError('');
     
     try {
       await signUp(formData.email, formData.password, formData.username);
-    } catch (error) {
+    } catch (error: any) {
+      setSignupError(error.message || 'An error occurred during signup');
       console.error('Signup failed:', error);
     } finally {
       setIsLoading(false);
@@ -77,6 +84,12 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
           <span className="text-3xl font-serif text-temple-gold">ॐ</span>
         </div>
       </div>
+      
+      {signupError && (
+        <div className="p-3 rounded-md bg-red-50 border border-red-200 text-sm text-red-600">
+          {signupError}
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">

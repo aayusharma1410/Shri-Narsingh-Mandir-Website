@@ -70,29 +70,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       });
       
-      if (error) throw error;
-      
-      if (data.user) {
-        // Insert the user into our custom users table
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert([{ 
-            id: data.user.id,
-            username,
-            email
-          }]);
-          
-        if (profileError) throw profileError;
+      if (error) {
+        // Handle rate limit errors specifically
+        if (error.status === 429) {
+          throw new Error("Too many sign-up attempts. Please wait a minute and try again.");
+        }
+        throw error;
       }
+      
+      // We no longer need to insert into a custom users table as Supabase
+      // already stores the user information in the auth.users table
+      // and we can access user metadata via the auth API
       
       toast({
         title: "Account created!",
         description: "Please check your email to confirm your account.",
       });
     } catch (error: any) {
+      let errorMessage = error.message;
+      
+      // Handle rate limit errors with user-friendly message
+      if (error.code === "over_email_send_rate_limit" || error.status === 429) {
+        errorMessage = "Too many sign-up attempts. Please wait a minute and try again.";
+      }
+      
       toast({
         title: "Error creating account",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
       console.error('Error signing up:', error);
