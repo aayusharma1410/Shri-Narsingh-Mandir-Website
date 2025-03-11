@@ -115,6 +115,20 @@ const translations = {
     'login.loginButton': 'Login',
     'login.loggingIn': 'Logging in...',
     'login.forgotPassword': 'Forgot password?',
+    'login.noAccount': 'Don\'t have an account?',
+    'login.createAccount': 'Create Account',
+    
+    // Signup
+    'signup.title': 'Create Your Account',
+    'signup.username': 'Username',
+    'signup.email': 'Email Address',
+    'signup.password': 'Password',
+    'signup.confirmPassword': 'Confirm Password',
+    'signup.signupButton': 'Sign Up',
+    'signup.signingUp': 'Creating account...',
+    'signup.alreadyHaveAccount': 'Already have an account?',
+    'signup.loginLink': 'Login',
+    'signup.passwordRequirements': 'Password must be at least 6 characters',
   },
   hi: {
     // Navbar
@@ -216,6 +230,20 @@ const translations = {
     'login.loginButton': 'लॉगिन',
     'login.loggingIn': 'लॉगिन हो रहा है...',
     'login.forgotPassword': 'पासवर्ड भूल गए?',
+    'login.noAccount': 'खाता नहीं है?',
+    'login.createAccount': 'खाता बनाएं',
+    
+    // Signup
+    'signup.title': 'अपना खाता बनाएं',
+    'signup.username': 'उपयोगकर्ता नाम',
+    'signup.email': 'ईमेल पता',
+    'signup.password': 'पासवर्ड',
+    'signup.confirmPassword': 'पासवर्ड की पुष्टि करें',
+    'signup.signupButton': 'साइन अप',
+    'signup.signingUp': 'खाता बन रहा है...',
+    'signup.alreadyHaveAccount': 'पहले से ही खाता है?',
+    'signup.loginLink': 'लॉगिन',
+    'signup.passwordRequirements': 'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए',
   }
 };
 

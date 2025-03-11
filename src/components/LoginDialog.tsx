@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import SignUpForm from './SignUpForm';
+import { AtSign, Lock } from 'lucide-react';
 
 const LoginDialog = () => {
   const { t } = useLanguage();
@@ -65,7 +66,7 @@ const LoginDialog = () => {
   };
 
   return (
-    <DialogContent className="sm:max-w-md">
+    <DialogContent className="sm:max-w-md bg-gradient-to-b from-temple-cream/95 to-white border-temple-gold/30 shadow-lg">
       <DialogHeader>
         <DialogTitle className="text-center text-2xl font-serif text-temple-maroon">
           {showSignUp ? t('signup.title') : t('login.title')}
@@ -77,43 +78,53 @@ const LoginDialog = () => {
           <SignUpForm onToggleForm={toggleForm} />
         ) : (
           <div className="space-y-6">
-            <div className="flex items-center justify-center mb-6">
-              <div className="h-20 w-20 rounded-full bg-temple-gold/20 flex items-center justify-center">
+            <div className="flex items-center justify-center mb-8">
+              <div className="h-20 w-20 rounded-full bg-temple-gold/20 flex items-center justify-center animate-glow">
                 <span className="text-3xl font-serif text-temple-gold">ॐ</span>
               </div>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">{t('login.email')}</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  required
-                  value={loginData.email}
-                  onChange={handleChange}
-                  className="border-temple-gold/30 focus:border-temple-gold"
-                  aria-invalid={!!errors.email}
-                />
+                <Label htmlFor="email" className="text-temple-maroon font-medium">{t('login.email')}</Label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-temple-gold/70">
+                    <AtSign size={18} />
+                  </div>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    required
+                    value={loginData.email}
+                    onChange={handleChange}
+                    className="pl-10 border-temple-gold/30 focus-visible:ring-temple-gold/70 focus-visible:border-temple-gold transition-all duration-200"
+                    aria-invalid={!!errors.email}
+                  />
+                </div>
                 {errors.email && (
                   <p className="text-xs text-red-500 mt-1">{errors.email}</p>
                 )}
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password">{t('login.password')}</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={loginData.password}
-                  onChange={handleChange}
-                  className="border-temple-gold/30 focus:border-temple-gold"
-                  aria-invalid={!!errors.password}
-                />
+                <Label htmlFor="password" className="text-temple-maroon font-medium">{t('login.password')}</Label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-temple-gold/70">
+                    <Lock size={18} />
+                  </div>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    value={loginData.password}
+                    onChange={handleChange}
+                    className="pl-10 border-temple-gold/30 focus-visible:ring-temple-gold/70 focus-visible:border-temple-gold transition-all duration-200"
+                    aria-invalid={!!errors.password}
+                  />
+                </div>
                 {errors.password && (
                   <p className="text-xs text-red-500 mt-1">{errors.password}</p>
                 )}
@@ -122,29 +133,29 @@ const LoginDialog = () => {
               <div className="pt-2">
                 <Button 
                   type="submit" 
-                  className="w-full bg-temple-gold hover:bg-temple-gold/80 text-white"
+                  className="w-full bg-temple-gold hover:bg-temple-gold/80 text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg"
                   disabled={isLoading}
                 >
                   {isLoading ? t('login.loggingIn') : t('login.loginButton')}
                 </Button>
               </div>
               
-              <div className="mt-6 flex flex-col items-center space-y-3">
+              <div className="mt-4 flex flex-col items-center space-y-5">
                 <div className="text-sm text-muted-foreground">
-                  <a href="#" className="hover:text-temple-maroon">{t('login.forgotPassword')}</a>
+                  <a href="#" className="text-temple-maroon hover:text-temple-darkred transition-colors">{t('login.forgotPassword')}</a>
                 </div>
                 
-                <div className="w-full border-t border-border my-2"></div>
-                
-                <p className="text-sm text-center text-muted-foreground">
-                  {t('login.noAccount')}
-                </p>
+                <div className="w-full flex items-center gap-3">
+                  <div className="h-px flex-1 bg-temple-gold/20"></div>
+                  <span className="text-xs text-muted-foreground px-2">{t('login.noAccount')}</span>
+                  <div className="h-px flex-1 bg-temple-gold/20"></div>
+                </div>
                 
                 <Button 
                   type="button"
                   variant="outline" 
                   onClick={toggleForm}
-                  className="w-full border-temple-gold text-temple-maroon hover:bg-temple-gold/10"
+                  className="w-full border-temple-gold text-temple-maroon hover:bg-temple-gold/10 transition-all duration-300"
                 >
                   {t('login.createAccount')}
                 </Button>
