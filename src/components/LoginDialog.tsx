@@ -129,17 +129,25 @@ const LoginDialog = () => {
                 </Button>
               </div>
               
-              <div className="text-center text-sm text-muted-foreground">
-                <div className="flex justify-between">
+              <div className="mt-6 flex flex-col items-center space-y-3">
+                <div className="text-sm text-muted-foreground">
                   <a href="#" className="hover:text-temple-maroon">{t('login.forgotPassword')}</a>
-                  <button 
-                    type="button"
-                    onClick={toggleForm}
-                    className="text-temple-maroon hover:underline"
-                  >
-                    {t('login.signupLink')}
-                  </button>
                 </div>
+                
+                <div className="w-full border-t border-border my-2"></div>
+                
+                <p className="text-sm text-center text-muted-foreground">
+                  {t('login.noAccount')}
+                </p>
+                
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  onClick={toggleForm}
+                  className="w-full border-temple-gold text-temple-maroon hover:bg-temple-gold/10"
+                >
+                  {t('login.createAccount')}
+                </Button>
               </div>
             </form>
           </div>
