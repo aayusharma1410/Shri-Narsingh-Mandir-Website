@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Info, Video, Image, Clock, User, Menu, X, Globe, LogOut } from 'lucide-react';
+import { Home, Info, Video, Image, Clock, User, Menu, X, Globe, LogOut, Heart } from 'lucide-react';
 import LoginDialog from './LoginDialog';
+import DonationDialog from './DonationDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -30,7 +31,8 @@ const Navbar = () => {
     { name: t('nav.about'), icon: <Info className="w-4 h-4" />, href: '/about' },
     { name: t('nav.liveAarti'), icon: <Video className="w-4 h-4" />, href: '/live-aarti' },
     { name: t('nav.gallery'), icon: <Image className="w-4 h-4" />, href: '/gallery' },
-    { name: t('nav.timings'), icon: <Clock className="w-4 h-4" />, href: '/timings' }
+    { name: t('nav.timings'), icon: <Clock className="w-4 h-4" />, href: '/timings' },
+    { name: t('nav.donate'), icon: <Heart className="w-4 h-4" />, href: '#', isDonation: true }
   ];
 
   const toggleLanguage = () => {
@@ -65,16 +67,36 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={`px-3 py-2 rounded-md flex items-center space-x-1 transition-all hover:bg-temple-lightgold/20 ${
-                isScrolled ? 'text-foreground' : 'text-white'
-              }`}
-            >
-              {item.icon}
-              <span>{item.name}</span>
-            </Link>
+            item.isDonation ? (
+              <Dialog key={item.name}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={`px-3 py-2 rounded-md flex items-center space-x-1 transition-all
+                      border-temple-gold ${
+                      isScrolled 
+                        ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' 
+                        : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
+                    }`}
+                  >
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </Button>
+                </DialogTrigger>
+                <DonationDialog />
+              </Dialog>
+            ) : (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`px-3 py-2 rounded-md flex items-center space-x-1 transition-all hover:bg-temple-lightgold/20 ${
+                  isScrolled ? 'text-foreground' : 'text-white'
+                }`}
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            )
           ))}
           
           {/* Language Switch */}
@@ -157,15 +179,30 @@ const Navbar = () => {
         <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-temple-gold/30 shadow-lg animate-fade-in">
           <div className="container mx-auto py-4 px-4 flex flex-col space-y-3">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="px-4 py-3 rounded-md flex items-center space-x-3 transition-all hover:bg-temple-lightgold"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </Link>
+              item.isDonation ? (
+                <Dialog key={item.name}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="px-4 py-3 rounded-md flex items-center space-x-3 transition-all justify-start w-full border-temple-gold text-temple-maroon hover:bg-temple-lightgold/50"
+                    >
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </Button>
+                  </DialogTrigger>
+                  <DonationDialog />
+                </Dialog>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="px-4 py-3 rounded-md flex items-center space-x-3 transition-all hover:bg-temple-lightgold"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.icon}
+                  <span>{item.name}</span>
+                </Link>
+              )
             ))}
             
             {user ? (
