@@ -42,6 +42,9 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  // Get username from user metadata
+  const username = user?.user_metadata?.username || user?.email?.split('@')[0] || t('nav.user');
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -87,16 +90,25 @@ const Navbar = () => {
           </Button>
           
           {user ? (
-            <Button 
-              variant="outline" 
-              className={`ml-2 border-temple-gold ${
-                isScrolled ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
-              }`}
-              onClick={handleSignOut}
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              {t('nav.logout')}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className={`ml-2 border-temple-gold ${
+                    isScrolled ? 'text-temple-maroon bg-white hover:bg-temple-lightgold/50' : 'text-white border-white/30 bg-white/10 hover:bg-white/20'
+                  }`}
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  {username}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="border-temple-gold/30">
+                <DropdownMenuItem className="cursor-pointer text-temple-maroon" onClick={handleSignOut}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  {t('nav.logout')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Dialog>
               <DialogTrigger asChild>
@@ -157,14 +169,20 @@ const Navbar = () => {
             ))}
             
             {user ? (
-              <Button 
-                variant="outline" 
-                className="w-full justify-start border-temple-gold text-temple-maroon"
-                onClick={handleSignOut}
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                {t('nav.logout')}
-              </Button>
+              <div className="flex flex-col space-y-2">
+                <div className="px-4 py-3 rounded-md flex items-center space-x-3 bg-temple-lightgold/20 text-temple-maroon">
+                  <User className="w-4 h-4" />
+                  <span className="font-medium">{username}</span>
+                </div>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-temple-gold text-temple-maroon"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  {t('nav.logout')}
+                </Button>
+              </div>
             ) : (
               <Dialog>
                 <DialogTrigger asChild>

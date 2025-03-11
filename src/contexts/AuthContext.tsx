@@ -43,8 +43,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error, data } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      
+      // Ensure username is available in the UI
+      if (data.user && !data.user.user_metadata?.username) {
+        // If username is not in metadata, use email prefix as fallback
+        const username = data.user.email?.split('@')[0] || 'user';
+        await supabase.auth.updateUser({
+          data: { username }
+        });
+      }
+      
       toast({
         title: "Welcome back!",
         description: "You've successfully signed in.",
