@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 type LanguageContextType = {
@@ -53,6 +52,13 @@ type TranslationType = {
     success: string;
     thankYou: string;
   };
+  hero: {
+    welcome: string;
+    temple: string;
+    subtitle: string;
+    viewDarshan: string;
+    templeTimings: string;
+  };
 };
 
 const translations: Record<string, TranslationType> = {
@@ -101,6 +107,13 @@ const translations: Record<string, TranslationType> = {
       donate: 'Make Donation',
       success: 'Donation Successful',
       thankYou: 'Thank you for your generous donation of ₹{amount}. Your contribution is greatly appreciated.'
+    },
+    hero: {
+      welcome: "Welcome to",
+      temple: "Shri Narsingh Temple",
+      subtitle: "A Sacred Space for Spiritual Connection",
+      viewDarshan: "View Darshan",
+      templeTimings: "Temple Timings"
     }
   },
   hi: {
@@ -148,6 +161,13 @@ const translations: Record<string, TranslationType> = {
       donate: 'दान करें',
       success: 'दान सफल',
       thankYou: 'आपके ₹{amount} के उदार दान के लिए धन्यवाद। आपके योगदान की बहुत सराहना की जाती है।'
+    },
+    hero: {
+      welcome: "आपका स्वागत है",
+      temple: "श्री नरसिंह मंदिर",
+      subtitle: "आध्यात्मिक संबंध के लिए एक पवित्र स्थान",
+      viewDarshan: "दर्शन करें",
+      templeTimings: "मंदिर समय"
     }
   }
 };
