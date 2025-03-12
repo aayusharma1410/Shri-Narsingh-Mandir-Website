@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 type LanguageContextType = {
@@ -27,7 +28,7 @@ const translations = {
       confirmPassword: 'Confirm Password',
       username: 'Username',
       forgotPassword: 'Forgot Password?',
-      noAccount: 'Don\'t have an account?',
+      noAccount: "Don't have an account?",
       alreadyAccount: 'Already have an account?',
       signupBtn: 'Create Account',
       loginBtn: 'Sign In',
@@ -120,8 +121,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (typeof value !== 'string') return key;
     
     if (options) {
-      return Object.entries(options).reduce((acc, [k, v]) => {
-        return acc.replace(`{${k}}`, String(v));
+      return Object.entries(options).reduce((acc, [key, val]) => {
+        return acc.replace(`{${key}}`, String(val));
       }, value);
     }
     
@@ -142,3 +143,4 @@ export const useLanguage = () => {
   }
   return context;
 };
+
