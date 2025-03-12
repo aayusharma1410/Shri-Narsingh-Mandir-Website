@@ -51,6 +51,10 @@ type TranslationType = {
     donate: string;
     success: string;
     thankYou: string;
+    receipt: string;
+    receiptSent: string;
+    emailReceipt: string;
+    scanQR: string;
   };
   hero: {
     welcome: string;
@@ -106,7 +110,11 @@ const translations: Record<string, TranslationType> = {
       card: 'Credit/Debit Card',
       donate: 'Make Donation',
       success: 'Donation Successful',
-      thankYou: 'Thank you for your generous donation of ₹{amount}. Your contribution is greatly appreciated.'
+      thankYou: 'Thank you for your generous donation of ₹{amount}. Your contribution is greatly appreciated.',
+      receipt: 'Donation Receipt',
+      receiptSent: 'A receipt has been sent to {email}',
+      emailReceipt: 'Email for Receipt',
+      scanQR: 'Scan with any UPI app to donate ₹{amount}'
     },
     hero: {
       welcome: "Welcome to",
@@ -160,7 +168,11 @@ const translations: Record<string, TranslationType> = {
       card: 'क्रेडिट/डेबिट कार्ड',
       donate: 'दान करें',
       success: 'दान सफल',
-      thankYou: 'आपके ₹{amount} के उदार दान के लिए धन्यवाद। आपके योगदान की बहुत सराहना की जाती है।'
+      thankYou: 'आपके ₹{amount} के उदार दान के लिए धन्यवाद। आपके योगदान की बहुत सराहना की जाती है।',
+      receipt: 'दान रसीद',
+      receiptSent: 'एक रसीद {email} पर भेज दी गई है',
+      emailReceipt: 'रसीद के लिए ईमेल',
+      scanQR: '₹{amount} का दान करने के लिए किसी भी यूपीआई ऐप से स्कैन करें'
     },
     hero: {
       welcome: "आपका स्वागत है",
