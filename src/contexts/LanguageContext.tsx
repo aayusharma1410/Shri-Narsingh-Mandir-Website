@@ -7,7 +7,55 @@ type LanguageContextType = {
   t: (key: string, options?: Record<string, any>) => string;
 };
 
-const translations = {
+type TranslationType = {
+  nav: {
+    home: string;
+    about: string;
+    liveAarti: string;
+    gallery: string;
+    timings: string;
+    login: string;
+    logout: string;
+    user: string;
+    donate: string;
+  };
+  auth: {
+    login: string;
+    signup: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    username: string;
+    forgotPassword: string;
+    noAccount: string;
+    alreadyAccount: string;
+    signupBtn: string;
+    loginBtn: string;
+    or: string;
+    rememberMe: string;
+    welcomeBack: string;
+    createAccount: string;
+    signupMessage: string;
+    emailPlaceholder: string;
+    passwordPlaceholder: string;
+    usernamePlaceholder: string;
+    passwordRequirements: string;
+    submitInfo: string;
+  };
+  donation: {
+    title: string;
+    description: string;
+    amount: string;
+    custom: string;
+    paymentMethod: string;
+    card: string;
+    donate: string;
+    success: string;
+    thankYou: string;
+  };
+};
+
+const translations: Record<string, TranslationType> = {
   en: {
     nav: {
       home: 'Home',
@@ -53,7 +101,7 @@ const translations = {
       donate: 'Make Donation',
       success: 'Donation Successful',
       thankYou: 'Thank you for your generous donation of ₹{amount}. Your contribution is greatly appreciated.'
-    },
+    }
   },
   hi: {
     nav: {
@@ -100,7 +148,7 @@ const translations = {
       donate: 'दान करें',
       success: 'दान सफल',
       thankYou: 'आपके ₹{amount} के उदार दान के लिए धन्यवाद। आपके योगदान की बहुत सराहना की जाती है।'
-    },
+    }
   }
 };
 
@@ -121,12 +169,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (typeof value !== 'string') return key;
     
     if (options) {
-      return Object.entries(options).reduce((acc, [key, val]) => {
-        return acc.replace(`{${key}}`, String(val));
-      }, value);
+      return Object.entries(options).reduce((acc, [optKey, val]) => 
+        acc.replace(new RegExp(`\\{${optKey}\\}`, 'g'), String(val))
+      , value as string);
     }
     
-    return value;
+    return value as string;
   };
 
   return (
@@ -143,4 +191,3 @@ export const useLanguage = () => {
   }
   return context;
 };
-
