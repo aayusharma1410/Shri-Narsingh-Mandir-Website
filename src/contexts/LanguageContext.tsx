@@ -169,9 +169,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (typeof value !== 'string') return key;
     
     if (options) {
-      return Object.entries(options).reduce((acc, [optKey, val]) => 
-        acc.replace(new RegExp(`\\{${optKey}\\}`, 'g'), String(val))
-      , value as string);
+      return Object.entries(options).reduce((acc, [optKey, optVal]) => 
+        acc.replace(new RegExp(`\\{${optKey}\\}`, 'g'), String(optVal))
+      , value);
     }
     
     return value;
