@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -61,49 +60,7 @@ const TimingsSection = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <Card className="glass-card opacity-0 animate-on-scroll">
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4">
-                <Clock className="w-6 h-6 text-temple-gold mr-2" />
-                <h3 className="font-serif text-xl font-semibold text-temple-maroon">नियमित दर्शन समय</h3>
-              </div>
-              
-              <table className="w-full border-collapse">
-                <thead className="border-b border-temple-gold/30">
-                  <tr>
-                    <th className="py-3 text-left text-temple-maroon">दिन</th>
-                    <th className="py-3 text-left text-temple-maroon">सुबह</th>
-                    <th className="py-3 text-left text-temple-maroon">शाम</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {regularTimings.map((timing, index) => (
-                    <tr key={index} className="border-b border-temple-gold/10">
-                      <td className="py-3 font-medium">{timing.day}</td>
-                      <td className="py-3">{timing.morning}</td>
-                      <td className="py-3">{timing.evening}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              
-              <div className="mt-8">
-                <div className="flex items-center mb-4">
-                  <Calendar className="w-6 h-6 text-temple-gold mr-2" />
-                  <h3 className="font-serif text-xl font-semibold text-temple-maroon">विशेष दिनों के समय</h3>
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {specialTimings.map((timing, index) => (
-                    <div key={index} className="border border-temple-gold/20 rounded-lg p-4 bg-white/50">
-                      <p className="font-medium text-temple-maroon">{timing.name}</p>
-                      <p className="text-sm">{timing.time}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <DailySchedule />
           
           <Card className="glass-card mt-6 opacity-0 animate-on-scroll">
             <CardContent className="p-6">
@@ -121,7 +78,6 @@ const TimingsSection = () => {
                     <p className="text-sm text-gray-600">मानचित्र यहां प्रदर्शित होगा</p>
                   </div>
                 </div>
-              </div>
               
               <div className="mt-4">
                 <p className="font-medium">पता:</p>
