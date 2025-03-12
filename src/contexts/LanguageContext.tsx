@@ -159,7 +159,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const t = (key: string, options?: Record<string, any>) => {
     const keys = key.split('.');
-    let value = translations[language as keyof typeof translations];
+    let value: any = translations[language];
     
     for (const k of keys) {
       if (value === undefined) return key;
@@ -174,7 +174,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       , value as string);
     }
     
-    return value as string;
+    return value;
   };
 
   return (
