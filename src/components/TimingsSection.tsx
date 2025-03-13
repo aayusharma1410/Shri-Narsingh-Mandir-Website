@@ -56,7 +56,7 @@ const TimingsSection = () => {
         <p className="text-temple-gold font-medium mb-3 opacity-0 animate-on-scroll">दर्शन समय</p>
         <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">मंदिर समय</h2>
         <p className="text-lg opacity-0 animate-on-scroll">
-          श्री लक्ष्मी नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।
+          श्री नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।
         </p>
       </div>
 
@@ -87,9 +87,9 @@ const TimingsSection = () => {
               
               <div className="mt-4">
                 <p className="font-medium">पता:</p>
-                <p>श्री लक्ष्मी नरसिंह मंदिर</p>
-                <p>हसमपुर गांव,</p>
-                <p>उत्तर प्रदेश, भारत</p>
+                <p>श्री नरसिंह मंदिर</p>
+                <p>हसमपुर, राजस्थान,</p>
+                <p>भारत</p>
                 
                 <Separator className="my-4 bg-temple-gold/20" />
                 

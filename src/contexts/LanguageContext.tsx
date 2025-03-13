@@ -63,6 +63,28 @@ type TranslationType = {
     viewDarshan: string;
     templeTimings: string;
   };
+  login: {
+    title: string;
+    email: string;
+    password: string;
+    forgotPassword: string;
+    loginButton: string;
+    loggingIn: string;
+    noAccount: string;
+    createAccount: string;
+  };
+  signup: {
+    title: string;
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    passwordRequirements: string;
+    signupButton: string;
+    signingUp: string;
+    alreadyHaveAccount: string;
+    loginLink: string;
+  };
 };
 
 const translations: Record<string, TranslationType> = {
@@ -122,6 +144,28 @@ const translations: Record<string, TranslationType> = {
       subtitle: "A Sacred Space for Spiritual Connection",
       viewDarshan: "View Darshan",
       templeTimings: "Temple Timings"
+    },
+    login: {
+      title: 'Sign In',
+      email: 'Email Address',
+      password: 'Password',
+      forgotPassword: 'Forgot Password?',
+      loginButton: 'Sign In',
+      loggingIn: 'Signing in...',
+      noAccount: 'Don\'t have an account yet?',
+      createAccount: 'Create an Account'
+    },
+    signup: {
+      title: 'Create an Account',
+      username: 'Full Name',
+      email: 'Email Address',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      passwordRequirements: 'Password must be at least 6 characters long',
+      signupButton: 'Create Account',
+      signingUp: 'Creating account...',
+      alreadyHaveAccount: 'Already have an account?',
+      loginLink: 'Sign In Instead'
     }
   },
   hi: {
@@ -180,6 +224,28 @@ const translations: Record<string, TranslationType> = {
       subtitle: "आध्यात्मिक संबंध के लिए एक पवित्र स्थान",
       viewDarshan: "दर्शन करें",
       templeTimings: "मंदिर समय"
+    },
+    login: {
+      title: 'प्रवेश करें',
+      email: 'ईमेल पता',
+      password: 'पासवर्ड',
+      forgotPassword: 'पासवर्ड भूल गए?',
+      loginButton: 'प्रवेश करें',
+      loggingIn: 'प्रवेश हो रहा है...',
+      noAccount: 'खाता नहीं है?',
+      createAccount: 'नया खाता बनाएं'
+    },
+    signup: {
+      title: 'नया खाता बनाएं',
+      username: 'आपका नाम',
+      email: 'ईमेल पता',
+      password: 'पासवर्ड',
+      confirmPassword: 'पासवर्ड की पुष्टि करें',
+      passwordRequirements: 'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए',
+      signupButton: 'खाता बनाएं',
+      signingUp: 'खाता बन रहा है...',
+      alreadyHaveAccount: 'पहले से ही खाता है?',
+      loginLink: 'प्रवेश करें'
     }
   }
 };

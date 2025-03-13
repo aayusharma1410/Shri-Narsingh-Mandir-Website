@@ -103,7 +103,7 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
             <Input
               id="username"
               name="username"
-              placeholder="Enter your username"
+              placeholder="Enter your full name"
               value={formData.username}
               onChange={handleChange}
               className="pl-10 border-temple-gold/30 focus-visible:ring-temple-gold/70 focus-visible:border-temple-gold transition-all duration-200"

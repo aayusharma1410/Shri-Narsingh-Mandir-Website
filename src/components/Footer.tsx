@@ -16,10 +16,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">
-              श्री लक्ष्मी नरसिंह मंदिर
+              श्री नरसिंह मंदिर
             </h3>
             <p className="mb-4">
-              हसमपुर में स्थित श्री लक्ष्मी नरसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।
+              हसमपुर, राजस्थान में स्थित श्री नरसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।
             </p>
             <div className="flex items-center mt-6">
               <Heart className="w-5 h-5 mr-2 text-temple-gold" />
@@ -33,7 +33,7 @@ const Footer = () => {
               <li className="flex">
                 <MapPin className="w-5 h-5 mr-3 text-temple-gold" />
                 <span>
-                  श्री लक्ष्मी नरसिंह मंदिर, हसमपुर गांव, उत्तर प्रदेश, भारत
+                  श्री नरसिंह मंदिर, हसमपुर, राजस्थान, भारत
                 </span>
               </li>
               <li className="flex">
@@ -100,7 +100,7 @@ const Footer = () => {
         
         <div className="text-center text-white/70">
           <p>
-            &copy; {currentYear} श्री लक्ष्मी नरसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।
+            &copy; {currentYear} श्री नरसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।
           </p>
         </div>
       </div>
