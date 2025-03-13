@@ -56,7 +56,7 @@ const TimingsSection = () => {
         <p className="text-temple-gold font-medium mb-3 opacity-0 animate-on-scroll">दर्शन समय</p>
         <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">मंदिर समय</h2>
         <p className="text-lg opacity-0 animate-on-scroll">
-          श्री नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।
+          श्री लक्ष्मी नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।
         </p>
       </div>
 
@@ -72,19 +72,22 @@ const TimingsSection = () => {
               </div>
               
               <div className="rounded-lg overflow-hidden h-64 bg-gray-200">
-                {/* Map placeholder */}
-                <div className="w-full h-full flex items-center justify-center bg-temple-gold/10">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-temple-maroon mx-auto mb-2" />
-                    <p className="font-medium">श्री नरसिंह मंदिर, हसमपुर</p>
-                    <p className="text-sm text-gray-600">मानचित्र यहां प्रदर्शित होगा</p>
-                  </div>
-                </div>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3497.6839773988823!2d77.45014591493774!3d28.760255482371196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf41afb11a607%3A0x97c2713eff3d574e!2sShree%20Narsingh%20Temple!5e0!3m2!1sen!2sin!4v1693996060311!5m2!1sen!2sin"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="श्री नरसिंह मंदिर हसमपुर का स्थान"
+                  className="w-full h-full"
+                ></iframe>
               </div>
               
               <div className="mt-4">
                 <p className="font-medium">पता:</p>
-                <p>श्री नरसिंह मंदिर</p>
+                <p>श्री लक्ष्मी नरसिंह मंदिर</p>
                 <p>हसमपुर गांव,</p>
                 <p>उत्तर प्रदेश, भारत</p>
                 
@@ -157,8 +160,8 @@ const TimingsSection = () => {
                 <h4 className="font-medium mb-2 text-temple-maroon">संपर्क विवरण</h4>
                 
                 <div className="space-y-2">
-                  <p>फोन: <span className="font-medium">+91 98765 43210</span></p>
-                  <p>ईमेल: <span className="font-medium">info@narsinghmandir.org</span></p>
+                  <p>फोन: <span className="font-medium">+91 8955672580</span></p>
+                  <p>ईमेल: <span className="font-medium">shrilakshminarsinghhasampur@gmail.com</span></p>
                 </div>
               </div>
             </CardContent>

@@ -41,27 +41,65 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const saveUserToDatabase = async (userId: string, email: string, username: string) => {
+    try {
+      // First check if user already exists in the user_details table
+      const { data: existingUser } = await supabase
+        .from('user_details')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (!existingUser) {
+        // User doesn't exist, insert new record
+        const { error } = await supabase
+          .from('user_details')
+          .insert([
+            { 
+              user_id: userId, 
+              email,
+              username,
+              created_at: new Date().toISOString(),
+              last_sign_in: new Date().toISOString()
+            }
+          ]);
+          
+        if (error) throw error;
+      } else {
+        // User exists, update last_sign_in
+        const { error } = await supabase
+          .from('user_details')
+          .update({ last_sign_in: new Date().toISOString() })
+          .eq('user_id', userId);
+          
+        if (error) throw error;
+      }
+    } catch (error) {
+      console.error('Error saving user to database:', error);
+      // Don't throw error here to prevent blocking the auth flow
+    }
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       const { error, data } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       
       // Ensure username is available in the UI
-      if (data.user && !data.user.user_metadata?.username) {
-        // If username is not in metadata, use email prefix as fallback
-        const username = data.user.email?.split('@')[0] || 'user';
-        await supabase.auth.updateUser({
-          data: { username }
-        });
+      if (data.user) {
+        const username = data.user.user_metadata?.username || data.user.email?.split('@')[0] || 'user';
+        
+        // Update user_details table
+        await saveUserToDatabase(data.user.id, data.user.email!, username);
       }
       
       toast({
-        title: "Welcome back!",
-        description: "You've successfully signed in.",
+        title: "सफल प्रवेश!",
+        description: "आपने सफलतापूर्वक प्रवेश किया है।",
       });
     } catch (error: any) {
       toast({
-        title: "Error signing in",
+        title: "प्रवेश में त्रुटि",
         description: error.message,
         variant: "destructive",
       });
@@ -83,29 +121,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (error) {
         // Handle rate limit errors specifically
         if (error.status === 429) {
-          throw new Error("Too many sign-up attempts. Please wait a minute and try again.");
+          throw new Error("बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।");
         }
         throw error;
       }
       
-      // We no longer need to insert into a custom users table as Supabase
-      // already stores the user information in the auth.users table
-      // and we can access user metadata via the auth API
+      if (data.user) {
+        // Save user to our custom database table
+        await saveUserToDatabase(data.user.id, email, username);
+      }
       
       toast({
-        title: "Account created!",
-        description: "Please check your email to confirm your account.",
+        title: "खाता बनाया गया!",
+        description: "कृपया अपने खाते की पुष्टि के लिए अपना ईमेल जांचें।",
       });
     } catch (error: any) {
       let errorMessage = error.message;
       
       // Handle rate limit errors with user-friendly message
       if (error.code === "over_email_send_rate_limit" || error.status === 429) {
-        errorMessage = "Too many sign-up attempts. Please wait a minute and try again.";
+        errorMessage = "बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।";
       }
       
       toast({
-        title: "Error creating account",
+        title: "खाता बनाने में त्रुटि",
         description: errorMessage,
         variant: "destructive",
       });
@@ -119,12 +158,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast({
-        title: "Signed out",
-        description: "You've been successfully signed out.",
+        title: "साइन आउट",
+        description: "आप सफलतापूर्वक साइन आउट हो गए हैं।",
       });
     } catch (error: any) {
       toast({
-        title: "Error signing out",
+        title: "साइन आउट में त्रुटि",
         description: error.message,
         variant: "destructive",
       });

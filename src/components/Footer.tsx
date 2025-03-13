@@ -16,81 +16,81 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">
-              {t('hero.temple')}
+              श्री लक्ष्मी नरसिंह मंदिर
             </h3>
             <p className="mb-4">
-              {t('footer.about')}
+              हसमपुर में स्थित श्री लक्ष्मी नरसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।
             </p>
             <div className="flex items-center mt-6">
               <Heart className="w-5 h-5 mr-2 text-temple-gold" />
-              <p>{t('footer.supportedBy')}</p>
+              <p>भक्तों के सहयोग से संचालित</p>
             </div>
           </div>
           
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">{t('footer.contactUs')}</h3>
+            <h3 className="font-serif text-xl font-bold mb-4">संपर्क करें</h3>
             <ul className="space-y-3">
               <li className="flex">
                 <MapPin className="w-5 h-5 mr-3 text-temple-gold" />
                 <span>
-                  {t('timings.temple')}, {t('timings.village')} {t('timings.state')}
+                  श्री लक्ष्मी नरसिंह मंदिर, हसमपुर गांव, उत्तर प्रदेश, भारत
                 </span>
               </li>
               <li className="flex">
                 <Phone className="w-5 h-5 mr-3 text-temple-gold" />
-                <span>+91 98765 43210</span>
+                <span>+91 8955672580</span>
               </li>
               <li className="flex">
                 <Mail className="w-5 h-5 mr-3 text-temple-gold" />
-                <span>info@narsinghmandir.org</span>
+                <span>shrilakshminarsinghhasampur@gmail.com</span>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">{t('footer.quickLinks')}</h3>
+            <h3 className="font-serif text-xl font-bold mb-4">त्वरित लिंक</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="hover:text-temple-gold transition-colors">
-                  {t('nav.home')}
+                  मुख्य पृष्ठ
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-temple-gold transition-colors">
-                  {t('nav.about')}
+                  मंदिर का इतिहास
                 </Link>
               </li>
               <li>
                 <Link to="/live-aarti" className="hover:text-temple-gold transition-colors">
-                  {t('nav.liveAarti')}
+                  लाइव आरती
                 </Link>
               </li>
               <li>
                 <Link to="/gallery" className="hover:text-temple-gold transition-colors">
-                  {t('nav.gallery')}
+                  चित्र दीर्घा
                 </Link>
               </li>
               <li>
                 <Link to="/timings" className="hover:text-temple-gold transition-colors">
-                  {t('nav.timings')}
+                  दर्शन समय
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">{t('footer.getUpdates')}</h3>
+            <h3 className="font-serif text-xl font-bold mb-4">अपडेट प्राप्त करें</h3>
             <p className="mb-4">
-              {t('footer.emailPrompt')}
+              मंदिर से जुड़ी नवीनतम जानकारी और आगामी कार्यक्रमों के लिए अपना ईमेल पंजीकृत करें।
             </p>
             <div className="flex space-x-2">
               <Input 
                 type="email" 
-                placeholder={t('footer.yourEmail')} 
+                placeholder="आपका ईमेल" 
                 className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-temple-gold"
               />
               <Button className="bg-temple-gold hover:bg-temple-gold/80 text-white">
-                {t('footer.subscribe')}
+                सदस्यता लें
               </Button>
             </div>
           </div>
@@ -100,7 +100,7 @@ const Footer = () => {
         
         <div className="text-center text-white/70">
           <p>
-            &copy; {currentYear} {t('hero.temple')}। {t('footer.rights')}
+            &copy; {currentYear} श्री लक्ष्मी नरसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।
           </p>
         </div>
       </div>
