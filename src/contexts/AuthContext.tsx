@@ -46,7 +46,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * This table stores additional information about users beyond what's in the auth.users table.
    * 
    * Table Schema:
-   * - user_id: The user's UUID from auth.users (primary key, foreign key)
+   * - id: Auto-generated UUID (primary key)
+   * - user_id: The user's UUID from auth.users (foreign key)
    * - email: The user's email address
    * - username: The user's chosen display name
    * - created_at: When the user's record was first created
@@ -56,16 +57,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    */
   const saveUserToDatabase = async (userId: string, email: string, username: string) => {
     try {
-      // First check if user already exists in the user_details table
-      const { data: existingUser } = await supabase
+      console.log("Saving user to database:", { userId, email, username });
+      
+      // First, ensure the user_details table exists
+      // This is a simplified version - in a real app you'd handle this during setup
+      const { error: tableError } = await supabase.rpc('create_user_details_table_if_not_exists');
+      if (tableError) {
+        console.error('Error creating table:', tableError);
+        // Continue anyway as table might already exist
+      }
+      
+      // Check if user already exists in the user_details table
+      const { data: existingUser, error: fetchError } = await supabase
         .from('user_details')
         .select('*')
         .eq('user_id', userId)
         .single();
+      
+      console.log("Existing user check result:", { existingUser, fetchError });
 
       if (!existingUser) {
         // User doesn't exist, insert new record
-        const { error } = await supabase
+        const { data: insertData, error: insertError } = await supabase
           .from('user_details')
           .insert([
             { 
@@ -75,17 +88,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               created_at: new Date().toISOString(),
               last_sign_in: new Date().toISOString()
             }
-          ]);
+          ])
+          .select();
           
-        if (error) throw error;
+        console.log("Insert result:", { insertData, insertError });
+        if (insertError) throw insertError;
       } else {
-        // User exists, update last_sign_in
-        const { error } = await supabase
+        // User exists, update last_sign_in and username if needed
+        const { data: updateData, error: updateError } = await supabase
           .from('user_details')
-          .update({ last_sign_in: new Date().toISOString() })
-          .eq('user_id', userId);
+          .update({ 
+            last_sign_in: new Date().toISOString(),
+            username: username // Update username in case it changed
+          })
+          .eq('user_id', userId)
+          .select();
           
-        if (error) throw error;
+        console.log("Update result:", { updateData, updateError });
+        if (updateError) throw updateError;
       }
     } catch (error) {
       console.error('Error saving user to database:', error);
