@@ -104,16 +104,43 @@ const AboutSection = () => {
             <h3 className="font-serif text-2xl font-bold mb-4 text-temple-maroon">
               {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
             </h3>
-            <p className="mb-4">
-              {language === 'en'
-                ? 'Shri Narsingh Temple was established in the 1820s. It was built by the local king, who was a devoted follower of Lord Narasimha. Over the years, this temple has become a center of faith and spirituality.'
-                : 'श्री नरसिंह मंदिर की स्थापना 1820 के दशक में हुई थी। इसका निर्माण स्थानीय राजा द्वारा किया गया था, जो भगवान नरसिंह के अनन्य भक्त थे। वर्षों से, यह मंदिर आस्था और आध्यात्मिकता का केंद्र बन गया है।'}
-            </p>
-            <p>
-              {language === 'en'
-                ? 'The temple\'s architecture reflects the North Indian style, featuring ornate pillars, elaborate sculptures, and beautiful fresco paintings. Besides the main temple, the complex also houses several small temples and sacred wells.'
-                : 'मंदिर की वास्तुकला उत्तर भारतीय शैली को दर्शाती है, जिसमें नक्काशीदार स्तंभ, विस्तृत मूर्तिकला और सुंदर फ्रेस्को पेंटिंग शामिल हैं। मुख्य मंदिर के अलावा, परिसर में कई छोटे मंदिर और पवित्र कुंड भी हैं।'}
-            </p>
+            {language === 'en' ? (
+              <>
+                <p className="mb-4">
+                  Bhakt Shiromani Gopalak Tyagamurti Shri Shri 1008 Shri Swami Vishnudas Ji Maharaj, the founder of Hasampur Peeth, was born in Samvat 1444 (1444).
+                </p>
+                <p className="mb-4">
+                  According to the legend, a lion attacked a cow. To protect the frightened cow, Swami Ji presented himself before the lion.
+                </p>
+                <p className="mb-4">
+                  Moved by his unwavering devotion, immense sacrifice, and sincere love, Lord Narasimha appeared with a lion's roar and commanded him to remove himself from under a heavy stone. The stone moved at Swami Ji's touch, and Lord Narasimha's Shaligram idol form appeared with the sounds of jhalar, conch, bell, and gong.
+                </p>
+                <p className="mb-4">
+                  In service to this divine idol, Swami Ji's son Shri Shri 1008 Shri Gangadas Ji Maharaj was born in Samvat 1476. Like his father, through immense devotion, sacrifice, austerity, and complete surrender to divine love, he spread the temple's glory in all ten directions.
+                </p>
+                <p>
+                  The temple's architecture reflects the North Indian style, featuring ornate pillars, elaborate sculptures, and beautiful fresco paintings. Besides the main temple, the complex also houses several small temples and sacred wells.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mb-4">
+                  भक्त शिरोमणि गौपालक त्यागमूर्ति श्री श्री १००८ श्री स्वामी विष्णुदास जी महाराज, हसामपुर पीठ के संस्थापक, का जन्म संवत १४४४(1444) में हुआ।
+                </p>
+                <p className="mb-4">
+                  प्राकट्य प्रसंग में से सुनी हुई कथानुसार सिंह ने गऊ पर आक्रमण किया। भयभीत गऊ की रक्षार्थ स्वामी जी ने स्वंय को सिंह के सम्मुख प्रस्तुत किया।
+                </p>
+                <p className="mb-4">
+                  आपकी अनन्य भक्ति असीम त्याग एवं निश्छल प्रेम समर्पण और सेवा से द्रवीभूत होकर नृसिंह भगवान ने सिंह गर्जना करते हुए दर्शन दिये और स्वंय को भारी भरकम शिला के नीचे से निकालने का आदेश किया। जो स्वामी जी के स्पर्श मात्र से सरक गई और श्री नृसिंह भगवान की शालिग्राम मूर्ति रूप का झालर शंख, घंटा, घडियाल की ध्वनि के साथ प्राकट्य हुआ।
+                </p>
+                <p className="mb-4">
+                  इस अलौकिक मूर्ति की सेवा स्वरुप स्वामी जी के पुत्र श्री श्री १००८ श्री गंगादास जी महाराज का जन्म संवत् १४७६ में हुआ। जिन्होंने अपने पिता की भांति ही असीम भक्ति त्याग, तपस्या एवं सम्पूर्ण समर्पित प्रभु प्रेम के चल पर मंदिर की कीर्ति को दसों दिशाओं में विजयमान किया।
+                </p>
+                <p>
+                  मंदिर की वास्तुकला उत्तर भारतीय शैली को दर्शाती है, जिसमें नक्काशीदार स्तंभ, विस्तृत मूर्तिकला और सुंदर फ्रेस्को पेंटिंग शामिल हैं। मुख्य मंदिर के अलावा, परिसर में कई छोटे मंदिर और पवित्र कुंड भी हैं।
+                </p>
+              </>
+            )}
           </div>
           <div className="md:w-1/2">
             <div className="rounded-xl overflow-hidden shadow-xl">
@@ -127,7 +154,7 @@ const AboutSection = () => {
         </div>
       </div>
 
-      {/* Map Section (moved from TimingsSection) */}
+      {/* Map Section */}
       <div className="mt-16 bg-white/70 backdrop-blur-sm rounded-xl p-8 border border-temple-gold/20 shadow-xl opacity-0 animate-on-scroll">
         <div className="mb-6 text-center">
           <h3 className="font-serif text-2xl font-bold mb-2 text-temple-maroon">
