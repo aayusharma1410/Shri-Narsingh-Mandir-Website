@@ -41,6 +41,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  /**
+   * Saves or updates user details in the 'user_details' table in Supabase.
+   * This table stores additional information about users beyond what's in the auth.users table.
+   * 
+   * Table Schema:
+   * - user_id: The user's UUID from auth.users (primary key, foreign key)
+   * - email: The user's email address
+   * - username: The user's chosen display name
+   * - created_at: When the user's record was first created
+   * - last_sign_in: The timestamp of the user's most recent sign in
+   * 
+   * This function is called after authentication events (sign-up and sign-in).
+   */
   const saveUserToDatabase = async (userId: string, email: string, username: string) => {
     try {
       // First check if user already exists in the user_details table
