@@ -1,7 +1,9 @@
+
 import { useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Clock, Calendar, MapPin } from 'lucide-react';
+import DailySchedule from './DailySchedule';
 
 const TimingsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -78,6 +80,7 @@ const TimingsSection = () => {
                     <p className="text-sm text-gray-600">मानचित्र यहां प्रदर्शित होगा</p>
                   </div>
                 </div>
+              </div>
               
               <div className="mt-4">
                 <p className="font-medium">पता:</p>
