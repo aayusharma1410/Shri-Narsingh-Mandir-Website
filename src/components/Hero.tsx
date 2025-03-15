@@ -30,16 +30,16 @@ const Hero = () => {
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: "url('/lovable-uploads/d0be3edb-0297-4207-bdc5-eb97803ac1a5.png')",
+        backgroundImage: "url('https://content.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-stcb9e6e2i.jpg?fit=around%7C350:350&crop=350:350;*,*')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      {/* Overlay with vibrant colors inspired by the image */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-temple-maroon/40 to-temple-gold/30"></div>
+      {/* Rich overlay with vibrant temple colors */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-temple-maroon/40 to-temple-gold/30"></div>
       
       {/* Golden gradient divider at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/30 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/40 to-transparent"></div>
       
       <div className="container relative z-10 px-6 py-32 mx-auto text-center">
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
