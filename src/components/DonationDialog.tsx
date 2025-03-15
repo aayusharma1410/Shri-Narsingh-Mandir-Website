@@ -63,7 +63,8 @@ const DonationDialog = () => {
       // Show success toast
       toast({
         title: t('donation.success'),
-        description: t('donation.thankYou', { amount }),
+        // Fix: Using template string interpolation instead of passing an object with amount
+        description: t(`donation.thankYou`).replace('{amount}', amount.toString())
       });
       
       // Show email receipt confirmation

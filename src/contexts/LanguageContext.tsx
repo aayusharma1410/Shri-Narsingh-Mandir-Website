@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type LanguageContextType = {
@@ -174,7 +175,8 @@ const translations = {
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState('en');
+  // Fix: Initialize with a typed value instead of just string
+  const [language, setLanguage] = useState<'en' | 'hi'>('en');
 
   const t = (key: string) => {
     const keys = key.split('.');
