@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
+import GallerySection from '@/components/GallerySection';
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <main className="flex flex-col">
         <Hero />
         <DarshanSlideshow />
+        <GallerySection />
       </main>
       <Footer />
     </div>

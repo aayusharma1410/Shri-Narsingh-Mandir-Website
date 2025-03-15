@@ -18,40 +18,52 @@ const GallerySection = () => {
   const galleryImages: GalleryImage[] = [
     { 
       id: 1, 
-      src: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-      alt: "Temple at Night", 
+      src: "https://i.ibb.co/1fq3Z7v/temple-exterior-1.jpg", 
+      alt: "Temple Front View", 
       category: "temple"
     },
     { 
       id: 2, 
-      src: "https://images.unsplash.com/photo-1466442929976-97f336a657be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-      alt: "Temple Exterior", 
+      src: "https://i.ibb.co/3mmqk0J/temple-exterior-2.jpg", 
+      alt: "Temple Side View", 
       category: "temple" 
     },
     { 
       id: 3, 
-      src: "https://images.unsplash.com/photo-1473177104440-ffee2f376098?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-      alt: "Temple Interior", 
+      src: "https://i.ibb.co/xSkMDRt/temple-interior-1.jpg", 
+      alt: "Temple Inner Sanctum", 
       category: "interior" 
     },
     { 
       id: 4, 
-      src: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-      alt: "Aarti Ceremony", 
-      category: "events" 
-    },
-    { 
-      id: 5, 
-      src: "https://images.unsplash.com/photo-1466442929976-97f336a657be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
+      src: "https://i.ibb.co/zWCcZpr/event-celebration-1.jpg", 
       alt: "Festival Celebration", 
       category: "events" 
     },
     { 
-      id: 6, 
-      src: "https://images.unsplash.com/photo-1473177104440-ffee2f376098?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
+      id: 5, 
+      src: "https://i.ibb.co/wNFnfqh/devotees-gathering-1.jpg", 
       alt: "Devotees Gathering", 
       category: "devotees" 
     },
+    { 
+      id: 6, 
+      src: "https://i.ibb.co/9kGp5MG/temple-grounds-1.jpg", 
+      alt: "Temple Grounds", 
+      category: "temple" 
+    },
+    { 
+      id: 7, 
+      src: "https://i.ibb.co/LXRY1wf/aarti-ceremony-1.jpg", 
+      alt: "Aarti Ceremony", 
+      category: "events" 
+    },
+    { 
+      id: 8, 
+      src: "https://i.ibb.co/JwL0rQt/temple-idol-1.jpg", 
+      alt: "Temple Idol", 
+      category: "interior" 
+    }
   ];
   
   const categories = [
