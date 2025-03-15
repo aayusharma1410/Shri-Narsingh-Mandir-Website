@@ -1,93 +1,14 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type LanguageContextType = {
-  language: string;
-  setLanguage: (lang: string) => void;
-  t: (key: string, options?: Record<string, any>) => string;
+  language: 'en' | 'hi';
+  setLanguage: (lang: 'en' | 'hi') => void;
+  t: (key: string) => string;
 };
 
-type TranslationType = {
-  nav: {
-    home: string;
-    about: string;
-    liveAarti: string;
-    gallery: string;
-    timings: string;
-    login: string;
-    logout: string;
-    user: string;
-    donate: string;
-  };
-  auth: {
-    login: string;
-    signup: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    username: string;
-    forgotPassword: string;
-    noAccount: string;
-    alreadyAccount: string;
-    signupBtn: string;
-    loginBtn: string;
-    or: string;
-    rememberMe: string;
-    welcomeBack: string;
-    createAccount: string;
-    signupMessage: string;
-    emailPlaceholder: string;
-    passwordPlaceholder: string;
-    usernamePlaceholder: string;
-    passwordRequirements: string;
-    submitInfo: string;
-  };
-  donation: {
-    title: string;
-    description: string;
-    amount: string;
-    custom: string;
-    paymentMethod: string;
-    card: string;
-    donate: string;
-    success: string;
-    thankYou: string;
-    receipt: string;
-    receiptSent: string;
-    emailReceipt: string;
-    scanQR: string;
-  };
-  hero: {
-    welcome: string;
-    temple: string;
-    subtitle: string;
-    viewDarshan: string;
-    templeTimings: string;
-  };
-  login: {
-    title: string;
-    email: string;
-    password: string;
-    forgotPassword: string;
-    loginButton: string;
-    loggingIn: string;
-    noAccount: string;
-    createAccount: string;
-  };
-  signup: {
-    title: string;
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    passwordRequirements: string;
-    signupButton: string;
-    signingUp: string;
-    alreadyHaveAccount: string;
-    loginLink: string;
-  };
-};
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const translations: Record<string, TranslationType> = {
+const translations = {
   en: {
     nav: {
       home: 'Home',
@@ -166,7 +87,8 @@ const translations: Record<string, TranslationType> = {
       signingUp: 'Creating account...',
       alreadyHaveAccount: 'Already have an account?',
       loginLink: 'Sign In Instead'
-    }
+    },
+    'nav.policies': 'Policies'
   },
   hi: {
     nav: {
@@ -221,7 +143,7 @@ const translations: Record<string, TranslationType> = {
     hero: {
       welcome: "आपका स्वागत है",
       temple: "श्री नरसिंह मंदिर",
-      subtitle: "आध्यात्मिक संबंध के लिए एक पवित्र स्थान",
+      subtitle: "आध्यात्मिक संबंध के लिए एक पवित्��� स्थान",
       viewDarshan: "दर्शन करें",
       templeTimings: "मंदिर समय"
     },
@@ -246,16 +168,15 @@ const translations: Record<string, TranslationType> = {
       signingUp: 'खाता बन रहा है...',
       alreadyHaveAccount: 'पहले से ही खाता है?',
       loginLink: 'प्रवेश करें'
-    }
+    },
+    'nav.policies': 'नीतियां'
   }
 };
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState('en');
 
-  const t = (key: string, options?: Record<string, any>) => {
+  const t = (key: string) => {
     const keys = key.split('.');
     let value: any = translations[language];
     
@@ -265,12 +186,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
     
     if (typeof value !== 'string') return key;
-    
-    if (options) {
-      return Object.entries(options).reduce((acc, [optKey, optVal]) => 
-        acc.replace(new RegExp(`\\{${optKey}\\}`, 'g'), String(optVal))
-      , value);
-    }
     
     return value;
   };

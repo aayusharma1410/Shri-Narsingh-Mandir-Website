@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Home, Info, Video, Image, Clock, User, Menu, X, Globe, LogOut, Heart } from 'lucide-react';
+import { Home, Info, Video, Image, Clock, User, Menu, X, Globe, LogOut, Heart, FileText } from 'lucide-react';
 import LoginDialog from './LoginDialog';
 import DonationDialog from './DonationDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -32,6 +31,7 @@ const Navbar = () => {
     { name: t('nav.liveAarti'), icon: <Video className="w-4 h-4" />, href: '/live-aarti' },
     { name: t('nav.gallery'), icon: <Image className="w-4 h-4" />, href: '/gallery' },
     { name: t('nav.timings'), icon: <Clock className="w-4 h-4" />, href: '/timings' },
+    { name: t('nav.policies'), icon: <FileText className="w-4 h-4" />, href: '/policies' },
     { name: t('nav.donate'), icon: <Heart className="w-4 h-4" />, href: '#', isDonation: true }
   ];
 
@@ -44,7 +44,6 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  // Get username from user metadata
   const username = user?.user_metadata?.username || user?.email?.split('@')[0] || t('nav.user');
 
   return (
@@ -64,7 +63,6 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => (
             item.isDonation ? (
@@ -99,7 +97,6 @@ const Navbar = () => {
             )
           ))}
           
-          {/* Language Switch */}
           <Button 
             variant="ghost" 
             size="icon"
@@ -149,7 +146,6 @@ const Navbar = () => {
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-2">
           <Button 
             variant="ghost" 
@@ -174,7 +170,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-temple-gold/30 shadow-lg animate-fade-in">
           <div className="container mx-auto py-4 px-4 flex flex-col space-y-3">

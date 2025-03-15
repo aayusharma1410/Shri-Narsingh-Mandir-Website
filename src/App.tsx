@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import LiveAartiPage from "./pages/LiveAartiPage";
 import GalleryPage from "./pages/GalleryPage";
 import TimingsPage from "./pages/TimingsPage";
+import PoliciesPage from "./pages/PoliciesPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/live-aarti" element={<LiveAartiPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/timings" element={<TimingsPage />} />
+              <Route path="/policies" element={<PoliciesPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
