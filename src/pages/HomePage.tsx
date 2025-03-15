@@ -6,9 +6,9 @@ import DarshanSlideshow from '@/components/DarshanSlideshow';
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <Navbar />
-      <main>
+      <main className="flex flex-col">
         <Hero />
         <DarshanSlideshow />
       </main>

@@ -30,24 +30,24 @@ const Hero = () => {
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: "url('/lovable-uploads/0af9c7fa-6f04-49c6-a66c-ef79a1c19db1.png')",
+        backgroundImage: "url('/lovable-uploads/d0be3edb-0297-4207-bdc5-eb97803ac1a5.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      {/* Overlay with slightly darker and more vibrant colors to enhance the image */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-temple-maroon/30 to-temple-gold/20"></div>
+      {/* Overlay with vibrant colors inspired by the image */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-temple-maroon/40 to-temple-gold/30"></div>
       
-      {/* Golden gradient divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/20 to-transparent"></div>
+      {/* Golden gradient divider at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/30 to-transparent"></div>
       
       <div className="container relative z-10 px-6 py-32 mx-auto text-center">
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/30">
+          <div className="inline-block mb-4 px-6 py-2 bg-black/30 backdrop-blur-sm rounded-full border border-temple-gold/50">
             <p className="font-serif text-temple-gold">{t('hero.welcome')}</p>
           </div>
           
-          <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white hero-text-stroke">
+          <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white hero-text-stroke text-shadow-lg">
             {t('hero.temple')}
           </h1>
           
@@ -58,7 +58,7 @@ const Hero = () => {
           <div className={`transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg shadow-lg"
+                className="bg-temple-gold hover:bg-temple-gold/80 text-black font-medium px-8 py-6 text-lg shadow-lg"
                 onClick={handleDarshanClick}
               >
                 {t('hero.viewDarshan')}
