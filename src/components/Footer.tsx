@@ -1,5 +1,5 @@
 
-import { Heart, Mail, Phone, MapPin } from 'lucide-react';
+import { Heart, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -81,6 +81,12 @@ const Footer = () => {
               <li>
                 <Link to="/timings" className="hover:text-temple-gold transition-colors">
                   {language === 'en' ? 'Darshan Timings' : 'दर्शन समय'}
+                </Link>
+              </li>
+              {/* Added the Policies link */}
+              <li>
+                <Link to="/policies" className="hover:text-temple-gold transition-colors">
+                  {language === 'en' ? 'Temple Policies' : 'मंदिर नीतियां'}
                 </Link>
               </li>
             </ul>

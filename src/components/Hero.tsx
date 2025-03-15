@@ -30,13 +30,13 @@ const Hero = () => {
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1473177104440-ffee2f376098?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+        backgroundImage: "url('/lovable-uploads/0af9c7fa-6f04-49c6-a66c-ef79a1c19db1.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      {/* Overlay with slightly darker and more vibrant colors to enhance the image */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-temple-maroon/30 to-temple-gold/20"></div>
       
       {/* Golden gradient divider */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/20 to-transparent"></div>
@@ -58,14 +58,14 @@ const Hero = () => {
           <div className={`transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg"
+                className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg shadow-lg"
                 onClick={handleDarshanClick}
               >
                 {t('hero.viewDarshan')}
               </Button>
               <Button 
                 variant="outline" 
-                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm"
+                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm shadow-lg"
                 onClick={handleTimingsClick}
               >
                 {t('hero.templeTimings')}

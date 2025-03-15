@@ -20,7 +20,8 @@ const translations = {
       login: 'Login',
       logout: 'Logout',
       user: 'User',
-      donate: 'Donate'
+      donate: 'Donate',
+      policies: 'Temple Policies'
     },
     auth: {
       login: 'Login',
@@ -89,7 +90,12 @@ const translations = {
       alreadyHaveAccount: 'Already have an account?',
       loginLink: 'Sign In Instead'
     },
-    'nav.policies': 'Policies'
+    policies: {
+      title: 'Temple Policies',
+      refundTitle: 'Return & Refund Policy',
+      privacyTitle: 'Privacy Policy',
+      disclaimerTitle: 'Disclaimer'
+    }
   },
   hi: {
     nav: {
@@ -101,7 +107,8 @@ const translations = {
       login: 'लॉगिन',
       logout: 'लॉगआउट',
       user: 'उपयोगकर्ता',
-      donate: 'दान करें'
+      donate: 'दान करें',
+      policies: 'मंदिर नीतियां'
     },
     auth: {
       login: 'लॉगिन',
@@ -144,7 +151,7 @@ const translations = {
     hero: {
       welcome: "आपका स्वागत है",
       temple: "श्री नरसिंह मंदिर",
-      subtitle: "आध्यात्मिक संबंध के लिए एक पवित्��� स्थान",
+      subtitle: "आध्यात्मिक संबंध के लिए एक पवित्र स्थान",
       viewDarshan: "दर्शन करें",
       templeTimings: "मंदिर समय"
     },
@@ -170,7 +177,12 @@ const translations = {
       alreadyHaveAccount: 'पहले से ही खाता है?',
       loginLink: 'प्रवेश करें'
     },
-    'nav.policies': 'नीतियां'
+    policies: {
+      title: 'मंदिर नीतियां',
+      refundTitle: 'वापसी और धनवापसी नीति',
+      privacyTitle: 'गोपनीयता नीति',
+      disclaimerTitle: 'अस्वीकरण'
+    }
   }
 };
 
