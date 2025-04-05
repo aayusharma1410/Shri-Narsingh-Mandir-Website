@@ -32,19 +32,20 @@ ALTER TABLE IF EXISTS public.user_details ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for user_details table
 -- Users can read their own data
-CREATE POLICY IF NOT EXISTS "Users can read their own data" 
+-- Note: Removed IF NOT EXISTS as it's causing syntax errors
+CREATE POLICY "Users can read their own data" 
 ON public.user_details 
 FOR SELECT 
 USING (auth.uid() = user_id);
 
 -- Users can insert their own data
-CREATE POLICY IF NOT EXISTS "Users can insert their own data" 
+CREATE POLICY "Users can insert their own data" 
 ON public.user_details 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
 -- Users can update their own data
-CREATE POLICY IF NOT EXISTS "Users can update their own data" 
+CREATE POLICY "Users can update their own data" 
 ON public.user_details 
 FOR UPDATE 
 USING (auth.uid() = user_id);
@@ -54,20 +55,29 @@ ALTER TABLE IF EXISTS public.donors ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for donors table
 -- Users can read all donors data (for public display)
-CREATE POLICY IF NOT EXISTS "Users can read all donors data" 
+CREATE POLICY "Users can read all donors data" 
 ON public.donors 
 FOR SELECT 
 USING (true);
 
 -- Users can insert their own donation data
-CREATE POLICY IF NOT EXISTS "Users can insert their own donation data" 
+CREATE POLICY "Users can insert their own donation data" 
 ON public.donors 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id OR auth.uid() IS NOT NULL);
 
--- Only admins can update or delete donation records
--- Note: You would need to implement an admin role system to use this
--- CREATE POLICY "Only admins can update donations" 
--- ON public.donors 
--- FOR UPDATE 
--- USING (auth.uid() IN (SELECT id FROM public.admins));
+-- Add a function to safely drop and recreate policies if they already exist
+DO $$ 
+BEGIN
+  -- Drop existing policies if they exist to avoid errors on recreation
+  BEGIN
+    DROP POLICY IF EXISTS "Users can read their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can insert their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can update their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can read all donors data" ON public.donors;
+    DROP POLICY IF EXISTS "Users can insert their own donation data" ON public.donors;
+  EXCEPTION
+    WHEN undefined_object THEN
+      RAISE NOTICE 'Some policies did not exist, continuing...';
+  END;
+END $$;
