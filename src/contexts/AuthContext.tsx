@@ -1,8 +1,10 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ensureDatabaseSetup } from '@/lib/supabase-helpers';
 
 type AuthContextType = {
   session: Session | null;
@@ -21,6 +23,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const { language, t } = useLanguage();
+
+  // Ensure database is set up when component mounts
+  useEffect(() => {
+    const setupDatabase = async () => {
+      try {
+        await ensureDatabaseSetup();
+      } catch (error) {
+        console.error('Failed to set up database:', error);
+      }
+    };
+    
+    setupDatabase();
+  }, []);
 
   useEffect(() => {
     // Get initial session
@@ -42,63 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Create table functions
-  const ensureTablesExist = async () => {
-    try {
-      // Ensure user_details table exists
-      try {
-        await supabase.rpc('create_user_details_table_if_not_exists');
-      } catch (error) {
-        console.error('Error creating user_details table:', error);
-        // Continue as table might already exist
-      }
-      
-      // Create donors table if it doesn't exist
-      try {
-        await supabase.rpc('create_donors_table_if_not_exists');
-      } catch (error) {
-        console.error('Error creating donors table:', error);
-      }
-      
-      // If RPC fails, try using _sql approach
-      const { error: donorsTableError } = await supabase
-        .from('_sql')
-        .select(`
-          CREATE TABLE IF NOT EXISTS donors (
-            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            user_id UUID REFERENCES auth.users(id),
-            email TEXT NOT NULL,
-            name TEXT,
-            amount NUMERIC NOT NULL,
-            transaction_id TEXT,
-            payment_method TEXT,
-            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-            anonymous BOOLEAN DEFAULT FALSE
-          );
-        `);
-      
-      if (donorsTableError) {
-        console.log("Error creating donors table manually:", donorsTableError);
-      }
-    } catch (error) {
-      console.error('Error ensuring tables exist:', error);
-    }
-  };
-
-  // Ensure tables exist on component load
-  useEffect(() => {
-    ensureTablesExist();
-  }, []);
-
   /**
    * Saves or updates user details in the 'user_details' table in Supabase.
    */
   const saveUserToDatabase = async (userId: string, email: string, username: string) => {
     try {
       console.log("Saving user to database:", { userId, email, username });
-      
-      // Ensure user_details table exists
-      await ensureTablesExist();
       
       // Check if user already exists in the user_details table
       const { data: existingUser, error: fetchError } = await supabase
@@ -111,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!existingUser) {
         // User doesn't exist, insert new record
-        const { data: insertData, error: insertError } = await supabase
+        const { error: insertError } = await supabase
           .from('user_details')
           .insert([
             { 
@@ -119,25 +83,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               email,
               username,
               language_preference: language, // Store current language preference
-              created_at: new Date().toISOString(),
-              last_sign_in: new Date().toISOString()
             }
           ]);
           
-        console.log("Insert result:", { insertData, insertError });
+        console.log("Insert result:", { insertError });
         if (insertError) throw insertError;
       } else {
         // User exists, update last_sign_in and username if needed
-        const { data: updateData, error: updateError } = await supabase
+        const { error: updateError } = await supabase
           .from('user_details')
           .update({ 
             last_sign_in: new Date().toISOString(),
             username: username, // Update username in case it changed
-            language_preference: language // Update language preference
           })
           .eq('user_id', userId);
           
-        console.log("Update result:", { updateData, updateError });
+        console.log("Update result:", { updateError });
         if (updateError) throw updateError;
       }
     } catch (error) {
