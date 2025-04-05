@@ -1,6 +1,6 @@
 
 -- This file contains SQL to set up all necessary tables in Supabase
--- You can run this in the Supabase SQL editor
+-- You can run this in the Supabase SQL Editor
 
 -- Create user_details table if it doesn't exist
 CREATE TABLE IF NOT EXISTS public.user_details (
@@ -30,9 +30,24 @@ CREATE TABLE IF NOT EXISTS public.donors (
 -- Enable RLS on user_details
 ALTER TABLE IF EXISTS public.user_details ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies to avoid conflicts
+DO $$
+BEGIN
+  -- Attempt to drop existing policies
+  BEGIN
+    DROP POLICY IF EXISTS "Users can read their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can insert their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can update their own data" ON public.user_details;
+    DROP POLICY IF EXISTS "Users can read all donors data" ON public.donors;
+    DROP POLICY IF EXISTS "Users can insert their own donation data" ON public.donors;
+  EXCEPTION 
+    WHEN OTHERS THEN 
+      RAISE NOTICE 'Some policies do not exist, continuing...';
+  END;
+END $$;
+
 -- Create policies for user_details table
 -- Users can read their own data
--- Note: Removed IF NOT EXISTS as it's causing syntax errors
 CREATE POLICY "Users can read their own data" 
 ON public.user_details 
 FOR SELECT 
@@ -65,19 +80,3 @@ CREATE POLICY "Users can insert their own donation data"
 ON public.donors 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id OR auth.uid() IS NOT NULL);
-
--- Add a function to safely drop and recreate policies if they already exist
-DO $$ 
-BEGIN
-  -- Drop existing policies if they exist to avoid errors on recreation
-  BEGIN
-    DROP POLICY IF EXISTS "Users can read their own data" ON public.user_details;
-    DROP POLICY IF EXISTS "Users can insert their own data" ON public.user_details;
-    DROP POLICY IF EXISTS "Users can update their own data" ON public.user_details;
-    DROP POLICY IF EXISTS "Users can read all donors data" ON public.donors;
-    DROP POLICY IF EXISTS "Users can insert their own donation data" ON public.donors;
-  EXCEPTION
-    WHEN undefined_object THEN
-      RAISE NOTICE 'Some policies did not exist, continuing...';
-  END;
-END $$;
