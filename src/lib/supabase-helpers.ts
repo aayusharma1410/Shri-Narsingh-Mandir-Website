@@ -7,45 +7,53 @@ import { supabase } from './supabase';
 export async function ensureDatabaseSetup() {
   try {
     // First, try to use the RPC function if it exists
-    await supabase.rpc('create_user_details_table_if_not_exists').catch(() => {
+    try {
+      await supabase.rpc('create_user_details_table_if_not_exists');
+    } catch (error) {
       console.log('RPC function not available, will try direct SQL');
-    });
+    }
     
-    await supabase.rpc('create_donors_table_if_not_exists').catch(() => {
+    try {
+      await supabase.rpc('create_donors_table_if_not_exists');
+    } catch (error) {
       console.log('RPC function not available, will try direct SQL');
-    });
+    }
     
     // Fallback - Create user_details table if doesn't exist
-    const { error: userDetailsError } = await supabase.query(`
-      CREATE TABLE IF NOT EXISTS user_details (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        user_id UUID REFERENCES auth.users(id) UNIQUE,
-        email TEXT NOT NULL,
-        username TEXT,
-        language_preference TEXT DEFAULT 'en',
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        last_sign_in TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-      );
-    `);
+    const { error: userDetailsError } = await supabase
+      .from('_sql')
+      .select(`
+        CREATE TABLE IF NOT EXISTS user_details (
+          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+          user_id UUID REFERENCES auth.users(id) UNIQUE,
+          email TEXT NOT NULL,
+          username TEXT,
+          language_preference TEXT DEFAULT 'en',
+          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+          last_sign_in TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        );
+      `);
     
     if (userDetailsError) {
       console.error('Error creating user_details table:', userDetailsError);
     }
     
     // Create donors table if it doesn't exist
-    const { error: donorsError } = await supabase.query(`
-      CREATE TABLE IF NOT EXISTS donors (
-        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        user_id UUID REFERENCES auth.users(id),
-        email TEXT NOT NULL,
-        name TEXT,
-        amount NUMERIC NOT NULL,
-        transaction_id TEXT,
-        payment_method TEXT,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        anonymous BOOLEAN DEFAULT FALSE
-      );
-    `);
+    const { error: donorsError } = await supabase
+      .from('_sql')
+      .select(`
+        CREATE TABLE IF NOT EXISTS donors (
+          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+          user_id UUID REFERENCES auth.users(id),
+          email TEXT NOT NULL,
+          name TEXT,
+          amount NUMERIC NOT NULL,
+          transaction_id TEXT,
+          payment_method TEXT,
+          created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+          anonymous BOOLEAN DEFAULT FALSE
+        );
+      `);
     
     if (donorsError) {
       console.error('Error creating donors table:', donorsError);

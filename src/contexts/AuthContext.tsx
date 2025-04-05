@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
@@ -47,19 +46,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const ensureTablesExist = async () => {
     try {
       // Ensure user_details table exists
-      await supabase.rpc('create_user_details_table_if_not_exists').catch(error => {
+      try {
+        await supabase.rpc('create_user_details_table_if_not_exists');
+      } catch (error) {
         console.error('Error creating user_details table:', error);
         // Continue as table might already exist
-      });
+      }
       
       // Create donors table if it doesn't exist
-      const { error: donorsTableError } = await supabase.rpc('create_donors_table_if_not_exists').catch(error => {
+      try {
+        await supabase.rpc('create_donors_table_if_not_exists');
+      } catch (error) {
         console.error('Error creating donors table:', error);
-      });
+      }
       
-      if (donorsTableError) {
-        console.log("Creating donors table manually");
-        await supabase.query(`
+      // If RPC fails, try using _sql approach
+      const { error: donorsTableError } = await supabase
+        .from('_sql')
+        .select(`
           CREATE TABLE IF NOT EXISTS donors (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             user_id UUID REFERENCES auth.users(id),
@@ -71,7 +75,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
             anonymous BOOLEAN DEFAULT FALSE
           );
-        `).catch(e => console.error('Manual donors table creation error:', e));
+        `);
+      
+      if (donorsTableError) {
+        console.log("Error creating donors table manually:", donorsTableError);
       }
     } catch (error) {
       console.error('Error ensuring tables exist:', error);
