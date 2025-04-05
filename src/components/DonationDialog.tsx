@@ -13,10 +13,12 @@ import { supabase } from '@/lib/supabase';
 
 const DonationDialog = () => {
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [amount, setAmount] = useState(101);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi'>('card');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user } = useAuth();
   const qrRef = useRef<HTMLDivElement>(null);
@@ -24,6 +26,30 @@ const DonationDialog = () => {
   // Generate a unique transaction ID
   const transactionId = `TRX${Date.now()}`;
   const qrValue = `upi://pay?pa=templedonation@upi&pn=Temple%20Donation&am=${amount}&tr=${transactionId}&cu=INR`;
+
+  // Store donation in Supabase
+  const storeDonation = async (donationData: {
+    user_id?: string;
+    email: string;
+    name?: string;
+    amount: number;
+    transaction_id: string;
+    payment_method: string;
+    anonymous: boolean;
+  }) => {
+    try {
+      const { data, error } = await supabase
+        .from('donors')
+        .insert([donationData]);
+        
+      if (error) throw error;
+      
+      return true;
+    } catch (error) {
+      console.error('Error storing donation:', error);
+      return false;
+    }
+  };
 
   const handleDonate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,47 +62,59 @@ const DonationDialog = () => {
       
       // Get email from authenticated user or input field
       const recipientEmail = user?.email || email;
+      const donorName = user?.user_metadata?.username || name || "Anonymous";
       
       if (!recipientEmail) {
         toast({
-          title: "Email Required",
-          description: "Please provide an email to receive your receipt",
+          title: language === 'en' ? "Email Required" : "ईमेल आवश्यक",
+          description: language === 'en' 
+            ? "Please provide an email to receive your receipt" 
+            : "अपनी रसीद प्राप्त करने के लिए कृपया एक ईमेल प्रदान करें",
           variant: "destructive",
         });
         setIsSubmitting(false);
         return;
       }
       
-      // Send receipt email using Supabase function (in a real app)
-      const timestamp = new Date().toLocaleString();
-      const receiptData = {
+      // Store donation in Supabase
+      const donationData = {
+        user_id: user?.id,
         email: recipientEmail,
+        name: isAnonymous ? "Anonymous" : donorName,
         amount,
-        transactionId,
-        date: timestamp,
-        method: paymentMethod === 'card' ? 'Credit/Debit Card' : 'UPI',
+        transaction_id: transactionId,
+        payment_method: paymentMethod === 'card' ? 'Credit/Debit Card' : 'UPI',
+        anonymous: isAnonymous,
       };
       
-      // This would be implemented in a real application using a serverless function
-      console.log('Sending receipt to:', receiptData);
+      const stored = await storeDonation(donationData);
+      
+      if (!stored) {
+        throw new Error("Failed to record donation");
+      }
       
       // Show success toast
       toast({
         title: t('donation.success'),
-        // Fix: Using template string interpolation instead of passing an object with amount
-        description: t(`donation.thankYou`).replace('{amount}', amount.toString())
+        description: language === 'en' 
+          ? `Thank you for your generous donation of ₹${amount}. Your contribution is greatly appreciated.`
+          : `आपके ₹${amount} के उदार दान के लिए धन्यवाद। आपके योगदान की बहुत सराहना की जाती है।`
       });
       
       // Show email receipt confirmation
       toast({
-        title: "Receipt Sent",
-        description: `A receipt has been sent to ${recipientEmail}`,
+        title: language === 'en' ? "Receipt Sent" : "रसीद भेज दी गई",
+        description: language === 'en' 
+          ? `A receipt has been sent to ${recipientEmail}`
+          : `एक रसीद ${recipientEmail} पर भेज दी गई है`,
       });
     } catch (error) {
       console.error('Donation error:', error);
       toast({
-        title: "Donation Failed",
-        description: "There was a problem processing your donation",
+        title: language === 'en' ? "Donation Failed" : "दान विफल",
+        description: language === 'en' 
+          ? "There was a problem processing your donation"
+          : "आपके दान को संसाधित करने में एक समस्या थी",
         variant: "destructive",
       });
     } finally {
@@ -178,29 +216,60 @@ const DonationDialog = () => {
               />
             </div>
             <p className="text-sm text-center text-temple-maroon mt-2">
-              Scan with any UPI app to donate ₹{amount}
+              {language === 'en' 
+                ? `Scan with any UPI app to donate ₹${amount}`
+                : `₹${amount} का दान करने के लिए किसी भी यूपीआई ऐप से स्कैन करें`}
             </p>
           </div>
         )}
         
         {!user && (
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-temple-maroon">
-              Email for Receipt
-            </Label>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-temple-maroon" />
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-temple-maroon">
+                {language === 'en' ? "Email for Receipt" : "रसीद के लिए ईमेल"}
+              </Label>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-temple-maroon" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  className="border-temple-gold/50 focus-visible:ring-temple-gold"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-temple-maroon">
+                {language === 'en' ? "Your Name (Optional)" : "आपका नाम (वैकल्पिक)"}
+              </Label>
               <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your.email@example.com"
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={language === 'en' ? "Your name" : "आपका नाम"}
                 className="border-temple-gold/50 focus-visible:ring-temple-gold"
               />
             </div>
-          </div>
+          </>
         )}
+        
+        <div className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            id="anonymous"
+            checked={isAnonymous}
+            onChange={(e) => setIsAnonymous(e.target.checked)}
+            className="rounded border-temple-gold/50 text-temple-gold focus:ring-temple-gold"
+          />
+          <Label htmlFor="anonymous" className="text-sm text-temple-maroon">
+            {language === 'en' ? "Make donation anonymous" : "दान अनाम करें"}
+          </Label>
+        </div>
 
         <DialogFooter>
           <Button 
@@ -209,7 +278,9 @@ const DonationDialog = () => {
             disabled={isSubmitting}
           >
             <Heart className="h-4 w-4 mr-2" />
-            {isSubmitting ? "Processing..." : t('donation.donate')}
+            {isSubmitting 
+              ? (language === 'en' ? "Processing..." : "प्रोसेसिंग...")
+              : t('donation.donate')}
           </Button>
         </DialogFooter>
       </form>

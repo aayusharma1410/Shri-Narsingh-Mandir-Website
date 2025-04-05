@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type AuthContextType = {
   session: Session | null;
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     // Get initial session
@@ -41,31 +43,55 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Create table functions
+  const ensureTablesExist = async () => {
+    try {
+      // Ensure user_details table exists
+      await supabase.rpc('create_user_details_table_if_not_exists').catch(error => {
+        console.error('Error creating user_details table:', error);
+        // Continue as table might already exist
+      });
+      
+      // Create donors table if it doesn't exist
+      const { error: donorsTableError } = await supabase.rpc('create_donors_table_if_not_exists').catch(error => {
+        console.error('Error creating donors table:', error);
+      });
+      
+      if (donorsTableError) {
+        console.log("Creating donors table manually");
+        await supabase.query(`
+          CREATE TABLE IF NOT EXISTS donors (
+            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            user_id UUID REFERENCES auth.users(id),
+            email TEXT NOT NULL,
+            name TEXT,
+            amount NUMERIC NOT NULL,
+            transaction_id TEXT,
+            payment_method TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            anonymous BOOLEAN DEFAULT FALSE
+          );
+        `).catch(e => console.error('Manual donors table creation error:', e));
+      }
+    } catch (error) {
+      console.error('Error ensuring tables exist:', error);
+    }
+  };
+
+  // Ensure tables exist on component load
+  useEffect(() => {
+    ensureTablesExist();
+  }, []);
+
   /**
    * Saves or updates user details in the 'user_details' table in Supabase.
-   * This table stores additional information about users beyond what's in the auth.users table.
-   * 
-   * Table Schema:
-   * - id: Auto-generated UUID (primary key)
-   * - user_id: The user's UUID from auth.users (foreign key)
-   * - email: The user's email address
-   * - username: The user's chosen display name
-   * - created_at: When the user's record was first created
-   * - last_sign_in: The timestamp of the user's most recent sign in
-   * 
-   * This function is called after authentication events (sign-up and sign-in).
    */
   const saveUserToDatabase = async (userId: string, email: string, username: string) => {
     try {
       console.log("Saving user to database:", { userId, email, username });
       
-      // First, ensure the user_details table exists
-      // This is a simplified version - in a real app you'd handle this during setup
-      const { error: tableError } = await supabase.rpc('create_user_details_table_if_not_exists');
-      if (tableError) {
-        console.error('Error creating table:', tableError);
-        // Continue anyway as table might already exist
-      }
+      // Ensure user_details table exists
+      await ensureTablesExist();
       
       // Check if user already exists in the user_details table
       const { data: existingUser, error: fetchError } = await supabase
@@ -85,11 +111,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               user_id: userId, 
               email,
               username,
+              language_preference: language, // Store current language preference
               created_at: new Date().toISOString(),
               last_sign_in: new Date().toISOString()
             }
-          ])
-          .select();
+          ]);
           
         console.log("Insert result:", { insertData, insertError });
         if (insertError) throw insertError;
@@ -99,17 +125,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           .from('user_details')
           .update({ 
             last_sign_in: new Date().toISOString(),
-            username: username // Update username in case it changed
+            username: username, // Update username in case it changed
+            language_preference: language // Update language preference
           })
-          .eq('user_id', userId)
-          .select();
+          .eq('user_id', userId);
           
         console.log("Update result:", { updateData, updateError });
         if (updateError) throw updateError;
       }
     } catch (error) {
       console.error('Error saving user to database:', error);
-      // Don't throw error here to prevent blocking the auth flow
     }
   };
 
@@ -127,12 +152,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       
       toast({
-        title: "सफल प्रवेश!",
-        description: "आपने सफलतापूर्वक प्रवेश किया है।",
+        title: language === 'en' ? "Successful Login!" : "सफल प्रवेश!",
+        description: language === 'en' ? "You have successfully logged in." : "आपने सफलतापूर्वक प्रवेश किया है।",
       });
     } catch (error: any) {
       toast({
-        title: "प्रवेश में त्रुटि",
+        title: language === 'en' ? "Login Error" : "प्रवेश में त्रुटि",
         description: error.message,
         variant: "destructive",
       });
@@ -154,7 +179,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (error) {
         // Handle rate limit errors specifically
         if (error.status === 429) {
-          throw new Error("बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।");
+          throw new Error(language === 'en' 
+            ? "Too many signup attempts. Please wait a minute and try again."
+            : "बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।");
         }
         throw error;
       }
@@ -165,19 +192,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       
       toast({
-        title: "खाता बनाया गया!",
-        description: "कृपया अपने खाते की पुष्टि के लिए अपना ईमेल जांचें।",
+        title: language === 'en' ? "Account Created!" : "खाता बनाया गया!",
+        description: language === 'en' 
+          ? "Please check your email to confirm your account." 
+          : "कृपया अपने खाते की पुष्टि के लिए अपना ईमेल जांचें।",
       });
     } catch (error: any) {
       let errorMessage = error.message;
       
       // Handle rate limit errors with user-friendly message
       if (error.code === "over_email_send_rate_limit" || error.status === 429) {
-        errorMessage = "बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।";
+        errorMessage = language === 'en' 
+          ? "Too many signup attempts. Please wait a minute and try again."
+          : "बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।";
       }
       
       toast({
-        title: "खाता बनाने में त्रुटि",
+        title: language === 'en' ? "Account Creation Error" : "खाता बनाने में त्रुटि",
         description: errorMessage,
         variant: "destructive",
       });
@@ -191,12 +222,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast({
-        title: "साइन आउट",
-        description: "आप सफलतापूर्वक साइन आउट हो गए हैं।",
+        title: language === 'en' ? "Sign Out" : "साइन आउट",
+        description: language === 'en' 
+          ? "You have successfully signed out." 
+          : "आप सफलतापूर्वक साइन आउट हो गए हैं।",
       });
     } catch (error: any) {
       toast({
-        title: "साइन आउट में त्रुटि",
+        title: language === 'en' ? "Sign Out Error" : "साइन आउट में त्रुटि",
         description: error.message,
         variant: "destructive",
       });
