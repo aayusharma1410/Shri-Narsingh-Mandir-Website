@@ -1,5 +1,5 @@
 
-import { Heart, Mail, Phone, MapPin, FileText } from 'lucide-react';
+import { Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -16,17 +16,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">
-              {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नरसिंह मंदिर'}
+              {language === 'en' ? 'Shri Nrusinh Temple' : 'श्री नृसिंह मंदिर'}
             </h3>
             <p className="mb-4">
               {language === 'en' 
-                ? 'Located in Hasampur, Rajasthan, Shri Narsingh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
-                : 'हसमपुर, राजस्थान में स्थित श्री नरसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
+                ? 'Located in Hasampur, Rajasthan, Shri Nrusinh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
+                : 'हसमपुर, राजस्थान में स्थित श्री नृसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
             </p>
-            <div className="flex items-center mt-6">
-              <Heart className="w-5 h-5 mr-2 text-temple-gold" />
-              <p>{language === 'en' ? 'Run by devotees\' support' : 'भक्तों के सहयोग से संचालित'}</p>
-            </div>
+            {/* Removed "Run by devotees' support" */}
           </div>
           
           <div>
@@ -38,8 +35,8 @@ const Footer = () => {
                 <MapPin className="w-5 h-5 mr-3 text-temple-gold shrink-0" />
                 <span>
                   {language === 'en' 
-                    ? 'Shri Narsingh Temple, Hasampur, Rajasthan, India'
-                    : 'श्री नरसिंह मंदिर, हसमपुर, राजस्थान, भारत'}
+                    ? 'Shri Nrusinh Temple, Hasampur, Rajasthan, India'
+                    : 'श्री नृसिंह मंदिर, हसमपुर, राजस्थान, भारत'}
                 </span>
               </li>
               <li className="flex">
@@ -48,7 +45,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-3 text-temple-gold shrink-0 mt-1" />
-                <span className="break-all">shrilakshminarsinghhasampur@gmail.com</span>
+                <span className="break-all">shrilakshminrusinghhasampur@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -83,7 +80,6 @@ const Footer = () => {
                   {language === 'en' ? 'Darshan Timings' : 'दर्शन समय'}
                 </Link>
               </li>
-              {/* Added the Policies link */}
               <li>
                 <Link to="/policies" className="hover:text-temple-gold transition-colors">
                   {language === 'en' ? 'Temple Policies' : 'मंदिर नीतियां'}
@@ -118,7 +114,7 @@ const Footer = () => {
         
         <div className="text-center text-white/70">
           <p>
-            &copy; {currentYear} {language === 'en' ? 'Shri Narsingh Temple, Hasampur. All rights reserved.' : 'श्री नरसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।'}
+            &copy; {currentYear} {language === 'en' ? 'Shri Nrusinh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।'}
           </p>
         </div>
       </div>

@@ -1,12 +1,15 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import AartiDialog from './AartiDialog';
 
 const Hero = () => {
   const { t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showAartiDialog, setShowAartiDialog] = useState(false);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -70,10 +73,21 @@ const Hero = () => {
               >
                 {t('hero.templeTimings')}
               </Button>
+              <Button 
+                variant="outline" 
+                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm shadow-lg"
+                onClick={() => setShowAartiDialog(true)}
+              >
+                {t('hero.aarti') || (t('language') === 'en' ? 'Aarti' : 'आरती')}
+              </Button>
             </div>
           </div>
         </div>
       </div>
+      
+      <Dialog open={showAartiDialog} onOpenChange={setShowAartiDialog}>
+        <AartiDialog />
+      </Dialog>
     </section>
   );
 };

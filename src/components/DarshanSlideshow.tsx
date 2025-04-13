@@ -228,14 +228,8 @@ const DarshanSlideshow = () => {
           </div>
 
           <Separator className="mb-10 bg-temple-gold/20" />
-
-          <div className="flex justify-center">
-            <Button 
-              className="bg-temple-gold hover:bg-temple-gold/80 text-white font-medium px-8 py-6 text-lg"
-            >
-              {language === 'en' ? "View All Darshans" : "सभी दर्शन देखें"}
-            </Button>
-          </div>
+          
+          {/* Removed "View All Darshans" button */}
         </div>
       </div>
     </section>

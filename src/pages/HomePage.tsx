@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
+import PraktotsavSchedule from '@/components/PraktotsavSchedule';
+import PraktotsavScheduleDialog from '@/components/PraktotsavScheduleDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -42,9 +44,11 @@ const HomePage = () => {
       <Navbar />
       <main className="flex flex-col">
         <Hero />
+        <PraktotsavSchedule />
         <DarshanSlideshow />
       </main>
       <Footer />
+      <PraktotsavScheduleDialog />
     </div>
   );
 };
