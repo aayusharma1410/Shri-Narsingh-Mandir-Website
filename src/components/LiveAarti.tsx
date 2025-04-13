@@ -1,7 +1,9 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2, VolumeX, Music, Calendar, Share2, Bell, Cast } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Music, Calendar, Share2, Bell, Cast, Facebook } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const LiveAarti = () => {
   const { t, language } = useLanguage();
@@ -117,9 +119,13 @@ const LiveAarti = () => {
       
       <div className="max-w-4xl mx-auto text-center mb-12">
         <p className="text-temple-gold font-medium mb-3 opacity-0 animate-on-scroll">आरती दर्शन</p>
-        <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">लाइव आरती</h2>
+        <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">
+          {language === 'en' ? 'Live Aarti' : 'लाइव आरती'}
+        </h2>
         <p className="text-lg opacity-0 animate-on-scroll">
-          हर दिन सुबह और शाम को होने वाली आरती का सीधा प्रसारण देखें और घर बैठे आध्यात्मिक अनुभव प्राप्त करें।
+          {language === 'en' 
+            ? 'Watch the live broadcast of the aarti performed every morning and evening and experience the spiritual atmosphere from home.'
+            : 'हर दिन सुबह और शाम को होने वाली आरती का सीधा प्रसारण देखें और घर बैठे आध्यात्मिक अनुभव प्राप्त करें।'}
         </p>
       </div>
 
@@ -131,10 +137,17 @@ const LiveAarti = () => {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-temple-gold/20 flex items-center justify-center animate-pulse">
-                    <span className="text-3xl font-serif text-temple-gold">ॐ</span>
+                    <Facebook className="h-10 w-10 text-temple-gold" />
                   </div>
                   <p className="text-white font-medium">
-                    {isPlaying ? 'आरती चल रही है' : 'अगली आरती जल्द ही शुरू होगी'}
+                    {isPlaying 
+                      ? (language === 'en' ? 'Aarti is now live' : 'आरती अभी लाइव है')
+                      : (language === 'en' ? 'Next aarti will begin soon' : 'अगली आरती जल्द ही शुरू होगी')}
+                  </p>
+                  <p className="text-white/70 text-sm mt-2">
+                    {language === 'en' 
+                      ? 'Click play to watch on Facebook Live' 
+                      : 'फेसबुक लाइव पर देखने के लिए प्ले बटन पर क्लिक करें'}
                   </p>
                 </div>
               </div>
@@ -142,17 +155,35 @@ const LiveAarti = () => {
               {/* Video controls overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                 <div className="flex items-center justify-between">
-                  <Button 
-                    onClick={togglePlay}
-                    variant="ghost" 
-                    size="icon"
-                    className="text-white hover:bg-white/20"
-                  >
-                    {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          onClick={togglePlay}
+                          variant="ghost" 
+                          size="icon"
+                          className="text-white hover:bg-white/20 relative"
+                        >
+                          <div className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                            <span className="relative inline-flex h-3 w-3 rounded-full bg-sky-500"></span>
+                          </div>
+                          {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {language === 'en' ? 'Watch on Facebook Live' : 'फेसबुक लाइव पर देखें'}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   
-                  <div className="text-white text-sm">
-                    {isPlaying ? 'Live' : 'Next: ' + formatTime(nextScheduledTime)}
+                  <div className="text-white text-sm flex items-center gap-2">
+                    {isPlaying 
+                      ? <span className="px-2 py-0.5 bg-red-600 rounded-full text-xs font-medium animate-pulse flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-white"></span> 
+                          Live
+                        </span>
+                      : 'Next: ' + formatTime(nextScheduledTime)}
                   </div>
                   
                   <Button 
@@ -171,40 +202,46 @@ const LiveAarti = () => {
         
         <div className="opacity-0 animate-on-scroll">
           <div className="bg-white rounded-xl shadow-lg p-6 border border-temple-gold/20">
-            <h3 className="font-serif text-xl font-bold mb-4 text-temple-maroon">आरती समय सूची</h3>
+            <h3 className="font-serif text-xl font-bold mb-4 text-temple-maroon">
+              {language === 'en' ? 'Aarti Schedule' : 'आरती समय सूची'}
+            </h3>
             
             <div className="space-y-4">
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">प्रातः आरती</p>
-                <p className="text-sm text-gray-600">सुबह 5:30 बजे</p>
+                <p className="font-medium">{language === 'en' ? 'Morning Aarti' : 'प्रातः आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '5:30 AM' : 'सुबह 5:30 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">मध्याह्न आरती</p>
-                <p className="text-sm text-gray-600">दोपहर 12:00 बजे</p>
+                <p className="font-medium">{language === 'en' ? 'Afternoon Aarti' : 'मध्याह्न आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '12:00 PM' : 'दोपहर 12:00 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">संध्या आरती</p>
-                <p className="text-sm text-gray-600">शाम 6:30 बजे</p>
+                <p className="font-medium">{language === 'en' ? 'Evening Aarti' : 'संध्या आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '6:30 PM' : 'शाम 6:30 बजे'}</p>
               </div>
               
               <div>
-                <p className="font-medium">शयन आरती</p>
-                <p className="text-sm text-gray-600">रात 8:00 बजे</p>
+                <p className="font-medium">{language === 'en' ? 'Night Aarti' : 'शयन आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '8:00 PM' : 'रात 8:00 बजे'}</p>
               </div>
             </div>
             
             <div className="mt-6">
-              <h4 className="font-medium mb-2">अगली आरती</h4>
+              <h4 className="font-medium mb-2">{language === 'en' ? 'Next Aarti' : 'अगली आरती'}</h4>
               <div className="bg-temple-lightgold rounded-lg p-3">
                 <p className="font-medium text-temple-maroon">{formatDate(nextScheduledTime)}</p>
                 <p className="text-sm">{formatTime(nextScheduledTime)}</p>
               </div>
             </div>
             
-            <Button className="w-full mt-6 bg-temple-gold hover:bg-temple-gold/80 text-white">
-              अनुस्मारक सेट करें
+            <Button 
+              onClick={togglePlay}
+              className="w-full mt-6 bg-temple-gold hover:bg-temple-gold/80 text-white flex items-center justify-center gap-2"
+            >
+              <Facebook className="h-4 w-4" />
+              {language === 'en' ? 'Watch Live on Facebook' : 'फेसबुक पर लाइव देखें'}
             </Button>
           </div>
         </div>

@@ -94,7 +94,7 @@ const AartiDialog = () => {
     <DialogContent className="sm:max-w-4xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle className="text-center font-serif text-2xl text-temple-maroon">
-          {language === 'en' ? 'Shri Nrusinh Aarti' : 'श्री नृसिंह आरती'}
+          {language === 'en' ? 'Shri Narsingh Aarti' : 'श्री नृसिंह आरती'}
         </DialogTitle>
         <DialogDescription className="text-center">
           {language === 'en' 

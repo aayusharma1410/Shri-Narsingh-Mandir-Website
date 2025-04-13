@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type LanguageContextType = {
@@ -66,7 +65,8 @@ const translations = {
       temple: "Shri Narsingh Temple",
       subtitle: "A Sacred Space for Spiritual Connection",
       viewDarshan: "View Darshan",
-      templeTimings: "Temple Timings"
+      templeTimings: "Temple Timings",
+      aarti: "Aarti"
     },
     login: {
       title: 'Sign In',
@@ -114,7 +114,7 @@ const translations = {
       login: 'लॉगिन',
       signup: 'साइन अप',
       email: 'ईमेल',
-      password: 'पासवर्ड',
+      password: 'पासवर्���',
       confirmPassword: 'पासवर्ड की पुष्टि करें',
       username: 'उपयोगकर्ता नाम',
       forgotPassword: 'पासवर्ड भूल गए?',
@@ -150,10 +150,11 @@ const translations = {
     },
     hero: {
       welcome: "आपका स्वागत है",
-      temple: "श्री नरसिंह मंदिर",
+      temple: "श्री नृसिंह मंदिर",
       subtitle: "आध्यात्मिक संबंध के लिए एक पवित्र स्थान",
       viewDarshan: "दर्शन करें",
-      templeTimings: "मंदिर समय"
+      templeTimings: "मंदिर समय",
+      aarti: "आरती"
     },
     login: {
       title: 'प्रवेश करें',
@@ -178,7 +179,7 @@ const translations = {
       loginLink: 'प्रवेश करें'
     },
     policies: {
-      title: 'मंदिर नीतियां',
+      title: 'मंदिर नीत��यां',
       refundTitle: 'वापसी और धनवापसी नीति',
       privacyTitle: 'गोपनीयता नीति',
       disclaimerTitle: 'अस्वीकरण'

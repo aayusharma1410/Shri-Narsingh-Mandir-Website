@@ -76,7 +76,7 @@ const Hero = () => {
                 className="bg-temple-gold hover:bg-temple-gold/80 text-black font-medium px-8 py-6 text-lg shadow-lg"
                 onClick={() => setShowAartiDialog(true)}
               >
-                {t('hero.aarti') || (t('language') === 'en' ? 'Aarti' : 'आरती')}
+                {t('hero.aarti')}
               </Button>
             </div>
           </div>
