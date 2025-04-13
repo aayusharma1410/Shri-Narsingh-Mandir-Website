@@ -67,15 +67,13 @@ const Hero = () => {
                 {t('hero.viewDarshan')}
               </Button>
               <Button 
-                variant="outline" 
-                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm shadow-lg"
+                className="bg-temple-gold hover:bg-temple-gold/80 text-black font-medium px-8 py-6 text-lg shadow-lg"
                 onClick={handleTimingsClick}
               >
                 {t('hero.templeTimings')}
               </Button>
               <Button 
-                variant="outline" 
-                className="border-temple-gold text-temple-gold hover:bg-temple-gold/20 font-medium px-8 py-6 text-lg backdrop-blur-sm shadow-lg"
+                className="bg-temple-gold hover:bg-temple-gold/80 text-black font-medium px-8 py-6 text-lg shadow-lg"
                 onClick={() => setShowAartiDialog(true)}
               >
                 {t('hero.aarti') || (t('language') === 'en' ? 'Aarti' : 'आरती')}

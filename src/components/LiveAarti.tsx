@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, VolumeX, Music, Calendar, Share2, Bell, Cast } from 'lucide-react';
@@ -39,7 +38,9 @@ const LiveAarti = () => {
   }, []);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    // Open Facebook event link in a new tab
+    window.open('https://www.facebook.com/events/695352646486362/', '_blank');
+    setIsPlaying(true);
   };
 
   const toggleMute = () => {
