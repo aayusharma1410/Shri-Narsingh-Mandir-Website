@@ -1,13 +1,15 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Clock, Calendar } from 'lucide-react';
+import { Switch } from "@/components/ui/switch";
 import DailySchedule from './DailySchedule';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const TimingsSection = () => {
   const { language } = useLanguage();
+  const [isSummerTimings, setIsSummerTimings] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -34,7 +36,7 @@ const TimingsSection = () => {
     };
   }, []);
   
-  const regularTimings = [
+  const summerRegularTimings = [
     { day: language === 'en' ? "Monday to Saturday" : "सोमवार से शनिवार", 
       morning: "05:00 AM - 12:00 PM", 
       evening: "04:00 PM - 09:00 PM" },
@@ -43,15 +45,24 @@ const TimingsSection = () => {
       evening: "03:30 PM - 10:00 PM" },
   ];
   
+  const winterRegularTimings = [
+    { day: language === 'en' ? "Monday to Saturday" : "सोमवार से शनिवार", 
+      morning: "05:30 AM - 12:30 PM", 
+      evening: "04:30 PM - 09:30 PM" },
+    { day: language === 'en' ? "Sunday and Holidays" : "रविवार और छुट्टियां", 
+      morning: "05:00 AM - 01:30 PM", 
+      evening: "04:00 PM - 10:30 PM" },
+  ];
+  
   const specialTimings = [
     { name: language === 'en' ? "Navratri" : "नवरात्रि", 
-      time: "03:30 AM - 11:00 PM" },
+      time: isSummerTimings ? "03:30 AM - 11:00 PM" : "04:00 AM - 11:30 PM" },
     { name: language === 'en' ? "Krishna Janmashtami" : "कृष्ण जन्माष्टमी", 
       time: language === 'en' ? "Open 24 hours" : "24 घंटे खुला" },
     { name: language === 'en' ? "Shivratri" : "शिवरात्रि", 
       time: language === 'en' ? "Open 24 hours" : "24 घंटे खुला" },
     { name: language === 'en' ? "Holi" : "होली", 
-      time: "06:00 AM - 10:00 PM" },
+      time: isSummerTimings ? "06:00 AM - 10:00 PM" : "06:30 AM - 10:30 PM" },
   ];
   
   const upcomingEvents = [
@@ -77,11 +88,27 @@ const TimingsSection = () => {
             ? 'Get information about the darshan and puja timings at Shri Narsingh Temple.'
             : 'श्री नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।'}
         </p>
+        
+        <div className="flex items-center justify-center mt-6 opacity-0 animate-on-scroll">
+          <div className="flex items-center space-x-2">
+            <span className={`text-sm ${!isSummerTimings ? 'text-temple-maroon font-bold' : 'text-gray-500'}`}>
+              {language === 'en' ? 'Winter Timings' : 'शीतकालीन समय'}
+            </span>
+            <Switch 
+              checked={isSummerTimings}
+              onCheckedChange={setIsSummerTimings}
+              className="data-[state=checked]:bg-temple-gold"
+            />
+            <span className={`text-sm ${isSummerTimings ? 'text-temple-maroon font-bold' : 'text-gray-500'}`}>
+              {language === 'en' ? 'Summer Timings' : 'ग्रीष्मकालीन समय'}
+            </span>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <DailySchedule />
+          <DailySchedule isSummerTimings={isSummerTimings} />
         </div>
         
         <div>
@@ -113,22 +140,22 @@ const TimingsSection = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>{language === 'en' ? 'Morning Aarti:' : 'प्रातः आरती:'}</span>
-                    <span className="font-medium">5:30 AM</span>
+                    <span className="font-medium">{isSummerTimings ? "5:30 AM" : "6:00 AM"}</span>
                   </div>
                   
                   <div className="flex justify-between">
                     <span>{language === 'en' ? 'Afternoon Aarti:' : 'मध्याह्न आरती:'}</span>
-                    <span className="font-medium">12:00 PM</span>
+                    <span className="font-medium">{isSummerTimings ? "12:00 PM" : "12:30 PM"}</span>
                   </div>
                   
                   <div className="flex justify-between">
                     <span>{language === 'en' ? 'Evening Aarti:' : 'संध्या आरती:'}</span>
-                    <span className="font-medium">6:30 PM</span>
+                    <span className="font-medium">{isSummerTimings ? "6:30 PM" : "7:00 PM"}</span>
                   </div>
                   
                   <div className="flex justify-between">
                     <span>{language === 'en' ? 'Night Aarti:' : 'शयन आरती:'}</span>
-                    <span className="font-medium">8:00 PM</span>
+                    <span className="font-medium">{isSummerTimings ? "8:00 PM" : "8:30 PM"}</span>
                   </div>
                 </div>
               </div>
