@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -38,8 +37,8 @@ const AboutSection = () => {
       icon: <History className="w-10 h-10 text-temple-maroon" />,
       title: language === 'en' ? "Ancient History" : "प्राचीन इतिहास",
       description: language === 'en' 
-        ? "Over 200 years old, Shri Narsingh Temple is an important part of Hasampur's spiritual heritage."
-        : "200 वर्षों से अधिक पुराना, श्री नरसिंह मंदिर हसमपुर की आध्यात्मिक विरासत का एक महत्वपूर्ण हिस्सा है।"
+        ? "Over 565 years old, Shri Narsingh Temple is an important part of Hasampur's spiritual heritage."
+        : "565 वर्षों से अधिक पुराना, श्री नरसिंह मंदिर हसमपुर की आध्यात्मिक विरासत का एक महत्वपूर्ण हिस्सा है।"
     },
     {
       icon: <MapPin className="w-10 h-10 text-temple-maroon" />,
@@ -57,10 +56,10 @@ const AboutSection = () => {
     },
     {
       icon: <Users className="w-10 h-10 text-temple-maroon" />,
-      title: language === 'en' ? "Community Service" : "सामुदायिक सेवा",
+      title: language === 'en' ? "Priest Family" : "पूजारी परिवार",
       description: language === 'en'
-        ? "Besides religious activities, the temple organizes social service and cultural events."
-        : "मंदिर धार्मिक गतिविधियों के अलावा समाज सेवा और सांस्कृतिक कार्यक्रमों का भी आयोजन करता है।"
+        ? "The priest family, descendants of Shri Shri 1008 Vishnu Das Ji Maharaj, Narhiya Swami, is the priest and personal servant of Shri Narsingh Bhagwan here."
+        : "श्री श्री 1008 विष्णु दास जी महाराज के वंशज नरहिया स्वामी यहां श्री नरसिंह भगवान के पुजारी एवं निज अंग सेवक हैं।"
     }
   ];
 
@@ -217,8 +216,8 @@ const AboutSection = () => {
             </h4>
             <p className="mb-2">
               {language === 'en' 
-                ? 'Nearest Railway Station: Hasampur Railway Station (2 km)'
-                : 'निकटतम रेलवे स्टेशन: हसमपुर रेलवे स्टेशन (2 किमी)'
+                ? 'Nearest Railway Station: Neem Ka Thana Railway Station (30 km)'
+                : 'निकटतम रेलवे स्टेशन: नीम का थाना रेलवे स्टेशन (30 किमी)'
               }
             </p>
             <p>

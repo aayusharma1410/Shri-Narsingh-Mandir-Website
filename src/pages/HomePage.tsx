@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
-import GallerySection from '@/components/GallerySection';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -44,7 +43,6 @@ const HomePage = () => {
       <main className="flex flex-col">
         <Hero />
         <DarshanSlideshow />
-        <GallerySection />
       </main>
       <Footer />
     </div>
