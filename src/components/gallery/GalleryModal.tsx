@@ -1,9 +1,9 @@
 
 import { Button } from "@/components/ui/button";
-import { DialogContent } from "@/components/ui/dialog";
+import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { GalleryImage } from "@/types/gallery";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface GalleryModalProps {
   image: GalleryImage;
@@ -12,8 +12,15 @@ interface GalleryModalProps {
 
 const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(
-    allImages.findIndex(img => img.id === image.id)
+    allImages.findIndex(img => img.id === (image?.id || 0))
   );
+  
+  // Make sure currentImageIndex is valid even if initial image is not found
+  useEffect(() => {
+    if (currentImageIndex === -1 && allImages.length > 0) {
+      setCurrentImageIndex(0);
+    }
+  }, [currentImageIndex, allImages]);
   
   const goToNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -25,10 +32,23 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
   };
   
+  // Safety check: If allImages is empty or currentImageIndex is invalid, show placeholder content
+  if (!allImages.length || currentImageIndex < 0 || currentImageIndex >= allImages.length) {
+    return (
+      <DialogContent className="sm:max-w-3xl p-0 border-none bg-transparent backdrop-blur-2xl">
+        <DialogTitle className="sr-only">Image Preview</DialogTitle>
+        <div className="flex items-center justify-center h-64 bg-black/80 rounded-lg">
+          <p className="text-white">No image available</p>
+        </div>
+      </DialogContent>
+    );
+  }
+  
   const currentImage = allImages[currentImageIndex];
   
   return (
     <DialogContent className="sm:max-w-3xl p-0 border-none bg-transparent backdrop-blur-2xl">
+      <DialogTitle className="sr-only">Image Preview</DialogTitle>
       <div className="relative w-full overflow-hidden rounded-lg">
         <img 
           src={currentImage.src} 

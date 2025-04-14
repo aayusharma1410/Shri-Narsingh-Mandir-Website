@@ -8,6 +8,14 @@ interface GalleryGridProps {
 }
 
 const GalleryGrid = ({ images }: GalleryGridProps) => {
+  if (!images || images.length === 0) {
+    return (
+      <div className="py-8 text-center">
+        <p>No gallery images available.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {images.map((image, index) => (
