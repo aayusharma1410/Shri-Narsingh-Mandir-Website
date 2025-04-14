@@ -9,7 +9,7 @@ const PraktotsavSchedule = () => {
       <div className="container px-6 mx-auto">
         <h2 className="section-heading mb-8 text-4xl text-center font-serif">
           {language === 'en' 
-            ? 'Shri Nrusinh Praktotsav Schedule' 
+            ? 'Shri Narsingh Praktotsav Schedule' 
             : 'श्री नृसिंह प्रकटोत्सव समय-सारणी'}
         </h2>
         

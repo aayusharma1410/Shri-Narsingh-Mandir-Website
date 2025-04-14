@@ -16,11 +16,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">
-              {language === 'en' ? 'Shri Nrusinh Temple' : 'श्री नृसिंह मंदिर'}
+              {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नृसिंह मंदिर'}
             </h3>
             <p className="mb-4">
               {language === 'en' 
-                ? 'Located in Hasampur, Rajasthan, Shri Nrusinh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
+                ? 'Located in Hasampur, Rajasthan, Shri Narsingh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
                 : 'हसमपुर, राजस्थान में स्थित श्री नृसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
             </p>
             {/* Removed "Run by devotees' support" */}
@@ -35,7 +35,7 @@ const Footer = () => {
                 <MapPin className="w-5 h-5 mr-3 text-temple-gold shrink-0" />
                 <span>
                   {language === 'en' 
-                    ? 'Shri Nrusinh Temple, Hasampur, Rajasthan, India'
+                    ? 'Shri Narsingh Temple, Hasampur, Rajasthan, India'
                     : 'श्री नृसिंह मंदिर, हसमपुर, राजस्थान, भारत'}
                 </span>
               </li>
@@ -114,7 +114,7 @@ const Footer = () => {
         
         <div className="text-center text-white/70">
           <p>
-            &copy; {currentYear} {language === 'en' ? 'Shri Nrusinh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।'}
+            &copy; {currentYear} {language === 'en' ? 'Shri Narsingh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।'}
           </p>
         </div>
       </div>

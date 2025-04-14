@@ -60,7 +60,7 @@ const Navbar = () => {
           <span className={`font-serif text-2xl font-bold transition-colors ${
             isScrolled ? 'text-temple-maroon' : 'text-white hero-text-stroke'
           }`}>
-            {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नरसिंह मंदिर'}
+            {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नृसिंह मंदिर'}
           </span>
         </Link>
 

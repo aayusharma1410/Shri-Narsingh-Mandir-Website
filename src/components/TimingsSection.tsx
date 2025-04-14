@@ -106,7 +106,7 @@ const TimingsSection = () => {
         <p className="text-lg opacity-0 animate-on-scroll">
           {language === 'en'
             ? 'Get information about the darshan and puja timings at Shri Narsingh Temple.'
-            : 'श्री नरसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।'}
+            : 'श्री नृसिंह मंदिर के दर्शन और पूजा के समय की जानकारी प्राप्त करें।'}
         </p>
         
         <div className="flex items-center justify-center mt-6 opacity-0 animate-on-scroll">

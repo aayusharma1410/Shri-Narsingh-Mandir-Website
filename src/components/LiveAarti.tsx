@@ -307,7 +307,7 @@ const LiveAarti = () => {
               onClick={() => setSelectedAarti("narsingh-aarti")}
               className={selectedAarti === "narsingh-aarti" ? "bg-temple-gold hover:bg-temple-gold/90" : ""}
             >
-              नरसिंह बाबा की आरती
+              नृसिंह बाबा की आरती
             </Button>
             <Button 
               variant={selectedAarti === "bhog-aarti" ? "default" : "outline"} 
@@ -339,7 +339,7 @@ const LiveAarti = () => {
                 <p className="mb-2 leading-relaxed text-gray-800">अपने हाथ उठाओ, द्वार पड़ा तेरे ॥ ॐ जय जगदीश हरे ।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">विषय-विकार मिटाओ, पाप हरो देवा । स्वभी पाप हरो देवा ।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">श्रद्धा-भक्ति बढ़ाओ, सन्तन की सेवा ॥ ॐ जय जगदीश हरे।</p>
-                <p className="mb-2 leading-relaxed text-gray-800">श्री लक्ष्मीनरसिंहजी की आरती, जो कोई नर गावे।</p>
+                <p className="mb-2 leading-relaxed text-gray-800">श्री लक्ष्मीनृसिंहजी की आरती, जो कोई नर गावे।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">स्वामी जो कोई नर गावे ।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">कहत शिवानन्द स्वामी, सुख संपत्ति पावे ॥</p>
                 <p className="mb-2 leading-relaxed text-gray-800">ॐ जय जगदीश हरे।</p>
@@ -352,9 +352,9 @@ const LiveAarti = () => {
           
           {selectedAarti === "narsingh-aarti" && (
             <div>
-              <h4 className="font-serif text-xl font-bold mb-3 text-temple-maroon">श्री लक्ष्मी नरसिंह आरती</h4>
+              <h4 className="font-serif text-xl font-bold mb-3 text-temple-maroon">श्री लक्ष्मी नृसिंह आरती</h4>
               <div className="bg-temple-gold/5 p-6 rounded-lg border border-temple-gold/30">
-                <p className="mb-2 leading-relaxed text-gray-800">आरती नरसिंह बाबाकी उतारो खम्यफटये की।</p>
+                <p className="mb-2 leading-relaxed text-gray-800">आरती नृसिंह बाबाकी उतारो खम्यफटये की।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">प्रेम से भक्त प्रहलाद रटा पिता की शक्ति से नड़टां ।।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">ध्यान में मग्न राम का शब्द भक्त का मान रखैये की ।। आरती. ।।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">खम्व को लाल अगनी कीना, भक्त लेजा लिपटा दीना ।।</p>

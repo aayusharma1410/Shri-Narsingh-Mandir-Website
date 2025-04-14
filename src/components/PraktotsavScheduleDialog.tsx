@@ -22,7 +22,7 @@ const PraktotsavScheduleDialog = () => {
         <DialogHeader>
           <DialogTitle className="text-center font-serif text-2xl text-temple-maroon">
             {language === 'en' 
-              ? 'Shri Nrusinh Praktotsav Schedule' 
+              ? 'Shri Narsingh Praktotsav Schedule' 
               : 'श्री नृसिंह प्रकटोत्सव समय-सारणी'}
           </DialogTitle>
         </DialogHeader>
