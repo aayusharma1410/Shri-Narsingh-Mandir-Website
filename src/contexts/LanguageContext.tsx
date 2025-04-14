@@ -216,7 +216,6 @@ Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story tea
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  // Fix: Initialize with a typed value instead of just string
   const [language, setLanguage] = useState<'en' | 'hi'>('en');
 
   const t = (key: string) => {

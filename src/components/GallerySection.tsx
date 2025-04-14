@@ -17,49 +17,49 @@ const GallerySection = () => {
   const galleryImages: GalleryImage[] = [
     { 
       id: 1, 
-      src: "/lovable-uploads/1dda7531-87ab-45fc-a698-3d3a28d25d05.png", 
+      src: "/lovable-uploads/1434a5a6-10d5-4de1-a362-1d2ee64eced3.png", 
       alt: "Morning Darshan", 
       category: "darshan"
     },
     { 
       id: 2, 
-      src: "/lovable-uploads/9f9d2654-52ad-44c3-92d3-8f92b067dade.png", 
+      src: "/lovable-uploads/6d709d5e-8162-4c9f-a65d-e08f56299ea8.png", 
       alt: "Afternoon Darshan", 
       category: "darshan"
     },
     { 
       id: 3, 
-      src: "/lovable-uploads/0dc387c4-682c-498b-a4d8-b35159ef10a5.png", 
+      src: "/lovable-uploads/7f5e03d3-8c83-4f35-84d4-942efc47d2b2.png", 
       alt: "Evening Darshan", 
       category: "darshan"
     },
     { 
       id: 4, 
-      src: "/lovable-uploads/59c90dc9-6fec-4f74-a458-7573dc0b2660.png", 
+      src: "/lovable-uploads/eb2af739-3b7b-411b-ae85-7d7f864aba86.png", 
       alt: "Shri Narsingh Darshan", 
-      category: "events"
+      category: "darshan"
     },
     { 
       id: 5, 
-      src: "/lovable-uploads/ffb05434-b184-4e59-93f8-647c06a8aff2.png", 
+      src: "/lovable-uploads/ce4e2728-1e57-4787-9769-5ffb97c2a7f6.png", 
       alt: "Decorated Shrine", 
       category: "shringar"
     },
     { 
       id: 6, 
-      src: "/lovable-uploads/9c54aa51-bfcf-4b94-999a-c9c11234b671.png", 
+      src: "/lovable-uploads/679567b7-197f-4de6-8181-b6266467e36c.png", 
       alt: "Festival Celebration", 
       category: "events"
     },
     { 
       id: 7, 
-      src: "/lovable-uploads/166a1ead-58e9-4b31-b8b2-e3b6e755e204.png", 
+      src: "/lovable-uploads/3bdeaf32-014d-4973-a6ca-fba97d0465ac.png", 
       alt: "Special Darshan", 
       category: "shringar"
     },
     { 
       id: 8, 
-      src: "/lovable-uploads/32711294-0b7d-4321-876d-b1f8608239ef.png", 
+      src: "/lovable-uploads/0f7c6a0d-b7e6-4f35-9ee9-a9ae61e5327d.png", 
       alt: "Shri Narsingh Dev", 
       category: "shringar"
     },
