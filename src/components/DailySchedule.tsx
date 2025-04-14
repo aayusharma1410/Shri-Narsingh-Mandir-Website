@@ -7,18 +7,6 @@ interface DailyScheduleProps {
 
 const DailySchedule = ({ isSummerTimings }: DailyScheduleProps) => {
   const summerSchedule = [
-    { event: "पट खुलने का समय", time: "4:30 AM" },
-    { event: "अभिषेक", time: "4:30 AM-4:45 AM" },
-    { event: "श्रृंगार", time: "4:45 AM-5:00 AM" },
-    { event: "मंगला आरती", time: "5:00 AM-5:15 AM" },
-    { event: "भोग आरती", time: "11:15 AM-11:30 AM" },
-    { event: "शयन", time: "12:00 PM-4:30 PM" },
-    { event: "पट खुलने का समय", time: "4:30 PM" },
-    { event: "संध्या आरती", time: "7:15 PM-7:30 PM" },
-    { event: "शयन भोग आरती", time: "8:15 PM-8:30 PM" }
-  ];
-
-  const winterSchedule = [
     { event: "पट खुलने का समय", time: "5:00 AM" },
     { event: "अभिषेक", time: "5:00 AM-5:15 AM" },
     { event: "श्रृंगार", time: "5:15 AM-5:30 AM" },
@@ -29,6 +17,18 @@ const DailySchedule = ({ isSummerTimings }: DailyScheduleProps) => {
     { event: "संध्या आरती", time: "6:30 PM-6:45 PM" },
     { event: "शयन भोग", time: "7:00 PM" },
     { event: "रात्री शयन", time: "7:30 PM-5:00 AM" }
+  ];
+
+  const winterSchedule = [
+    { event: "पट खुलने का समय", time: "5:00 AM" },
+    { event: "अभिषेक", time: "5:00 AM-5:15 AM" },
+    { event: "श्रृंगार", time: "5:15 AM-5:30 AM" },
+    { event: "मंगला आरती", time: "5:00 AM-5:15 AM" },
+    { event: "भोग आरती", time: "11:15 AM-11:30 AM" },
+    { event: "शयन", time: "12:00 PM-4:30 PM" },
+    { event: "पट खुलने का समय", time: "4:30 PM" },
+    { event: "संध्या आरती", time: "7:15 PM-7:30 PM" },
+    { event: "शयन भोग आरती", time: "8:15 PM-8:30 PM" }
   ];
 
   const schedule = isSummerTimings ? summerSchedule : winterSchedule;

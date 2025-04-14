@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, VolumeX, Music, Calendar, Share2, Bell, Cast, Facebook } from 'lucide-react';
@@ -209,7 +208,7 @@ const LiveAarti = () => {
             <div className="space-y-4">
               <div className="border-b border-temple-gold/20 pb-3">
                 <p className="font-medium">{language === 'en' ? 'Morning Aarti' : 'प्रातः आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '5:30 AM' : 'सुबह 5:30 बजे'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '5:00 AM' : 'सुबह 5:00 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
