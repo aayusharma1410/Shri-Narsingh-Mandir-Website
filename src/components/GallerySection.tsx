@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -18,60 +17,72 @@ const GallerySection = () => {
   const galleryImages: GalleryImage[] = [
     { 
       id: 1, 
-      src: "https://i.ibb.co/1fq3Z7v/temple-exterior-1.jpg", 
-      alt: "Temple Front View", 
-      category: "temple"
+      src: "/lovable-uploads/1dda7531-87ab-45fc-a698-3d3a28d25d05.png", 
+      alt: "Morning Darshan", 
+      category: "darshan"
     },
     { 
       id: 2, 
-      src: "https://i.ibb.co/3mmqk0J/temple-exterior-2.jpg", 
-      alt: "Temple Side View", 
-      category: "temple" 
+      src: "/lovable-uploads/9f9d2654-52ad-44c3-92d3-8f92b067dade.png", 
+      alt: "Afternoon Darshan", 
+      category: "darshan"
     },
     { 
       id: 3, 
-      src: "https://i.ibb.co/xSkMDRt/temple-interior-1.jpg", 
-      alt: "Temple Inner Sanctum", 
-      category: "interior" 
+      src: "/lovable-uploads/0dc387c4-682c-498b-a4d8-b35159ef10a5.png", 
+      alt: "Evening Darshan", 
+      category: "darshan"
     },
     { 
       id: 4, 
-      src: "https://i.ibb.co/zWCcZpr/event-celebration-1.jpg", 
-      alt: "Festival Celebration", 
-      category: "events" 
+      src: "/lovable-uploads/59c90dc9-6fec-4f74-a458-7573dc0b2660.png", 
+      alt: "Shri Narsingh Darshan", 
+      category: "events"
     },
     { 
       id: 5, 
-      src: "https://i.ibb.co/wNFnfqh/devotees-gathering-1.jpg", 
-      alt: "Devotees Gathering", 
-      category: "devotees" 
+      src: "/lovable-uploads/ffb05434-b184-4e59-93f8-647c06a8aff2.png", 
+      alt: "Decorated Shrine", 
+      category: "shringar"
     },
     { 
       id: 6, 
-      src: "https://i.ibb.co/9kGp5MG/temple-grounds-1.jpg", 
-      alt: "Temple Grounds", 
-      category: "temple" 
+      src: "/lovable-uploads/9c54aa51-bfcf-4b94-999a-c9c11234b671.png", 
+      alt: "Festival Celebration", 
+      category: "events"
     },
     { 
       id: 7, 
-      src: "https://i.ibb.co/LXRY1wf/aarti-ceremony-1.jpg", 
-      alt: "Aarti Ceremony", 
-      category: "events" 
+      src: "/lovable-uploads/166a1ead-58e9-4b31-b8b2-e3b6e755e204.png", 
+      alt: "Special Darshan", 
+      category: "shringar"
     },
     { 
       id: 8, 
-      src: "https://i.ibb.co/JwL0rQt/temple-idol-1.jpg", 
-      alt: "Temple Idol", 
-      category: "interior" 
+      src: "/lovable-uploads/32711294-0b7d-4321-876d-b1f8608239ef.png", 
+      alt: "Shri Narsingh Dev", 
+      category: "shringar"
+    },
+    { 
+      id: 9, 
+      src: "/lovable-uploads/8004559d-4885-4064-a334-9c67a69b8f1b.png", 
+      alt: "Temple Interior", 
+      category: "mandir"
+    },
+    { 
+      id: 10, 
+      src: "/lovable-uploads/aa5bf370-ee00-4613-93a3-805c90a67e20.png", 
+      alt: "Sacred Murti", 
+      category: "darshan"
     }
   ];
   
   const categories = [
     { id: 'all', name: 'सभी' },
-    { id: 'temple', name: 'मंदिर' },
-    { id: 'interior', name: 'अंदरूनी' },
+    { id: 'darshan', name: 'दर्शन' },
+    { id: 'shringar', name: 'श्रृंगार' },
     { id: 'events', name: 'उत्सव' },
-    { id: 'devotees', name: 'भक्तगण' },
+    { id: 'mandir', name: 'मंदिर' }
   ];
   
   const filteredImages = activeCategory === 'all' 

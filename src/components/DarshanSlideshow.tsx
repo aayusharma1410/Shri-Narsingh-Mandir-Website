@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -6,31 +5,30 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Calendar, Clock } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
-// Mock data for today's darshan and recent events
 const darshanImages = [
   {
     id: 1,
     title: "Morning Darshan",
     titleHi: "प्रातः दर्शन",
-    image: "https://images.unsplash.com/photo-1609696503575-30032d28e10d?q=80&w=1000",
-    time: "07:30 AM",
-    date: "2023-08-15"
+    image: "/lovable-uploads/1dda7531-87ab-45fc-a698-3d3a28d25d05.png",
+    time: "05:00 AM",
+    date: "2025-04-14"
   },
   {
     id: 2,
     title: "Afternoon Darshan",
     titleHi: "दोपहर दर्शन",
-    image: "https://images.unsplash.com/photo-1609696503575-30032d28e10d?q=80&w=1000",
-    time: "12:00 PM",
-    date: "2023-08-15"
+    image: "/lovable-uploads/9f9d2654-52ad-44c3-92d3-8f92b067dade.png",
+    time: "11:15 AM",
+    date: "2025-04-14"
   },
   {
     id: 3,
     title: "Evening Darshan",
     titleHi: "सायं दर्शन",
-    image: "https://images.unsplash.com/photo-1609696503575-30032d28e10d?q=80&w=1000",
-    time: "06:30 PM",
-    date: "2023-08-15"
+    image: "/lovable-uploads/0dc387c4-682c-498b-a4d8-b35159ef10a5.png",
+    time: "07:15 PM",
+    date: "2025-04-14"
   }
 ];
 

@@ -22,28 +22,33 @@ const translations = {
       donate: 'Donate',
       policies: 'Mandir Policies'
     },
-    auth: {
-      login: 'Login',
-      signup: 'Sign Up',
-      email: 'Email',
-      password: 'Password',
-      confirmPassword: 'Confirm Password',
-      username: 'Username',
-      forgotPassword: 'Forgot Password?',
-      noAccount: "Don't have an account?",
-      alreadyAccount: 'Already have an account?',
-      signupBtn: 'Create Account',
-      loginBtn: 'Sign In',
-      or: 'or',
-      rememberMe: 'Remember me',
-      welcomeBack: 'Welcome back',
-      createAccount: 'Create an account',
-      signupMessage: 'Join our mandir community',
-      emailPlaceholder: 'Enter your email',
-      passwordPlaceholder: 'Enter your password',
-      usernamePlaceholder: 'Choose a username',
-      passwordRequirements: 'Password must be at least 8 characters',
-      submitInfo: 'By creating an account, you agree to our Terms and Privacy Policy'
+    about: {
+      narsinghKatha: `The Story of Lord Narsingh Avatar
+
+In Sanatan Dharma, whenever dharma is in decline and adharma rises, Lord Vishnu takes avatar on Earth. His ten principal avatars are known as 'Dashavatar'. Among these, the fourth avatar was Narsingh, which the Lord took to destroy the demon Hiranyakashipu and protect his devotee Prahlad. This avatar was unique as the Lord appeared neither fully human nor fully animal — he manifested as half-lion and half-human.
+
+Long ago, sage Kashyap's wife Diti gave birth to two demon brothers — Hiranyaksha and Hiranyakashipu. Both were extremely powerful and arrogant. They terrorized the devas and spread chaos in the universe. When Hiranyaksha hid the Earth in the cosmic waters, Lord Vishnu took the Varaha avatar and killed him, restoring Earth to its place.
+
+Enraged by his brother's death, Hiranyakashipu vowed revenge against Lord Vishnu. He performed severe penance to please Lord Brahma and asked for a boon that no being could kill him — neither human nor animal; neither by day nor by night; neither inside nor outside; neither in sky nor on earth; and not by any weapon. Lord Brahma granted this boon.
+
+This boon made Hiranyakashipu even more arrogant. He expanded his power across the three worlds and declared himself God. He ordered everyone to worship only him. Anyone who took Lord Vishnu's name was punished.
+
+However, his son Prahlad was a supreme devotee of Lord Vishnu from childhood. He constantly remembered Narayan, sang His glory, and spread the message of devotion. When Hiranyakashipu learned that his own son was disobeying his orders, he became furious.
+
+Hiranyakashipu tried many times to stop Prahlad from worshipping Vishnu, but Prahlad never wavered. Then he tried to kill Prahlad — through poison, by having elephants trample him, by placing him in fire (with Holika), but each time Lord Vishnu protected His devotee. Prahlad survived every attempt.
+
+One day, in anger, Hiranyakashipu asked Prahlad:
+"Where is your Vishnu? Is He in this pillar too?"
+Prahlad calmly replied:
+"Yes, He is everywhere — even in this pillar."
+
+Hiranyakashipu struck the pillar in rage, and at that moment, Lord Vishnu emerged in His Narsingh avatar — half-lion, half-human. This form was neither fully human nor fully animal — thus adhering to Lord Brahma's boon.
+
+As Narsingh, the Lord caught Hiranyakashipu at the threshold of his palace — neither inside nor outside. It was twilight — neither day nor night. He placed him on His thighs — neither earth nor sky — and tore him apart with His nails — neither weapon nor projectile. Thus, every condition of the boon was fulfilled in Hiranyakashipu's death.
+
+Afterward, Lord Narsingh became extremely fierce. No deity could calm Him. Then His supreme devotee Prahlad approached His feet and humbly prayed. Pleased by his devotion, Lord Narsingh became peaceful and blessed Prahlad.
+
+Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story teaches us that devotion has power. The Lord Himself protects His true devotees, no matter how difficult the circumstances. Pride, tyranny, and adharma must end — and dharma, truth, and devotion always triumph.`
     },
     donation: {
       title: 'Donate to the Mandir',
@@ -95,7 +100,30 @@ const translations = {
       refundTitle: 'Return & Refund Policy',
       privacyTitle: 'Privacy Policy',
       disclaimerTitle: 'Disclaimer'
-    }
+    },
+    auth: {
+      login: 'Login',
+      signup: 'Sign Up',
+      email: 'Email',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      username: 'Username',
+      forgotPassword: 'Forgot Password?',
+      noAccount: "Don't have an account?",
+      alreadyAccount: 'Already have an account?',
+      signupBtn: 'Create Account',
+      loginBtn: 'Sign In',
+      or: 'or',
+      rememberMe: 'Remember me',
+      welcomeBack: 'Welcome back',
+      createAccount: 'Create an account',
+      signupMessage: 'Join our mandir community',
+      emailPlaceholder: 'Enter your email',
+      passwordPlaceholder: 'Enter your password',
+      usernamePlaceholder: 'Choose a username',
+      passwordRequirements: 'Password must be at least 8 characters',
+      submitInfo: 'By creating an account, you agree to our Terms and Privacy Policy'
+    },
   },
   hi: {
     nav: {
@@ -109,29 +137,6 @@ const translations = {
       user: 'उपयोगकर्ता',
       donate: 'दान करें',
       policies: 'मंदिर नीतियां'
-    },
-    auth: {
-      login: 'लॉगिन',
-      signup: 'साइन अप',
-      email: 'ईमेल',
-      password: 'पासवर्ड',
-      confirmPassword: 'पासवर्ड की पुष्टि करें',
-      username: 'उपयोगकर्ता नाम',
-      forgotPassword: 'पासवर्ड भूल गए?',
-      noAccount: 'खाता नहीं है?',
-      alreadyAccount: 'पहले से ही खाता है?',
-      signupBtn: 'खाता बनाएं',
-      loginBtn: 'साइन इन करें',
-      or: 'या',
-      rememberMe: 'मुझे याद रखें',
-      welcomeBack: 'वापसी पर स्वागत है',
-      createAccount: 'खाता बनाएं',
-      signupMessage: 'हमारे मंदिर समुदाय से जुड़ें',
-      emailPlaceholder: 'अपना ईमेल दर्ज करें',
-      passwordPlaceholder: 'अपना पासवर्ड दर्ज करें',
-      usernamePlaceholder: 'एक उपयोगकर्ता नाम चुनें',
-      passwordRequirements: 'पासवर्ड कम से कम 8 अक्षर का होना चाहिए',
-      submitInfo: 'खाता बनाकर, आप हमारी शर्तों और गोपनीयता नीति से सहमत हैं'
     },
     donation: {
       title: 'मंदिर को दान करें',
@@ -183,7 +188,30 @@ const translations = {
       refundTitle: 'वापसी और धनवापसी नीति',
       privacyTitle: 'गोपनीयता नीति',
       disclaimerTitle: 'अस्वीकरण'
-    }
+    },
+    auth: {
+      login: 'लॉगिन',
+      signup: 'साइन अप',
+      email: 'ईमेल',
+      password: 'पासवर्ड',
+      confirmPassword: 'पासवर्ड की पुष्टि करें',
+      username: 'उपयोगकर्ता नाम',
+      forgotPassword: 'पासवर्ड भूल गए?',
+      noAccount: 'खाता नहीं है?',
+      alreadyAccount: 'पहले से ही खाता है?',
+      signupBtn: 'खाता बनाएं',
+      loginBtn: 'साइन इन करें',
+      or: 'या',
+      rememberMe: 'मुझे याद रखें',
+      welcomeBack: 'वापसी पर स्वागत है',
+      createAccount: 'खाता बनाएं',
+      signupMessage: 'हमारे मंदिर समुदाय से जुड़ें',
+      emailPlaceholder: 'अपना ईमेल दर्ज करें',
+      passwordPlaceholder: 'अपना पासवर्ड दर्ज करें',
+      usernamePlaceholder: 'एक उपयोगकर्ता नाम चुनें',
+      passwordRequirements: 'पासवर्ड कम से कम 8 अक्षर का होना चाहिए',
+      submitInfo: 'खाता बनाकर, आप हमारी शर्तों और गोपनीयता नीति से सहमत हैं'
+    },
   }
 };
 

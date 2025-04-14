@@ -75,7 +75,13 @@ const TimingsSection = () => {
 
   const chaturdashiDates = [
     { name: "11 April 2025", day: "Friday" },
-    { name: "11 May 2025", day: "Sunday", isSpecial: true, note: "श्री नृसिंह चतुर्दशी" },
+    { 
+      name: "11 May 2025", 
+      day: "Sunday", 
+      isSpecial: true, 
+      note: "श्री नृसिंह चतुर्दशी",
+      highlight: true 
+    },
     { name: "10 June 2025", day: "Tuesday" },
     { name: "9 July 2025", day: "Wednesday" },
     { name: "8 August 2025", day: "Friday" },
@@ -85,7 +91,7 @@ const TimingsSection = () => {
     { name: "4 December 2025", day: "Thursday" },
     { name: "2 January 2026", day: "Friday" },
     { name: "2 February 2026", day: "Sunday" },
-    { name: "2 March 2026", day: "Monday" },
+    { name: "2 March 2026", day: "Monday" }
   ];
 
   return (
