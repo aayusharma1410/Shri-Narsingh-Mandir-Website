@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -74,6 +73,21 @@ const TimingsSection = () => {
       date: language === 'en' ? "December 23, 2023" : "23 दिसंबर, 2023" },
   ];
 
+  const chaturdashiDates = [
+    { name: "11 April 2025", day: "Friday" },
+    { name: "11 May 2025", day: "Sunday", isSpecial: true, note: "श्री नृसिंह चतुर्दशी" },
+    { name: "10 June 2025", day: "Tuesday" },
+    { name: "9 July 2025", day: "Wednesday" },
+    { name: "8 August 2025", day: "Friday" },
+    { name: "6 September 2025", day: "Saturday" },
+    { name: "6 October 2025", day: "Monday" },
+    { name: "4 November 2025", day: "Tuesday" },
+    { name: "4 December 2025", day: "Thursday" },
+    { name: "2 January 2026", day: "Friday" },
+    { name: "2 February 2026", day: "Sunday" },
+    { name: "2 March 2026", day: "Monday" },
+  ];
+
   return (
     <section id="timings" className="section-container bg-temple-cream/50" ref={sectionRef}>
       <div className="max-w-4xl mx-auto text-center mb-12">
@@ -117,15 +131,21 @@ const TimingsSection = () => {
               <div className="flex items-center mb-4">
                 <Calendar className="w-6 h-6 text-temple-gold mr-2" />
                 <h3 className="font-serif text-xl font-semibold text-temple-maroon">
-                  {language === 'en' ? 'Upcoming Festivals' : 'आगामी उत्सव'}
+                  {language === 'en' ? 'Chaturdashi Dates 2082' : 'चतुर्दशी तिथियाँ 2082'}
                 </h3>
               </div>
               
               <div className="space-y-4">
-                {upcomingEvents.map((event, index) => (
-                  <div key={index} className="border-b border-temple-gold/20 pb-4 last:border-0">
-                    <p className="font-medium text-temple-maroon">{event.name}</p>
-                    <p className="text-sm text-gray-600">{event.date}</p>
+                {chaturdashiDates.map((date, index) => (
+                  <div key={index} className={`border-b border-temple-gold/20 pb-4 last:border-0 ${
+                    date.isSpecial ? 'bg-temple-gold/10 p-3 rounded-lg' : ''
+                  }`}>
+                    <p className={`font-medium text-temple-maroon ${date.isSpecial ? 'font-bold' : ''}`}>
+                      {date.name} - {date.day}
+                      {date.isSpecial && (
+                        <span className="ml-2 text-temple-gold">({date.note})</span>
+                      )}
+                    </p>
                   </div>
                 ))}
               </div>

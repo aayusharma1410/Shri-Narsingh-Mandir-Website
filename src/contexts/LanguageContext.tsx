@@ -20,7 +20,7 @@ const translations = {
       logout: 'Logout',
       user: 'User',
       donate: 'Donate',
-      policies: 'Temple Policies'
+      policies: 'Mandir Policies'
     },
     auth: {
       login: 'Login',
@@ -38,7 +38,7 @@ const translations = {
       rememberMe: 'Remember me',
       welcomeBack: 'Welcome back',
       createAccount: 'Create an account',
-      signupMessage: 'Join our temple community',
+      signupMessage: 'Join our mandir community',
       emailPlaceholder: 'Enter your email',
       passwordPlaceholder: 'Enter your password',
       usernamePlaceholder: 'Choose a username',
@@ -46,8 +46,8 @@ const translations = {
       submitInfo: 'By creating an account, you agree to our Terms and Privacy Policy'
     },
     donation: {
-      title: 'Donate to the Temple',
-      description: 'Your contribution helps us maintain the temple and support community services.',
+      title: 'Donate to the Mandir',
+      description: 'Your contribution helps us maintain the mandir and support community services.',
       amount: 'Select an amount',
       custom: 'Custom amount',
       paymentMethod: 'Payment method',
@@ -62,10 +62,10 @@ const translations = {
     },
     hero: {
       welcome: "Welcome to",
-      temple: "Shri Narsingh Temple",
+      temple: "Shri Narsingh Mandir",
       subtitle: "A Sacred Space for Spiritual Connection",
       viewDarshan: "View Darshan",
-      templeTimings: "Temple Timings",
+      templeTimings: "Mandir Timings",
       aarti: "Aarti"
     },
     login: {
@@ -91,7 +91,7 @@ const translations = {
       loginLink: 'Sign In Instead'
     },
     policies: {
-      title: 'Temple Policies',
+      title: 'Mandir Policies',
       refundTitle: 'Return & Refund Policy',
       privacyTitle: 'Privacy Policy',
       disclaimerTitle: 'Disclaimer'
@@ -114,7 +114,7 @@ const translations = {
       login: 'लॉगिन',
       signup: 'साइन अप',
       email: 'ईमेल',
-      password: 'पासवर्���',
+      password: 'पासवर्ड',
       confirmPassword: 'पासवर्ड की पुष्टि करें',
       username: 'उपयोगकर्ता नाम',
       forgotPassword: 'पासवर्ड भूल गए?',
@@ -179,7 +179,7 @@ const translations = {
       loginLink: 'प्रवेश करें'
     },
     policies: {
-      title: 'मंदिर नीत��यां',
+      title: 'मंदिर नीतियां',
       refundTitle: 'वापसी और धनवापसी नीति',
       privacyTitle: 'गोपनीयता नीति',
       disclaimerTitle: 'अस्वीकरण'

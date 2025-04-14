@@ -8,10 +8,10 @@ const PraktotsavScheduleDialog = () => {
   const { language } = useLanguage();
   
   useEffect(() => {
-    // Show dialog after 30 seconds
+    // Show dialog after 5 seconds
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 30000);
+    }, 5000);
     
     return () => clearTimeout(timer);
   }, []);

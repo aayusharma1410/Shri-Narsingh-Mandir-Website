@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 
@@ -30,9 +29,9 @@ const DailySchedule = ({ isSummerTimings }: DailyScheduleProps) => {
     { event: "राज भोग", time: "11:45 AM-12:00 PM" },
     { event: "शयन", time: "12:30 PM-5:00 PM" },
     { event: "पट खुलने का समय", time: "5:00 PM" },
-    { event: "संध्या आरती", time: "7:45 PM-8:00 PM" },
-    { event: "शयन भोग", time: "9:30 PM-9:45 PM" },
-    { event: "रात्री शयन", time: "10:00 PM-5:00 AM" },
+    { event: "संध्या आरती", time: "6:30 PM-6:45 PM" },
+    { event: "शयन भोग", time: "7:00 PM" },
+    { event: "रात्री शयन", time: "7:30 PM-5:00 AM" },
   ];
 
   const schedule = isSummerTimings ? summerSchedule : winterSchedule;
