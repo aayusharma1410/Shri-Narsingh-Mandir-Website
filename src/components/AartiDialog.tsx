@@ -6,85 +6,284 @@ import { Music } from "lucide-react";
 
 // Aarti texts from the LiveAarti component
 const morningAarti = {
-  en: `Jai Lakshmi Narsingh ji, Jai Lakshmi Narsingh ji
-Shri Lakshmi Narsingh ji, Jai Lakshmi Narsingh ji
+  en: `Om Jai Jagdish Hare
+Swami Jai Jagdish Hare
+Bhakt jano ke sankat
+Kshan mein door kare
+Jo dhyave phal pave
+Dukh binse man ka
+Swami dukh binse man ka
+Sukh sampatti ghar aave
+Kasht mite tan ka
+Om Jai Jagdish Hare
 
-Prabhu ji tum Bhakt-vatsala ho, Prabhu ji tum Bhakt-vatsala ho
-Sharan mein lelo, Shri Lakshmi Narsingh ji
-Jai Lakshmi Narsingh ji, Jai Lakshmi Narsingh ji
+Maat-pita tum mere
+Sharan gahun main kiski
+Swami sharan gahun main kiski
+Tum bin aur na dooja
+Aas karun jiski
+Om Jai Jagdish Hare
 
-Prabhu ji kalyug mein sukh-shanti do, Prabhu ji kalyug mein sukh-shanti do
-Gyan vairagya do, Shri Lakshmi Narsingh ji
-Jai Lakshmi Narsingh ji, Jai Lakshmi Narsingh ji`,
+Tum poorn parmatma
+Tum antaryaami
+Swami tum antaryaami
+Parabrahma Parmeshwar
+Tum sabke Swami
+Om Jai Jagdish Hare
 
-  hi: `जय लक्ष्मी नृसिंह जी, जय लक्ष्मी नृसिंह जी
-श्री लक्ष्मी नृसिंह जी, जय लक्ष्मी नृसिंह जी
+Tum karuna ke saagar
+Tum paalan karta
+Swami tum paalan karta
+Main moorakh khal kaami
+Kripa karo bharta
+Om Jai Jagdish Hare
 
-प्रभु जी तुम भक्त-वत्सल हो, प्रभु जी तुम भक्त-वत्सल हो
-शरण में लेलो, श्री लक्ष्मी नृसिंह जी
-जय लक्ष्मी नृसिंह जी, जय लक्ष्मी नृसिंह जी
+Tum ho ek agochar
+Sabke praanpati
+Swami sabke praanpati
+Kis vidhi miloon dayamay
+Tumko main kumati
+Om Jai Jagdish Hare
 
-प्रभु जी कलयुग में सुख-शान्ति दो, प्रभु जी कलयुग में सुख-शान्ति दो
-ज्ञान वैराग्य दो, श्री लक्ष्मी नृसिंह जी
-जय लक्ष्मी नृसिंह जी, जय लक्ष्मी नृसिंह जी`
+Deenbandhu dukh-harta
+Tum Thakur mere
+Swami tum Thakur mere
+Apne haath uthao
+Dwaar pada tere
+Om Jai Jagdish Hare
+
+Vishay-vikaar mitaao
+Paap haro Deva
+Swami paap haro Deva
+Shraddha-bhakti badhaao
+Santan ki seva
+Om Jai Jagdish Hare
+
+Shri Lakshmi Narayan ji ki aarti
+Jo koi nar gaave
+Swami jo koi nar gaave
+Kahat Shivanand Swami
+Sukh sampatti paave
+Om Jai Jagdish Hare`,
+
+  hi: `ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे
+
+भक्त जनों के संकट, क्षण में दूर करे
+
+जो ध्यावे फल पावे, दुःख बिनसे मन का
+
+स्वामी दुःख बिनसे मन का
+
+सुख सम्पत्ति घर आवे, कष्ट मिटे तन का ॥ ॐ जय जगदीश हरे।
+
+मात-पिता तुम मेरे, शरण गहूँ में किसकी। स्वार्मी शरण गहूँ मैं किसकी।
+
+तुम बिन और न दूजा, आस करूँ जिसकी ॥ ॐ जय जगदीश हरे ।
+
+तुम पूरण परमात्मा, तुम अन्तर्यामी। स्वामी तुम अन्तर्यामी ।
+
+पारब्रह्म परमेश्वर, तुम सबके स्वामी ॥ ॐ जय जगदीश हरे।
+
+तुम करुणा के सागर, तुम पालन कर्ता । स्वामी तुम पालन-कर्ता ।
+
+में मूरख खल कामी, कृपा करो भर्ता ॥ ॐ जय जगदीश हरे।
+
+तुम हो एक अगोचर, सबके प्राणपति । स्वामी सबके प्राणपति ।
+
+किस विधि मिलूँ दयामय, तुमको मैं कुमति ॥ ॐ जय जगदीश हरे ।
+
+दीनबन्धु दुखहर्ता, तुम ठाकुर मेरे। स्वामी तुम ठाकुर मेरे।
+
+अपने हाथ उठाओ, द्वार पड़ा तेरे ॥ ॐ जय जगदीश हरे ।
+
+विषय-विकार मिटाओ, पाप हरो देवा । स्वभी पाप हरो देवा ।
+
+श्रद्धा-भक्ति बढ़ाओ, सन्तन की सेवा ॥ ॐ जय जगदीश हरे।
+
+श्री लक्ष्मीनृसिंहजी की आरती, जो कोई नर गावे।
+
+स्वामी जो कोई नर गावे ।
+
+कहत शिवानन्द स्वामी, सुख संपत्ति पावे ॥
+
+ॐ जय जगदीश हरे।`
 };
 
 const eveningAarti = {
-  en: `Om Jay Jagadish Hare, Swami Jay Jagadish Hare
-Bhakt Jano Ke Sankat, Daas Jano Ke Sankat
-Kshan Men Door Kare, Om Jay Jagadish Hare
+  en: `Aarti Narsingh Baba ki utaaro khamb fathaye ki
+Prem se bhakt Prahlad rata, pita ki shakti se ladta
+Dhyan mein magan Ram ka, shabd bhakt ka maan rakhaye ki
+Aarti...
 
-Jo Dhyave Phal Pave, Dukh Bin Se Man Ka
-Swami Dukh Bin Se Man Ka, Sukh Sampati Ghar Aave
-Sukh Sampati Ghar Aave, Kashta Mite Tan Ka
-Om Jay Jagadish Hare
+Khamb ko laal agni keena, bhakt le ja lipta deena
+Lamb se nikli gunj bhari, asurni garbh giraye ki
+Aarti...
 
-Maat Pita Tum Mere, Sharan Kahoon Kiski
-Swami Sharan Kahoon Kiski, Tum Bin Aur Na Dooja
-Tum Bin Aur Na Dooja, Aas Karoon Jiski
-Om Jay Jagadish Hare`,
+Khadag ko khamb bheja deena, kahaan tera Ram, bata deena
+Roop hai ugrav ati ke Hari, Narsingh banaye ki
+Aarti...
 
-  hi: `ॐ जय जगदीश हरे, स्वामी जय जगदीश हरे
-भक्त जनों के संकट, दास जनों के संकट
-क्षण में दूर करे, ॐ जय जगदीश हरे
+Daitya ka faatat hai sina, dekh tad roop mati heena
+Roop hai ugrav adhik hi apaar, shaant hi dhyan dharaye ki
+Aarti...
 
-जो ध्यावे फल पावे, दुख बिनसे मन का
-स्वामी दुख बिनसे मन का, सुख सम्पत्ति घर आवे
-सुख सम्पत्ति घर आवे, कष्ट मिटे तन का
-ॐ जय जगदीश हरे
+Jivha bani hui chhuri dhaar, mukut dheedi bahut vishal
+Phatat jab hriday asur sab, darat khamb se prakat nikaale ki
+Aarti...
 
-मात-पिता तुम मेरे, शरण कहूँ किसकी
-स्वामी शरण कहूँ किसकी, तुम बिन और न दूजा
-तुम बिन और न दूजा, आस करूँ जिसकी
-ॐ जय जगदीश हरे`
+Shish par jata ati pyaari, kees mein daadhi si chhaari
+Netra hain laala laal bhaari, ang mein pitambar dhaari
+Aarti...
+
+Gale mein Vaijayanti mala, shish par mukut ghara nyaara
+Kaan mein kundal ati pyaara, kar mein shankh chakra dhaari
+Aarti...
+
+Lakshmi ji vaame ang bilse, devta darshan ko tarse
+Gagan se pushp bahut varse, mahipar mangalkari ki
+Aarti...
+
+Gaj ko graah ne aa jakda, tarsoon graah ko ja pakda
+Phiraakar chakra kaat graahik, Garud taje dhaavan waale ki
+Aarti...
+
+Aarti Shri Narsingh gaaye, gaate pad vo amar paaye
+Hari yu kehta kar jore, laaj rakh Vishnudas kul ki
+Aarti...
+
+Sevak yu kehta kar jore, laaj rakh hum sab bhakton ki
+Aarti Narsingh Baba ki utaaro khamb fathaye ki`,
+
+  hi: `आरती नृसिंह बाबाकी उतारो खम्यफटये की।
+
+प्रेम से भक्त प्रहलाद रटा पिता की शक्ति से नड़टां ।।
+
+ध्यान में मग्न राम का शब्द भक्त का मान रखैये की ।। आरती. ।।
+
+खम्व को लाल अगनी कीना, भक्त लेजा लिपटा दीना ।।
+
+लम्ब से निकली गुन्ज भरी असुरणी गर्भ गिरैये की ।
+
+खड़ग को खम्ब पेजा दीनां कहां तेरा राम वता देना ।।
+
+रूप हे उग्र अति के हरि नरसे सिंह बनये की ।। आरती. ।।
+
+दैत्वका फाटत है सिना देख तद् रुपमति हीना ।
+
+रूप है उग्र अधिक ही अपार शान्त ही ध्यान धरैय की ।। आरती. ।।
+
+जिवहा बनी हुई छुरधार मुकुटि ढेडी बहुत विशाल
+
+फटत जब हृदय असुर सब डरत खम्ब से प्रगट न्दाले की ।। आरती. ।।
+
+शिशपर जटा अति प्यारी किर में दाढ़ी सी छारी ।
+
+नेत्र हैं लाला लाल भारी अंग में पिताम्बर धारी ।। आरती. ।।
+
+गले में वेजन्तीमाला शिशपर मुकुट घरा न्यारा ।
+
+कान में कुण्डल अतिप्यारा कर में संख चक्र धारी ।। आरती. ।।
+
+लक्ष्मी जी वांमे अंग बिलसे देवता दर्शन को तरसे ।
+
+गगन से पुष्प बहुत वर्षे महिपर मंगलकारी की ।। आरती.।।
+
+गजको ग्राहने आ जकड़ा टरसुन ग्राहको जा पकड़ा
+
+फिराकर चक्र काट ग्राइक गरुड़ तज धावन वाले की ।। आरती.।।
+
+आरती श्री नृसिंह गाये गाते पद वो अमर पावे ।
+
+हरि यु कहता करजोरे लाज रख विष्णुदास कुल की ।। आरती. ।।
+
+सेवक यु कहता करजोरे लाज रख हम सब भक्तों की ।`
 };
 
 const nightAarti = {
-  en: `Aarti Keeje Shri Bhagawan, Jai Jai Narsingh Bhagawan
-Sharan Mein Aaye Sahay Karo, Jai Jai Narsingh Bhagawan
+  en: `Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Chhappan bhog chhatteeson vyanjan, naana vidhi ke kand ॥1॥
 
-Karuna Sindhu Sada Sukh-daata, Deen-bandhu Dayal
-Tum Ho Jagat Ke Paalan-karta, Deenon Ke Pratipal
-Bhav-bandhan Se Mukti Dilaado, Do Bhakti Ka Daan
-Jai Jai Narsingh Bhagawan, Jai Jai Narsingh Bhagawan
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Duryodhan ghar mewa tyaagi, to shaak Vidur ghar paayo ॥2॥
 
-Jo Sharanaagat Tumhare Aaye, Unko Kiye Kalyan
-Jo Drohee Ban Ke Sataye, Unka Kiya Vinash
-Bhakt Prahlad Ki Raksha Kaarani, Liya Avataar
-Jai Jai Narsingh Bhagawan, Jai Jai Narsingh Bhagawan`,
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Bhilni ke ber, Sudama ke tandul, ruchi ruchi bhog lagaayo ॥3॥
 
-  hi: `आरती कीजै श्री भगवान, जय जय नृसिंह भगवान
-शरण में आये सहाय करो, जय जय नृसिंह भगवान
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Karma Bai ko kheechdo khayo, to bhakta ko maan badhaayo ॥4॥
 
-करुणा सिंधु सदा सुख-दाता, दीन-बंधु दयाल
-तुम हो जगत के पालन-कर्ता, दीनों के प्रतिपाल
-भव-बंधन से मुक्ति दिलादो, दो भक्ति का दान
-जय जय नृसिंह भगवान, जय जय नृसिंह भगवान
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Narad Muni panvaado lyaaye, to jal bhar lyaaye Shri Gang ॥5॥
 
-जो शरणागत तुम्हारे आये, उनको किये कल्याण
-जो द्रोही बन के सताये, उनका किया विनाश
-भक्त प्रह्लाद की रक्षा कारणि, लिया अवतार
-जय जय नृसिंह भगवान, जय जय नृसिंह भगवान`
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Lakshmi ji bhojan aap banaave, to man mein bahut umang ॥6॥
+
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Chaaro Bhaiya jeeman baithe, to maat Kaushalya umang ॥7॥
+
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Prem bhaav se bhojan kariyo, to kariyo bahut aanand ॥8॥
+
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Sanak Sanandan chamvar dulaavat, to gaavat Ved anant ॥9॥
+
+Mahaprabhu aarogo Narsingh, Dayanidhi aarogo Narsingh
+Daas Vaijayanti gaali jo gaave, to man mein bahut umang ॥10॥
+
+Aao ji Kanhaaiya aapa chaupad khela
+Aao ji Saawariya aapa chaupad khela
+To baazi lagaai Guru Gyaan ki le,
+To jaaiyo re Kanuda beedo paan ki ॥11॥
+
+Paan ki re paan ki, aur ras gyaan ki
+Aur Guru Gyaan ki, aur Mata Janki
+Le to jaaiyo re Kanuda beedo paan ki ॥12॥`,
+
+  hi: `महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+छप्पन भोग छत्तीसों व्यंजन, नाना विधि के कंद ।1।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+दुर्योधन घर मेवा त्यागी, तो शाक विदुर घर पायो ।2।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+भीलनी के बेर सुदामा के तंदुल, रुचि रुचि भोग लगाओ 131
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+करमा बाई को खीचड़ो खायो, तो भक्ता को मान बढ़ायो 141
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+नारद मुनि पनवाड़ो ल्याये, तो जल भर ल्याये श्री गंग ।5।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह
+
+लक्ष्मी जी भोजन आप बनावे, तो मन में बहुत उमंग ।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 161
+
+चारों भैया जीमन बैठे, तो मात् कोशल्या उमंग।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 161
+
+प्रेम भाव से भोजन करियो, तो करियो बहुत आनंद।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 171
+
+सनक सनंदन चंवर डुलावत, तो गावत वेद अनन्त ।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 18।
+
+दास वैजन्ती गाली जो गावें, तो मन में बहुत उमंग ।
+
+महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 191
+
+आओ जी कन्हैया आपा चौपड़ खेला, आओ जी सांवरिया आपा चौपड़ खेला तो बाजी लगाई गुरु ज्ञान की ले, तो जाइजे रै कांनुडा बीडो पान की ।10।
+
+पान की रे पान की और रस ज्ञान की, और गुरु ज्ञान की, और माता जानकी, ले तो जाइजे रै कांनुडा बीडो पान की ।11।`
 };
 
 const AartiDialog = () => {

@@ -207,23 +207,23 @@ const LiveAarti = () => {
             
             <div className="space-y-4">
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">{language === 'en' ? 'Morning Aarti' : 'प्रातः आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '5:00 AM' : 'सुबह 5:00 बजे'}</p>
+                <p className="font-medium">{language === 'en' ? 'Morning Aarti' : 'मंगला आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '5:15 AM' : 'सुबह 5:15 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">{language === 'en' ? 'Bhog Aarti' : 'मध्याह्न आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '12:00 PM' : 'दोपहर 12:00 बजे'}</p>
+                <p className="font-medium">{language === 'en' ? 'Bhog Aarti' : 'भोग आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '11:15 PM' : 'दोपहर 11:15 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
                 <p className="font-medium">{language === 'en' ? 'Evening Aarti' : 'संध्या आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '7:0 PM' : 'शाम 7:00 बजे'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '7:15 PM' : 'शाम 7:15 बजे'}</p>
               </div>
               
               <div>
-                <p className="font-medium">{language === 'en' ? 'Shayan Bhog Aarti' : 'शयन आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '8:00 PM' : 'रात 8:00 बजे'}</p>
+                <p className="font-medium">{language === 'en' ? 'Shayan Bhog Aarti' : 'शयन भोग आरती'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '8:15 PM' : 'रात 8:15 बजे'}</p>
               </div>
             </div>
             
