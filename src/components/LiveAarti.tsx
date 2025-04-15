@@ -212,17 +212,17 @@ const LiveAarti = () => {
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
-                <p className="font-medium">{language === 'en' ? 'Afternoon Aarti' : 'मध्याह्न आरती'}</p>
+                <p className="font-medium">{language === 'en' ? 'Bhog Aarti' : 'मध्याह्न आरती'}</p>
                 <p className="text-sm text-gray-600">{language === 'en' ? '12:00 PM' : 'दोपहर 12:00 बजे'}</p>
               </div>
               
               <div className="border-b border-temple-gold/20 pb-3">
                 <p className="font-medium">{language === 'en' ? 'Evening Aarti' : 'संध्या आरती'}</p>
-                <p className="text-sm text-gray-600">{language === 'en' ? '6:30 PM' : 'शाम 6:30 बजे'}</p>
+                <p className="text-sm text-gray-600">{language === 'en' ? '7:0 PM' : 'शाम 7:00 बजे'}</p>
               </div>
               
               <div>
-                <p className="font-medium">{language === 'en' ? 'Night Aarti' : 'शयन आरती'}</p>
+                <p className="font-medium">{language === 'en' ? 'Shayan Bhog Aarti' : 'शयन आरती'}</p>
                 <p className="text-sm text-gray-600">{language === 'en' ? '8:00 PM' : 'रात 8:00 बजे'}</p>
               </div>
             </div>

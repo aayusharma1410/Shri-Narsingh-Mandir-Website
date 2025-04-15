@@ -7,9 +7,9 @@ interface DailyScheduleProps {
 
 const DailySchedule = ({ isSummerTimings }: DailyScheduleProps) => {
   const summerSchedule = [
-    { event: "पट खुलने का समय", time: "5:00 AM" },
-    { event: "अभिषेक", time: "5:00 AM-5:15 AM" },
-    { event: "श्रृंगार", time: "5:15 AM-5:30 AM" },
+    { event: "पट खुलने का समय", time: "4:30 AM" },
+    { event: "अभिषेक", time: "4:30 AM-4:45 AM" },
+    { event: "श्रृंगार", time: "4:45 AM-5:00 AM" },
     { event: "मंगला आरती", time: "5:00 AM-5:15 AM" },
     { event: "भोग आरती", time: "11:15 AM-11:30 AM" },
     { event: "शयन", time: "12:30 PM-5:00 PM" },
