@@ -343,9 +343,7 @@ const LiveAarti = () => {
                 <p className="mb-2 leading-relaxed text-gray-800">स्वामी जो कोई नर गावे ।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">कहत शिवानन्द स्वामी, सुख संपत्ति पावे ॥</p>
                 <p className="mb-2 leading-relaxed text-gray-800">ॐ जय जगदीश हरे।</p>
-                <p className="mt-4 text-sm text-gray-600 italic">Om Jai Jagdish Hare, Swami Jai Jagdish Hare <br />
-                Victory to the Lord of the universe, O Lord, victory to You, the Lord of the universe <br />
-                The troubles of Your devotees are removed in a moment... </p>
+                
               </div>
             </div>
           )}
@@ -376,8 +374,7 @@ const LiveAarti = () => {
                 <p className="mb-2 leading-relaxed text-gray-800">आरती श्री नृसिंह गाये गाते पद वो अमर पावे ।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">हरि यु कहता करजोरे लाज रख विष्णुदास कुल की ।। आरती. ।।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">सेवक यु कहता करजोरे लाज रख हम सब भक्तों की ।</p>
-                <p className="mt-4 text-sm text-gray-600 italic">Aarti of Lord Narasimha who appeared from the pillar.<br />
-                Devotee Prahlad with love chanted Ram's name against his father's might...</p>
+                
               </div>
             </div>
           )}
@@ -409,8 +406,7 @@ const LiveAarti = () => {
                 <p className="mb-2 leading-relaxed text-gray-800">महाप्रभु आरोगो नृसिंह दयानिधि आरोगो नृसिंह 191</p>
                 <p className="mb-2 leading-relaxed text-gray-800">आओ जी कन्हैया आपा चौपड़ खेला, आओ जी सांवरिया आपा चौपड़ खेला तो बाजी लगाई गुरु ज्ञान की ले, तो जाइजे रै कांनुडा बीडो पान की ।10।</p>
                 <p className="mb-2 leading-relaxed text-gray-800">पान की रे पान की और रस ज्ञान की, और गुरु ज्ञान की, और माता जानकी, ले तो जाइजे रै कांनुडा बीडो पान की ।11।</p>
-                <p className="mt-4 text-sm text-gray-600 italic">O Narasimha, treasure of compassion, please accept our offerings<br />
-                Fifty-six delicacies, thirty-six dishes, various kinds of roots...</p>
+                
               </div>
             </div>
           )}
