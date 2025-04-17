@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { GalleryImage } from "@/types/gallery";
@@ -9,9 +9,11 @@ import { format } from "date-fns";
 interface GalleryModalProps {
   image: GalleryImage;
   allImages: GalleryImage[];
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
+const GalleryModal = ({ image, allImages, open, onOpenChange }: GalleryModalProps) => {
   const [currentIndex, setCurrentIndex] = useState(() => {
     return allImages.findIndex((img) => img.id === image.id);
   });
