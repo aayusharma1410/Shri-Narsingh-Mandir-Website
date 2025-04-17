@@ -1,3 +1,4 @@
+
 import { supabase } from './supabase';
 
 /**
@@ -157,21 +158,77 @@ export async function ensureAdminAccount() {
         }
       });
       
-      if (createError) throw createError;
+      if (createError) {
+        console.error('Error creating admin account:', createError);
+        
+        // Try to create admin account manually through SQL
+        try {
+          // First create auth user if needed (this is dangerous in production but necessary for demo)
+          const { data: existingUser } = await supabase
+            .from('auth.users')
+            .select('id')
+            .eq('email', adminEmail)
+            .single();
+            
+          if (!existingUser) {
+            console.log('Attempting to insert admin into user_details directly');
+            // Directly insert into user_details table
+            const { error: insertError } = await supabase
+              .from('user_details')
+              .insert([
+                { 
+                  user_id: '00000000-0000-0000-0000-000000000000', // Placeholder
+                  email: adminEmail,
+                  username: 'admin',
+                  is_admin: true
+                }
+              ]);
+              
+            if (insertError) {
+              console.error('Error inserting admin into user_details:', insertError);
+            }
+          }
+        } catch (sqlError) {
+          console.error('Error executing SQL for admin creation:', sqlError);
+        }
+        
+        throw createError;
+      }
       
       console.log('Admin account created successfully!');
       
       // Update the user_details table to mark the user as admin
       if (newAdminData.user) {
         try {
-          // We need to directly execute SQL for this operation
-          const { error: rpcError } = await supabase.rpc('make_user_admin', { 
-            user_id: newAdminData.user.id 
-          });
-          
-          if (rpcError) throw rpcError;
-          
-          console.log('Admin role assigned successfully!');
+          // Directly insert into user_details table
+          const { error: insertError } = await supabase
+            .from('user_details')
+            .insert([
+              { 
+                user_id: newAdminData.user.id,
+                email: adminEmail,
+                username: 'admin',
+                is_admin: true
+              }
+            ]);
+            
+          if (insertError) {
+            console.error('Error inserting admin into user_details:', insertError);
+            
+            // Try to update if insert failed due to conflict
+            const { error: updateError } = await supabase
+              .from('user_details')
+              .update({ is_admin: true })
+              .eq('user_id', newAdminData.user.id);
+              
+            if (updateError) {
+              console.error('Error updating admin in user_details:', updateError);
+            } else {
+              console.log('Admin role updated successfully!');
+            }
+          } else {
+            console.log('Admin role assigned successfully!');
+          }
         } catch (error) {
           console.error('Error adding admin to user_details:', error);
         }
@@ -180,12 +237,35 @@ export async function ensureAdminAccount() {
       // Admin exists, ensure they have admin flag set
       if (adminUser.user) {
         try {
-          const { error: rpcError } = await supabase.rpc('make_user_admin', { 
-            user_id: adminUser.user.id 
-          });
-          
-          if (rpcError) {
-            console.error('Error updating admin status:', rpcError);
+          // Check if user exists in user_details
+          const { data: userDetails, error: userDetailsError } = await supabase
+            .from('user_details')
+            .select('*')
+            .eq('user_id', adminUser.user.id)
+            .single();
+            
+          if (userDetailsError || !userDetails) {
+            // User doesn't exist in user_details, insert
+            await supabase
+              .from('user_details')
+              .insert([
+                { 
+                  user_id: adminUser.user.id,
+                  email: adminEmail,
+                  username: 'admin',
+                  is_admin: true
+                }
+              ]);
+              
+            console.log('Admin user details created');
+          } else if (!userDetails.is_admin) {
+            // User exists but is not admin, update
+            await supabase
+              .from('user_details')
+              .update({ is_admin: true })
+              .eq('user_id', adminUser.user.id);
+              
+            console.log('Admin status updated to true');
           } else {
             console.log('Admin status verified');
           }

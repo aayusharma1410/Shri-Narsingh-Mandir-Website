@@ -1,9 +1,9 @@
 
 export interface GalleryImage {
   id: number;
-  src: string;
-  alt: string;
-  category: string;
+  image_url: string;
+  title: string;
+  created_at: string;
 }
 
 export type GalleryCategory = {
