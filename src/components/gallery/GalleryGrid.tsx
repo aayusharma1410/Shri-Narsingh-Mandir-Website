@@ -1,13 +1,67 @@
 
+import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { GalleryImage } from "@/types/gallery";
 import GalleryModal from "./GalleryModal";
+import { supabase } from "@/lib/supabase";
 
-interface GalleryGridProps {
-  images: GalleryImage[];
+interface GalleryImage {
+  id: number;
+  image_url: string;
+  title: string;
+  created_at: string;
 }
 
-const GalleryGrid = ({ images }: GalleryGridProps) => {
+const GalleryGrid = () => {
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('gallery_images')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          // Transform the data to match the expected format
+          const transformedData = data.map(item => ({
+            id: item.id,
+            src: item.image_url,
+            alt: item.title,
+            category: 'all'
+          }));
+          setImages(transformedData);
+        } else {
+          // Use fallback to static data if the database is empty
+          console.log('No gallery images found in the database. Using static data.');
+          setImages([]);
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+        setImages([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGalleryImages();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3, 4, 5, 6].map((index) => (
+          <div key={index} className="animate-pulse">
+            <div className="overflow-hidden rounded-xl shadow-lg bg-gray-200 aspect-[4/3]"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   if (!images || images.length === 0) {
     return (
       <div className="py-8 text-center">

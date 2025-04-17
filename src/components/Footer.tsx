@@ -1,121 +1,140 @@
 
-import { Mail, Phone, MapPin, FileText } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
-  const { t, language } = useLanguage();
-  const currentYear = new Date().getFullYear();
-  
+  const { language, t } = useLanguage();
+
   return (
-    <footer className="bg-temple-maroon text-white">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-temple-darkmaroon text-white pt-12 pb-6">
+      <div className="container px-4 mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">
+            <h3 className="font-serif text-2xl text-temple-gold mb-4">
               {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नृसिंह मंदिर'}
             </h3>
-            <p className="mb-4">
-              {language === 'en' 
-                ? 'Located in Hasampur, Rajasthan, Shri Narsingh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
-                : 'हसामपुर, राजस्थान में स्थित श्री नृसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
+            <p className="mb-4 text-white/80">
+              {language === 'en'
+                ? 'An ancient temple dedicated to Bhagwan Narsingh, situated in the serene village of Hasampur.'
+                : 'हसामपुर के शांत गांव में स्थित भगवान नृसिंह को समर्पित एक प्राचीन मंदिर।'}
             </p>
-            {/* Removed "Run by devotees' support" */}
+            <div className="flex space-x-3">
+              <a 
+                href="https://www.facebook.com/shrinarsinhgtemple" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-temple-gold/20 hover:bg-temple-gold/40 transition-colors"
+              >
+                <Facebook size={16} className="text-temple-gold" />
+              </a>
+              <a 
+                href="https://www.instagram.com/shrinarsinhgtemple" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-temple-gold/20 hover:bg-temple-gold/40 transition-colors"
+              >
+                <Instagram size={16} className="text-temple-gold" />
+              </a>
+            </div>
           </div>
           
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">
-              {language === 'en' ? 'Contact Us' : 'संपर्क करें'}
-            </h3>
-            <ul className="space-y-3">
-              <li className="flex">
-                <MapPin className="w-5 h-5 mr-3 text-temple-gold shrink-0" />
-                <span>
-                  {language === 'en' 
-                    ? 'Shri Narsingh Temple, Hasampur, Rajasthan, India'
-                    : 'श्री नृसिंह मंदिर, हसामपुर, राजस्थान, भारत'}
-                </span>
-              </li>
-              <li className="flex">
-                <Phone className="w-5 h-5 mr-3 text-temple-gold shrink-0" />
-                <span>+91 8955672580</span>
-              </li>
-              <li className="flex items-start">
-                <Mail className="w-5 h-5 mr-3 text-temple-gold shrink-0 mt-1" />
-                <span className="break-all">shrilakshminarsinghhasampur@gmail.com</span>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-serif text-xl font-bold mb-4">
-              {language === 'en' ? 'Quick Links' : 'त्वरित लिंक'}
+            <h3 className="font-medium text-lg text-temple-gold mb-4">
+              {t('footer.quickLinks')}
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Home' : 'मुख्य पृष्ठ'}
+                <Link to="/" className="text-white/80 hover:text-temple-gold transition-colors">
+                  {t('nav.home')}
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
+                <Link to="/about" className="text-white/80 hover:text-temple-gold transition-colors">
+                  {t('nav.about')}
                 </Link>
               </li>
               <li>
-                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Live Aarti' : 'लाइव आरती'}
+                <Link to="/gallery" className="text-white/80 hover:text-temple-gold transition-colors">
+                  {t('nav.gallery')}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Gallery' : 'चित्र दीर्घा'}
+                <Link to="/live-aarti" className="text-white/80 hover:text-temple-gold transition-colors">
+                  {t('nav.liveAarti')}
                 </Link>
               </li>
               <li>
-                <Link to="/timings" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Darshan Timings' : 'दर्शन समय'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/policies" className="hover:text-temple-gold transition-colors">
-                  {language === 'en' ? 'Temple Policies' : 'मंदिर नीतियां'}
+                <Link to="/timings" className="text-white/80 hover:text-temple-gold transition-colors">
+                  {t('nav.timings')}
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-serif text-xl font-bold mb-4">
-              {language === 'en' ? 'Get Updates' : 'अपडेट प्राप्त करें'}
+            <h3 className="font-medium text-lg text-temple-gold mb-4">
+              {t('footer.contactUs')}
             </h3>
-            <p className="mb-4">
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <MapPin size={18} className="text-temple-gold mr-3 mt-0.5 flex-shrink-0" />
+                <span className="text-white/80">
+                  {language === 'en' 
+                    ? 'Hasampur, Koderma, Jharkhand, India' 
+                    : 'हसामपुर, कोडरमा, झारखंड, भारत'}
+                </span>
+              </li>
+              <li className="flex items-center">
+                <Phone size={18} className="text-temple-gold mr-3 flex-shrink-0" />
+                <a href="tel:+917073990477" className="text-white/80 hover:text-temple-gold transition-colors">
+                  +91 7073990477
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Mail size={18} className="text-temple-gold mr-3 flex-shrink-0" />
+                <a href="mailto:shrilakshminarsinghhasampur@gmail.com" className="text-white/80 hover:text-temple-gold transition-colors">
+                  shrilakshminarsinghhasampur@gmail.com
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="font-medium text-lg text-temple-gold mb-4">
+              {language === 'en' ? 'Visit Us' : 'हमसे मिलें'}
+            </h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3635.6439245218415!2d85.62255287526271!3d24.342783277496244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f173a6f9b06c2b%3A0x1ec96075499a461f!2sLakshmi%20Narsingh%20Temple!5e0!3m2!1sen!2sin!4v1683804036741!5m2!1sen!2sin"
+              width="100%"
+              height="150"
+              style={{ border: 0, borderRadius: '8px' }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Temple Location"
+              className="mb-2"
+            ></iframe>
+            <p className="text-sm text-white/70">
               {language === 'en' 
-                ? 'Register your email for latest information and upcoming events at the temple.'
-                : 'मंदिर से जुड़ी नवीनतम जानकारी और आगामी कार्यक्रमों के लिए अपना ईमेल पंजीकृत करें।'}
+                ? 'Get directions to the temple' 
+                : 'मंदिर तक पहुंचने के लिए दिशा-निर्देश प्राप्त करें'}
             </p>
-            <div className="flex space-x-2">
-              <Input 
-                type="email" 
-                placeholder={language === 'en' ? 'Your Email' : 'आपका ईमेल'} 
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-temple-gold"
-              />
-              <Button className="bg-temple-gold hover:bg-temple-gold/80 text-white">
-                {language === 'en' ? 'Subscribe' : 'सदस्यता लें'}
-              </Button>
-            </div>
           </div>
         </div>
         
-        <Separator className="my-8 bg-white/20" />
+        <Separator className="my-6 bg-temple-gold/10" />
         
-        <div className="text-center text-white/70">
-          <p>
-            &copy; {currentYear} {language === 'en' ? 'Shri Narsingh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसामपुर। सर्वाधिकार सुरक्षित।'}
+        <div className="flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-sm text-white/70 mb-4 sm:mb-0">
+            &copy; {new Date().getFullYear()} {language === 'en' ? 'Shri Narsingh Temple. All rights reserved.' : 'श्री नृसिंह मंदिर। सर्वाधिकार सुरक्षित।'}
           </p>
+          <div className="flex space-x-4">
+            <Link to="/policies" className="text-sm text-white/70 hover:text-temple-gold transition-colors">
+              {t('footer.policies')}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

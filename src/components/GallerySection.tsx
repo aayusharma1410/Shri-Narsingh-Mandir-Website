@@ -1,17 +1,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import GalleryCategories from './gallery/GalleryCategories';
 import GalleryGrid from './gallery/GalleryGrid';
-import { galleryImages, categories } from '@/data/galleryData';
 
 const GallerySection = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  const filteredImages = activeCategory === 'all' 
-    ? galleryImages 
-    : galleryImages.filter(img => img.category === activeCategory);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,13 +40,7 @@ const GallerySection = () => {
         </p>
       </div>
       
-      <GalleryCategories 
-        categories={categories}
-        activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
-      />
-      
-      <GalleryGrid images={filteredImages} />
+      <GalleryGrid />
       
       <div className="mt-10 text-center opacity-0 animate-on-scroll">
         <Button 

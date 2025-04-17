@@ -14,6 +14,10 @@ import TimingsPage from "./pages/TimingsPage";
 import PoliciesPage from "./pages/PoliciesPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminDarshan from "./pages/admin/AdminDarshan";
+import AdminNotices from "./pages/admin/AdminNotices";
+import AdminGallery from "./pages/admin/AdminGallery";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +36,30 @@ const App = () => (
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/timings" element={<TimingsPage />} />
               <Route path="/policies" element={<PoliciesPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              
+              {/* Admin routes */}
+              <Route path="/admin" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/darshan" element={
+                <ProtectedRoute>
+                  <AdminDarshan />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/notices" element={
+                <ProtectedRoute>
+                  <AdminNotices />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/gallery" element={
+                <ProtectedRoute>
+                  <AdminGallery />
+                </ProtectedRoute>
+              } />
+              
+              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
