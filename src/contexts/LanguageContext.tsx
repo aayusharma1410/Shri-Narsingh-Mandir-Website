@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 type LanguageContextType = {
   language: 'en' | 'hi';
@@ -216,7 +217,8 @@ Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story tea
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<'en' | 'hi'>('en');
+  // Change default to Hindi
+  const [language, setLanguage] = useState<'en' | 'hi'>('hi');
 
   const t = (key: string) => {
     const keys = key.split('.');

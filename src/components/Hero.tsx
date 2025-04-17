@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import AartiDialog from './AartiDialog';
 
 const Hero = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAartiDialog, setShowAartiDialog] = useState(false);
   const navigate = useNavigate();
@@ -54,9 +54,13 @@ const Hero = () => {
             {t('hero.temple')}
           </h1>
           
-          <h2 className={`font-serif text-2xl md:text-3xl text-white mb-8 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className={`font-serif text-2xl md:text-3xl text-white mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {t('hero.subtitle')}
           </h2>
+          
+          <p className={`text-white/80 mb-8 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {language === 'en' ? 'Hasampur, Sikar, Rajasthan, India' : 'हसामपुर, सीकर, राजस्थान, भारत'}
+          </p>
           
           <div className={`transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

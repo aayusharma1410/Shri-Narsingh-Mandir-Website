@@ -8,17 +8,17 @@ const Footer = () => {
   const { language, t } = useLanguage();
 
   return (
-    <footer className="bg-temple-darkmaroon text-white pt-12 pb-6">
+    <footer className="bg-red-700 text-white pt-12 pb-6">
       <div className="container px-4 mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <h3 className="font-serif text-2xl text-temple-gold mb-4">
               {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नृसिंह मंदिर'}
             </h3>
             <p className="mb-4 text-white/80">
               {language === 'en'
-                ? 'An ancient temple dedicated to Bhagwan Narsingh, situated in the serene village of Hasampur.'
-                : 'हसामपुर के शांत गांव में स्थित भगवान नृसिंह को समर्पित एक प्राचीन मंदिर।'}
+                ? 'An ancient temple dedicated to Bhagwan Narsingh, situated in the serene village of Hasampur, Sikar, Rajasthan, India.'
+                : 'हसामपुर, सीकर, राजस्थान, भारत के शांत गांव में स्थित भगवान नृसिंह को समर्पित एक प्राचीन मंदिर।'}
             </p>
             <div className="flex space-x-3">
               <a 
@@ -82,8 +82,8 @@ const Footer = () => {
                 <MapPin size={18} className="text-temple-gold mr-3 mt-0.5 flex-shrink-0" />
                 <span className="text-white/80">
                   {language === 'en' 
-                    ? 'Hasampur, Koderma, Jharkhand, India' 
-                    : 'हसामपुर, कोडरमा, झारखंड, भारत'}
+                    ? 'Hasampur, Sikar, Rajasthan, India' 
+                    : 'हसामपुर, सीकर, राजस्थान, भारत'}
                 </span>
               </li>
               <li className="flex items-center">
@@ -99,28 +99,6 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-medium text-lg text-temple-gold mb-4">
-              {language === 'en' ? 'Visit Us' : 'हमसे मिलें'}
-            </h3>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3635.6439245218415!2d85.62255287526271!3d24.342783277496244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f173a6f9b06c2b%3A0x1ec96075499a461f!2sLakshmi%20Narsingh%20Temple!5e0!3m2!1sen!2sin!4v1683804036741!5m2!1sen!2sin"
-              width="100%"
-              height="150"
-              style={{ border: 0, borderRadius: '8px' }}
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Temple Location"
-              className="mb-2"
-            ></iframe>
-            <p className="text-sm text-white/70">
-              {language === 'en' 
-                ? 'Get directions to the temple' 
-                : 'मंदिर तक पहुंचने के लिए दिशा-निर्देश प्राप्त करें'}
-            </p>
           </div>
         </div>
         
