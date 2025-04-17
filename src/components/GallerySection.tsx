@@ -43,7 +43,7 @@ const GallerySection = () => {
         <p className="text-temple-gold font-medium mb-3 opacity-0 animate-on-scroll">दिव्य दर्शन</p>
         <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">मंदिर गैलरी</h2>
         <p className="text-lg opacity-0 animate-on-scroll">
-          श्री नृसिंह मंदिर हसमपुर के सुंदर दृश्यों, भव्य उत्सवों और आध्यात्मिक क्षणों की झलक देखें।
+          श्री नृसिंह मंदिर हसामपुर के सुंदर दृश्यों, भव्य उत्सवों और आध्यात्मिक क्षणों की झलक देखें।
         </p>
       </div>
       

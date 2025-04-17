@@ -38,7 +38,7 @@ const AboutSection = () => {
       title: language === 'en' ? "Ancient History" : "प्राचीन इतिहास",
       description: language === 'en' 
         ? "Over 565 years old, Shri Narsingh Temple is an important part of Hasampur's spiritual heritage."
-        : "565 वर्षों से अधिक पुराना, श्री नृसिंह मंदिर हसमपुर की आध्यात्मिक विरासत का एक महत्वपूर्ण हिस्सा है।"
+        : "565 वर्षों से अधिक पुराना, श्री नृसिंह मंदिर हसामपुर की आध्यात्मिक विरासत का एक महत्वपूर्ण हिस्सा है।"
     },
     {
       icon: <MapPin className="w-10 h-10 text-temple-maroon" />,
@@ -70,12 +70,12 @@ const AboutSection = () => {
           {language === 'en' ? 'About Us' : 'हमारे बारे में'}
         </p>
         <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">
-          {language === 'en' ? 'Shri Narsingh Temple Hasampur' : 'श्री नृसिंह मंदिर हसमपुर'}
+          {language === 'en' ? 'Shri Narsingh Temple Hasampur' : 'श्री नृसिंह मंदिर हसामपुर'}
         </h2>
         <p className="text-lg opacity-0 animate-on-scroll">
           {language === 'en' 
             ? 'Shri Narsingh Temple in Hasampur is an ancient temple dedicated to Lord Narasimha, one of the incarnations of Lord Vishnu. The temple is known for its beautiful architecture, serene atmosphere, and deep spiritual traditions.'
-            : 'श्री नृसिंह मंदिर हसमपुर भगवान नृसिंह को समर्पित एक प्राचीन मंदिर है, जो भगवान विष्णु के अवतारों में से एक हैं। यह मंदिर अपनी सुंदर वास्तुकला, शांत वातावरण और गहरी आध्यात्मिक परंपराओं के लिए जाना जाता है।'}
+            : 'श्री नृसिंह मंदिर हसामपुर भगवान नृसिंह को समर्पित एक प्राचीन मंदिर है, जो भगवान विष्णु के अवतारों में से एक हैं। यह मंदिर अपनी सुंदर वास्तुकला, शांत वातावरण और गहरी आध्यात्मिक परंपराओं के लिए जाना जाता है।'}
         </p>
       </div>
 
@@ -240,7 +240,7 @@ const AboutSection = () => {
           <p className="text-gray-700 mb-6">
             {language === 'en'
               ? 'Find directions to Shri Narsingh Temple, Hasampur, Rajasthan, India'
-              : 'श्री नृसिंह मंदिर, हसमपुर, राजस्थान, भारत तक पहुंचने का मार्ग'}
+              : 'श्री नृसिंह मंदिर, हसामपुर, राजस्थान, भारत तक पहुंचने का मार्ग'}
           </p>
         </div>
 
@@ -253,7 +253,7 @@ const AboutSection = () => {
             allowFullScreen={true} 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
-            title={language === 'en' ? "Location of Shri Narsingh Temple Hasampur" : "श्री नृसिंह मंदिर हसमपुर का स्थान"}
+            title={language === 'en' ? "Location of Shri Narsingh Temple Hasampur" : "श्री नृसिंह मंदिर हसामपुर का स्थान"}
             className="w-full h-full"
           ></iframe>
         </div>
@@ -267,7 +267,7 @@ const AboutSection = () => {
               {language === 'en' ? 'Shri Narsingh Temple' : 'श्री नृसिंह मंदिर'}
             </p>
             <p>
-              {language === 'en' ? 'Hasampur, Rajasthan,' : 'हसमपुर, राजस्थान,'}
+              {language === 'en' ? 'Hasampur, Rajasthan,' : 'हसामपुर, राजस्थान,'}
             </p>
             <p>
               {language === 'en' ? 'India' : 'भारत'}
@@ -301,7 +301,7 @@ const AboutSection = () => {
             <p>
               {language === 'en'
                 ? 'Nearest Bus Stop: Hasampur Bus Stand (1 km)'
-                : 'निकटतम बस स्टॉप: हसमपुर बस स्टैंड (1 किमी)'
+                : 'निकटतम बस स्टॉप: हसामपुर बस स्टैंड (1 किमी)'
               }
             </p>
           </div>

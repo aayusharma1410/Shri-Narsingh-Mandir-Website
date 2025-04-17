@@ -21,7 +21,7 @@ const Footer = () => {
             <p className="mb-4">
               {language === 'en' 
                 ? 'Located in Hasampur, Rajasthan, Shri Narsingh Temple is a center for spiritual peace and devotion. Devotees receive divine blessings by visiting this sacred place.'
-                : 'हसमपुर, राजस्थान में स्थित श्री नृसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
+                : 'हसामपुर, राजस्थान में स्थित श्री नृसिंह मंदिर आध्यात्मिक शांति और भक्ति का केंद्र है। यहां दर्शन करके भक्तगण परमात्मा का आशीर्वाद प्राप्त करते हैं।'}
             </p>
             {/* Removed "Run by devotees' support" */}
           </div>
@@ -36,7 +36,7 @@ const Footer = () => {
                 <span>
                   {language === 'en' 
                     ? 'Shri Narsingh Temple, Hasampur, Rajasthan, India'
-                    : 'श्री नृसिंह मंदिर, हसमपुर, राजस्थान, भारत'}
+                    : 'श्री नृसिंह मंदिर, हसामपुर, राजस्थान, भारत'}
                 </span>
               </li>
               <li className="flex">
@@ -114,7 +114,7 @@ const Footer = () => {
         
         <div className="text-center text-white/70">
           <p>
-            &copy; {currentYear} {language === 'en' ? 'Shri Narsingh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसमपुर। सर्वाधिकार सुरक्षित।'}
+            &copy; {currentYear} {language === 'en' ? 'Shri Narsingh Temple, Hasampur. All rights reserved.' : 'श्री नृसिंह मंदिर, हसामपुर। सर्वाधिकार सुरक्षित।'}
           </p>
         </div>
       </div>
