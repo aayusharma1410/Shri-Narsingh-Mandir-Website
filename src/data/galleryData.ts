@@ -1,20 +1,19 @@
-
 import { GalleryImage, GalleryCategory } from '@/types/gallery';
 
 export const galleryImages: GalleryImage[] = [
   { 
     id: 1, 
-    image_url: "/lovable-uploads/1434a5a6-10d5-4de1-a362-1d2ee64eced3.png", 
-    title: "Morning Darshan",
-    alt: "Morning Darshan", 
+    image_url: "/lovable-uploads/acbea974-756b-4308-a7dd-5f93aa907c3a.png",
+    title: "श्री नृसिंह देव दर्शन",
+    alt: "Shri Narsingh Dev Darshan", 
     category: "darshan",
     created_at: new Date().toISOString()
   },
   { 
     id: 2, 
-    image_url: "/lovable-uploads/6d709d5e-8162-4c9f-a65d-e08f56299ea8.png", 
-    title: "Afternoon Darshan",
-    alt: "Afternoon Darshan", 
+    image_url: "/lovable-uploads/d0ad4717-d4b0-47f6-9f34-65a4cc3931a2.png",
+    title: "श्री नृसिंह मंदिर दर्शन",
+    alt: "Shri Narsingh Temple Darshan", 
     category: "darshan",
     created_at: new Date().toISOString()
   },

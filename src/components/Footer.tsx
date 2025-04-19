@@ -1,8 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, FileText, Link as LinkIcon, Info } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const Footer = () => {
@@ -12,7 +11,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-b from-red-700 to-red-800 text-white pt-16 pb-8 shadow-lg border-t-4 border-temple-gold">
       <div className="container px-4 mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Temple Info */}
           <div className="flex flex-col items-start">
             <h3 className="font-serif text-2xl text-temple-gold mb-4 relative after:content-[''] after:block after:w-16 after:h-0.5 after:bg-temple-gold/70 after:mt-2">
@@ -45,10 +44,11 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Quick Links */}
+          {/* Important Links */}
           <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
-            <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2">
-              {t('footer.quickLinks')}
+            <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
+              <LinkIcon size={18} className="text-temple-gold" />
+              {language === 'en' ? 'Important Links' : 'महत्वपूर्ण लिंक्स'}
             </h3>
             <ul className="space-y-3">
               <li>
@@ -86,8 +86,9 @@ const Footer = () => {
           
           {/* Contact Info */}
           <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
-            <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2">
-              {t('footer.contactUs')}
+            <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
+              <Phone size={18} className="text-temple-gold" />
+              {language === 'en' ? 'Contact Us' : 'संपर्क करें'}
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start">
@@ -115,19 +116,42 @@ const Footer = () => {
               </li>
             </ul>
           </Card>
+
+          {/* Terms & Policies */}
+          <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
+            <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
+              <FileText size={18} className="text-temple-gold" />
+              {language === 'en' ? 'Terms & Policies' : 'नियम और नीतियां'}
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/policies#terms" className="text-white/90 hover:text-temple-gold transition-colors flex items-center gap-2 group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-temple-gold/50 group-hover:bg-temple-gold group-hover:w-2 transition-all"></span>
+                  {language === 'en' ? 'Terms & Conditions' : 'नियम और शर्तें'}
+                </Link>
+              </li>
+              <li>
+                <Link to="/policies#privacy" className="text-white/90 hover:text-temple-gold transition-colors flex items-center gap-2 group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-temple-gold/50 group-hover:bg-temple-gold group-hover:w-2 transition-all"></span>
+                  {language === 'en' ? 'Privacy Policy' : 'गोपनीयता नीति'}
+                </Link>
+              </li>
+              <li>
+                <Link to="/policies#donation" className="text-white/90 hover:text-temple-gold transition-colors flex items-center gap-2 group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-temple-gold/50 group-hover:bg-temple-gold group-hover:w-2 transition-all"></span>
+                  {language === 'en' ? 'Donation Policy' : 'दान नीति'}
+                </Link>
+              </li>
+            </ul>
+          </Card>
         </div>
         
         <Separator className="my-8 bg-temple-gold/20" />
         
-        <div className="flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-white/80 mb-4 sm:mb-0">
+        <div className="text-center">
+          <p className="text-sm text-white/80">
             &copy; {year} {language === 'en' ? 'Shri Narsingh Temple. All rights reserved.' : 'श्री नृसिंह मंदिर। सर्वाधिकार सुरक्षित।'}
           </p>
-          <div className="flex space-x-4">
-            <Link to="/policies" className="text-sm text-white/80 hover:text-temple-gold transition-colors">
-              {t('footer.policies')}
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
