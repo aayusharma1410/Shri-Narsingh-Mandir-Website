@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminDarshan from "./pages/admin/AdminDarshan";
 import AdminNotices from "./pages/admin/AdminNotices";
 import AdminGallery from "./pages/admin/AdminGallery";
+import PoshakSevaPage from "./pages/PoshakSevaPage";
 
 const queryClient = new QueryClient();
 
@@ -36,8 +36,8 @@ const App = () => (
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/timings" element={<TimingsPage />} />
               <Route path="/policies" element={<PoliciesPage />} />
+              <Route path="/poshak-seva" element={<PoshakSevaPage />} />
               
-              {/* Admin routes */}
               <Route path="/admin" element={
                 <ProtectedRoute>
                   <AdminDashboard />
@@ -59,7 +59,6 @@ const App = () => (
                 </ProtectedRoute>
               } />
               
-              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

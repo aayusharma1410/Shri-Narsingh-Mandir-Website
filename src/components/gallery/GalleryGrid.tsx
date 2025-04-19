@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import GalleryModal from "./GalleryModal";
 import { supabase } from "@/lib/supabase";
 import { GalleryImage } from "@/types/gallery";
-import { galleryImages } from "@/data/galleryData"; // Import static gallery data
 
 const GalleryGrid = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
@@ -14,8 +12,9 @@ const GalleryGrid = () => {
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
+      setIsLoading(true);
       try {
-        // First try to fetch from gallery_images table in Supabase
+        // First try to fetch from gallery_images table
         const { data: dbImages, error: dbError } = await supabase
           .from('gallery_images')
           .select('*')
@@ -24,64 +23,48 @@ const GalleryGrid = () => {
         if (dbError) {
           console.error('Error fetching gallery images from DB:', dbError);
         }
-        
-        // Then try to fetch images from gallery storage bucket
+
+        // Then fetch images from gallery storage bucket
         const { data: storageImages, error: storageError } = await supabase
           .storage
           .from('gallery')
           .list('', {
             limit: 100,
-            offset: 0,
             sortBy: { column: 'name', order: 'asc' }
           });
-          
+
         if (storageError) {
           console.error('Error fetching gallery images from storage:', storageError);
         }
-        
-        // Combine images from different sources
-        let allImages: GalleryImage[] = [...galleryImages]; // Start with static images
-        
+
+        let allImages: GalleryImage[] = [];
+
         // Add database images if any
         if (dbImages && dbImages.length > 0) {
-          dbImages.forEach((dbImage) => {
-            // Convert database image to our format if needed
-            if (!allImages.some(img => img.id === dbImage.id)) {
-              allImages.push(dbImage as GalleryImage);
-            }
-          });
+          allImages = [...dbImages];
         }
-        
+
         // Add storage images if any
         if (storageImages && storageImages.length > 0) {
           const storageBaseUrl = supabase.storage.from('gallery').getPublicUrl('').data.publicUrl;
           
-          storageImages.forEach((file, index) => {
-            if (!file.name.includes('.')) return; // Skip folders
-            
-            const fileUrl = `${storageBaseUrl}/${file.name}`;
-            // Avoid duplicates by checking if URL already exists
-            if (!allImages.some(img => img.image_url === fileUrl)) {
-              allImages.push({
-                id: 10000 + index, // Use high IDs to avoid conflicts
-                image_url: fileUrl,
-                title: file.name.split('.')[0],
-                alt: file.name.split('.')[0],
-                category: "mandir",
-                created_at: file.created_at || new Date().toISOString()
-              });
-            }
-          });
+          const storageImagesFormatted = storageImages
+            .filter(file => !file.name.startsWith('.')) // Filter out hidden files
+            .map((file, index) => ({
+              id: `storage-${index}`,
+              title: file.name.split('.')[0],
+              image_url: `${storageBaseUrl}/${file.name}`,
+              category: "mandir",
+              created_at: file.created_at || new Date().toISOString()
+            }));
+
+          allImages = [...allImages, ...storageImagesFormatted];
         }
-        
-        // Sort by created_at
-        allImages.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        
+
         setImages(allImages);
       } catch (error) {
         console.error('Error in fetchGalleryImages:', error);
-        // Fallback to static data
-        setImages(galleryImages);
+        setImages([]);
       } finally {
         setIsLoading(false);
       }

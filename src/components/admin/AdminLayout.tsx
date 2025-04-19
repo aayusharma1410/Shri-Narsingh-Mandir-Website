@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -108,6 +107,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               </div>
               <div className="px-4">
                 <div className="space-y-1">
+                  <Link to="/">
+                    <Button variant="ghost" className="w-full justify-start">
+                      <Home className="mr-2 h-4 w-4" />
+                      Back to Website
+                    </Button>
+                  </Link>
                   <Link to="/admin">
                     <Button variant="ghost" className="w-full justify-start">
                       <Home className="mr-2 h-4 w-4" />

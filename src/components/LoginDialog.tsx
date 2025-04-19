@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -8,10 +7,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import SignUpForm from './SignUpForm';
 import { AtSign, Lock } from 'lucide-react';
+import { toast } from '@/components/ui/toast';
 
 interface LoginDialogProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
@@ -28,7 +28,6 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user types
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -58,8 +57,17 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
     
     try {
       await signIn(loginData.email, loginData.password);
-    } catch (error) {
-      console.error('Login failed:', error);
+      onOpenChange(false);
+      toast({
+        title: "Success",
+        description: "Successfully logged in",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to log in",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }

@@ -83,6 +83,7 @@ const Navbar = () => {
     { name: t('nav.liveAarti'), path: "/live-aarti" },
     { name: t('nav.gallery'), path: "/gallery" },
     { name: t('nav.timings'), path: "/timings" },
+    { name: "Poshak Seva", path: "/poshak-seva" },
   ];
 
   return (
