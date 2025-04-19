@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import { Menu, X, Globe, User } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginDialog from './LoginDialog';
+import { supabase } from '@/lib/supabase';
 
 const Navbar = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -23,12 +23,10 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const [username, setUsername] = useState("");
 
-  // Get username from user object or metadata
   useEffect(() => {
     if (user) {
       const fetchUsername = async () => {
         try {
-          // Try to get username from user_details table
           const { data, error } = await supabase
             .from('user_details')
             .select('username')
@@ -38,7 +36,6 @@ const Navbar = () => {
           if (data && data.username) {
             setUsername(data.username);
           } else {
-            // Fallback to email if username not found
             setUsername(user.email?.split('@')[0] || 'User');
           }
         } catch (error) {
@@ -51,7 +48,6 @@ const Navbar = () => {
     }
   }, [user]);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -65,7 +61,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
@@ -107,7 +102,6 @@ const Navbar = () => {
               </span>
             </Link>
 
-            {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-6">
               {navLinks.map((link) => (
                 <Link
@@ -123,7 +117,6 @@ const Navbar = () => {
                 </Link>
               ))}
 
-              {/* Language Toggle - ENHANCED */}
               <Button 
                 onClick={toggleLanguage} 
                 variant="outline" 
@@ -181,7 +174,6 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile menu trigger */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -211,7 +203,6 @@ const Navbar = () => {
                     </Link>
                   ))}
 
-                  {/* Mobile Language Toggle - ENHANCED */}
                   <Button 
                     onClick={toggleLanguage} 
                     variant="outline"
