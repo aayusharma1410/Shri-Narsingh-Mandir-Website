@@ -1,3 +1,4 @@
+
 import { GalleryImage, GalleryCategory } from '@/types/gallery';
 
 export const galleryImages: GalleryImage[] = [
@@ -78,6 +79,22 @@ export const galleryImages: GalleryImage[] = [
     image_url: "/lovable-uploads/aa5bf370-ee00-4613-93a3-805c90a67e20.png", 
     title: "Sacred Murti",
     alt: "Sacred Murti", 
+    category: "darshan",
+    created_at: new Date().toISOString()
+  },
+  { 
+    id: 11, 
+    image_url: "/lovable-uploads/acbea974-756b-4308-a7dd-5f93aa907c3a.png",
+    title: "Temple Overview",
+    alt: "Temple Overview", 
+    category: "mandir",
+    created_at: new Date().toISOString()
+  },
+  { 
+    id: 12, 
+    image_url: "/lovable-uploads/d0ad4717-d4b0-47f6-9f34-65a4cc3931a2.png",
+    title: "श्री नृसिंह मंदिर दर्शन",
+    alt: "Shri Narsingh Temple Darshan", 
     category: "darshan",
     created_at: new Date().toISOString()
   }
