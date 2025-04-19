@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Home, Image, Bell, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -29,9 +30,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       }
 
       try {
-        const adminStatus = await isUserAdmin(user.id);
-        console.log('Admin status:', adminStatus);
-        setIsAdmin(adminStatus);
+        // Check if user has admin email
+        if (user.email === 'shrilakshminarsinghhasampur@gmail.com') {
+          console.log('Admin email detected:', user.email);
+          setIsAdmin(true);
+          
+          // Also ensure they have admin flag in user_details
+          const { data, error } = await supabase
+            .from('user_details')
+            .update({ is_admin: true })
+            .eq('user_id', user.id);
+            
+          if (error) console.error('Error updating admin status:', error);
+        } else {
+          // For non-specific emails, check admin status via function
+          const adminStatus = await isUserAdmin(user.id);
+          console.log('Admin status for non-specific email:', adminStatus);
+          setIsAdmin(adminStatus);
+        }
       } catch (error) {
         console.error('Error checking admin status:', error);
         setIsAdmin(false);
@@ -60,7 +76,17 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     );
   }
 
-  if (!user || isAdmin === false) {
+  if (!user) {
+    toast({
+      title: "Access Denied",
+      description: "Please login to access the admin area.",
+      variant: "destructive",
+    });
+    return <Navigate to="/" replace />;
+  }
+  
+  // Special check for the specific admin email
+  if (user.email !== 'shrilakshminarsinghhasampur@gmail.com' && isAdmin === false) {
     toast({
       title: "Access Denied",
       description: "You need admin privileges to access this area.",
@@ -117,7 +143,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             Logout
           </Button>
           <div className="mt-2 px-2 text-xs text-muted-foreground">
-            Logged in as Admin
+            Logged in as Admin: {user.email}
           </div>
         </div>
       </Sidebar>

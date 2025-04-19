@@ -4,6 +4,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import GalleryModal from "./GalleryModal";
 import { supabase } from "@/lib/supabase";
 import { GalleryImage } from "@/types/gallery";
+import { galleryImages } from "@/data/galleryData"; // Import static gallery data
 
 const GalleryGrid = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
@@ -14,23 +15,73 @@ const GalleryGrid = () => {
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
-        const { data, error } = await supabase
+        // First try to fetch from gallery_images table in Supabase
+        const { data: dbImages, error: dbError } = await supabase
           .from('gallery_images')
           .select('*')
           .order('created_at', { ascending: false });
-        
-        if (error) throw error;
-        
-        if (data && data.length > 0) {
-          setImages(data);
-        } else {
-          // Use fallback to static data if the database is empty
-          console.log('No gallery images found in the database. Using static data.');
-          setImages([]);
+          
+        if (dbError) {
+          console.error('Error fetching gallery images from DB:', dbError);
         }
+        
+        // Then try to fetch images from gallery storage bucket
+        const { data: storageImages, error: storageError } = await supabase
+          .storage
+          .from('gallery')
+          .list('', {
+            limit: 100,
+            offset: 0,
+            sortBy: { column: 'name', order: 'asc' }
+          });
+          
+        if (storageError) {
+          console.error('Error fetching gallery images from storage:', storageError);
+        }
+        
+        // Combine images from different sources
+        let allImages: GalleryImage[] = [...galleryImages]; // Start with static images
+        
+        // Add database images if any
+        if (dbImages && dbImages.length > 0) {
+          dbImages.forEach((dbImage) => {
+            // Convert database image to our format if needed
+            if (!allImages.some(img => img.id === dbImage.id)) {
+              allImages.push(dbImage as GalleryImage);
+            }
+          });
+        }
+        
+        // Add storage images if any
+        if (storageImages && storageImages.length > 0) {
+          const storageBaseUrl = supabase.storage.from('gallery').getPublicUrl('').data.publicUrl;
+          
+          storageImages.forEach((file, index) => {
+            if (!file.name.includes('.')) return; // Skip folders
+            
+            const fileUrl = `${storageBaseUrl}/${file.name}`;
+            // Avoid duplicates by checking if URL already exists
+            if (!allImages.some(img => img.image_url === fileUrl)) {
+              allImages.push({
+                id: 10000 + index, // Use high IDs to avoid conflicts
+                image_url: fileUrl,
+                title: file.name.split('.')[0],
+                alt: file.name.split('.')[0],
+                category: "mandir",
+                created_at: file.created_at || new Date().toISOString()
+              });
+            }
+          });
+        }
+        
+        // Sort by created_at
+        allImages.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        
+        setImages(allImages);
       } catch (error) {
-        console.error('Error fetching gallery images:', error);
-        setImages([]);
+        console.error('Error in fetchGalleryImages:', error);
+        // Fallback to static data
+        setImages(galleryImages);
       } finally {
         setIsLoading(false);
       }
@@ -64,7 +115,7 @@ const GalleryGrid = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {images.map((image, index) => (
           <div 
-            key={image.id} 
+            key={`${image.id}-${index}`} 
             className="opacity-0 animate-on-scroll"
             style={{ animationDelay: `${index * 100}ms` }}
           >

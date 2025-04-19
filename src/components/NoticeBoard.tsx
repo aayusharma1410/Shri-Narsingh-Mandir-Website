@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/lib/supabase';
+import { galleryImages } from '@/data/galleryData';
 
 interface Notice {
   id: number;
@@ -25,16 +26,41 @@ const NoticeBoard = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
+        // First try to fetch from notices table in Supabase
         const { data, error } = await supabase
           .from('notices')
           .select('*')
           .order('created_at', { ascending: false })
           .limit(3);
         
-        if (error) throw error;
-        setNotices(data || []);
+        if (error) {
+          console.error('Error fetching notices:', error);
+          // If there's an error, we'll fall back to static data
+          setNotices([
+            {
+              id: 1,
+              title: "Temple Renovation",
+              title_hi: "मंदिर का जीर्णोद्धार",
+              content: "We are pleased to announce that temple renovation work will begin next month.",
+              content_hi: "हमें यह घोषणा करते हुए प्रसन्नता हो रही है कि मंदिर के जीर्णोद्धार का कार्य अगले महीने से प्रारंभ होगा।",
+              is_important: true,
+              created_at: new Date().toISOString()
+            },
+            {
+              id: 2,
+              title: "Annual Festival",
+              title_hi: "वार्षिक उत्सव",
+              content: "Annual temple festival will be celebrated from 15th to 21st May with special ceremonies.",
+              content_hi: "वार्षिक मंदिर उत्सव 15 से 21 मई तक विशेष समारोहों के साथ मनाया जाएगा।",
+              is_important: false,
+              created_at: new Date(Date.now() - 86400000).toISOString()
+            }
+          ]);
+        } else {
+          setNotices(data || []);
+        }
       } catch (error) {
-        console.error('Error fetching notices:', error);
+        console.error('Error in fetchNotices:', error);
       } finally {
         setIsLoading(false);
       }

@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, User } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginDialog from './LoginDialog';
@@ -21,6 +21,35 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const { user, signOut } = useAuth();
+  const [username, setUsername] = useState("");
+
+  // Get username from user object or metadata
+  useEffect(() => {
+    if (user) {
+      const fetchUsername = async () => {
+        try {
+          // Try to get username from user_details table
+          const { data, error } = await supabase
+            .from('user_details')
+            .select('username')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (data && data.username) {
+            setUsername(data.username);
+          } else {
+            // Fallback to email if username not found
+            setUsername(user.email?.split('@')[0] || 'User');
+          }
+        } catch (error) {
+          console.error("Error fetching username:", error);
+          setUsername(user.email?.split('@')[0] || 'User');
+        }
+      };
+      
+      fetchUsername();
+    }
+  }, [user]);
 
   // Handle scroll effect
   useEffect(() => {
@@ -111,7 +140,7 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  {user.email === 'admin@temple.com' && (
+                  {user.email === 'shrilakshminarsinghhasampur@gmail.com' && (
                     <Link
                       to="/admin"
                       className={`transition-colors duration-200 ${
@@ -123,15 +152,21 @@ const Navbar = () => {
                       Admin
                     </Link>
                   )}
-                  <Button
-                    onClick={handleLogout}
-                    variant="ghost"
-                    className={`${
-                      isScrolled ? "text-gray-700" : "text-white"
-                    } hover:text-temple-gold`}
-                  >
-                    {t('nav.logout')}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <User className={`h-4 w-4 ${isScrolled ? "text-gray-700" : "text-white"}`} />
+                    <span className={`${isScrolled ? "text-gray-700" : "text-white"}`}>
+                      {username}
+                    </span>
+                    <Button
+                      onClick={handleLogout}
+                      variant="ghost"
+                      className={`${
+                        isScrolled ? "text-gray-700" : "text-white"
+                      } hover:text-temple-gold`}
+                    >
+                      {t('nav.logout')}
+                    </Button>
+                  </div>
                 </>
               ) : (
                 <Button
@@ -188,7 +223,7 @@ const Navbar = () => {
 
                   {user ? (
                     <>
-                      {user.email === 'admin@temple.com' && (
+                      {user.email === 'shrilakshminarsinghhasampur@gmail.com' && (
                         <Link
                           to="/admin"
                           className="px-4 py-2 text-base hover:bg-gray-100 rounded-md"
@@ -196,6 +231,10 @@ const Navbar = () => {
                           Admin Panel
                         </Link>
                       )}
+                      <div className="px-4 py-2 text-base">
+                        <User className="h-4 w-4 inline mr-2" />
+                        {username}
+                      </div>
                       <Button
                         onClick={handleLogout}
                         variant="ghost"
