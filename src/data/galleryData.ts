@@ -3,7 +3,7 @@ import { GalleryImage, GalleryCategory } from '@/types/gallery';
 export const galleryImages: GalleryImage[] = [
   { 
     id: 1, 
-    image_url: "/lovable-uploads/acbea974-756b-4308-a7dd-5f93aa907c3a.png",
+    image_url: "/lovable-uploads/9d35f335-2af8-4d36-8911-d309c4f8dd26.png",
     title: "श्री नृसिंह देव दर्शन",
     alt: "Shri Narsingh Dev Darshan", 
     category: "darshan",
@@ -11,10 +11,10 @@ export const galleryImages: GalleryImage[] = [
   },
   { 
     id: 2, 
-    image_url: "/lovable-uploads/d0ad4717-d4b0-47f6-9f34-65a4cc3931a2.png",
-    title: "श्री नृसिंह मंदिर दर्शन",
-    alt: "Shri Narsingh Temple Darshan", 
-    category: "darshan",
+    image_url: "/lovable-uploads/73682d4c-f478-41f2-bbb7-a5dd1b218f32.png",
+    title: "श्री नृसिंह मंदिर श्रृंगार",
+    alt: "Shri Narsingh Temple Shringar", 
+    category: "shringar",
     created_at: new Date().toISOString()
   },
   { 

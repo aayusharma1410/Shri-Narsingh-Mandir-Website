@@ -9,8 +9,9 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-b from-red-700 to-red-800 text-white pt-16 pb-8 shadow-lg border-t-4 border-temple-gold">
-      <div className="container px-4 mx-auto">
+    <footer className="bg-gradient-to-b from-red-700 to-red-800 text-white pt-16 pb-8 shadow-lg border-t-4 border-temple-gold relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/lovable-uploads/9d35f335-2af8-4d36-8911-d309c4f8dd26.png')] opacity-5"></div>
+      <div className="container px-4 mx-auto relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Temple Info */}
           <div className="flex flex-col items-start">
@@ -44,11 +45,11 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Important Links */}
+          {/* Quick Links */}
           <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
             <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
               <LinkIcon size={18} className="text-temple-gold" />
-              {language === 'en' ? 'Important Links' : 'महत्वपूर्ण लिंक्स'}
+              {language === 'en' ? 'Quick Links' : 'त्वरित लिंक'}
             </h3>
             <ul className="space-y-3">
               <li>
@@ -84,8 +85,8 @@ const Footer = () => {
             </ul>
           </Card>
           
-          {/* Contact Info */}
-          <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
+          {/* Contact Us */}
+          <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl hover:bg-red-800/40 transition-colors">
             <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
               <Phone size={18} className="text-temple-gold" />
               {language === 'en' ? 'Contact Us' : 'संपर्क करें'}
@@ -118,7 +119,7 @@ const Footer = () => {
           </Card>
 
           {/* Terms & Policies */}
-          <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl">
+          <Card className="bg-red-800/30 backdrop-blur-sm border-temple-gold/30 p-6 rounded-xl hover:bg-red-800/40 transition-colors">
             <h3 className="font-serif text-lg text-temple-gold mb-4 border-b border-temple-gold/30 pb-2 flex items-center gap-2">
               <FileText size={18} className="text-temple-gold" />
               {language === 'en' ? 'Terms & Policies' : 'नियम और नीतियां'}
@@ -150,7 +151,9 @@ const Footer = () => {
         
         <div className="text-center">
           <p className="text-sm text-white/80">
-            &copy; {year} {language === 'en' ? 'Shri Narsingh Temple. All rights reserved.' : 'श्री नृसिंह मंदिर। सर्वाधिकार सुरक्षित।'}
+            &copy; {year} {language === 'en' 
+              ? 'Shri Narsingh Temple. All rights reserved.' 
+              : 'श्री नृसिंह मंदिर। सर्वाधिकार सुरक्षित।'}
           </p>
         </div>
       </div>
