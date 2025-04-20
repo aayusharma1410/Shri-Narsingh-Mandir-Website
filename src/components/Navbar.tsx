@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ import { Menu, X, Globe, User, Home } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginDialog from './LoginDialog';
-import { supabase } from '@/lib/supabase';
 
 const Navbar = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -29,22 +27,10 @@ const Navbar = () => {
     if (user) {
       const fetchUsername = async () => {
         try {
-          const { data, error } = await supabase
-            .from('user_details')
-            .select('username')
-            .eq('user_id', user.id)
-            .single();
+          const displayName = user.email?.split('@')[0] || 'User';
+          setUsername(displayName);
           
-          if (data && data.username) {
-            setUsername(data.username);
-          } else {
-            setUsername(user.email?.split('@')[0] || 'User');
-          }
-          
-          // Check if the user is an admin (specific email)
-          if (user.email === 'shrilakshminarsinghhasampur@gmail.com') {
-            setIsAdmin(true);
-          }
+          setIsAdmin(user.email === 'shrilakshminarsinghhasampur@gmail.com');
         } catch (error) {
           console.error("Error fetching username:", error);
           setUsername(user.email?.split('@')[0] || 'User');
