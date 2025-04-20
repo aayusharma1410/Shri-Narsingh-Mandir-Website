@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Calendar, Clock } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
-import NoticeBoard from './NoticeBoard';
 import { supabase } from '@/lib/supabase';
 
 interface DarshanImage {
@@ -105,7 +104,6 @@ const DarshanSlideshow = () => {
 
   const nextDarshan = () => {
     if (darshanImages.length === 0) return;
-    
     setCurrentDarshanIndex((prevIndex) => 
       prevIndex === darshanImages.length - 1 ? 0 : prevIndex + 1
     );
@@ -113,19 +111,9 @@ const DarshanSlideshow = () => {
 
   const prevDarshan = () => {
     if (darshanImages.length === 0) return;
-    
     setCurrentDarshanIndex((prevIndex) => 
       prevIndex === 0 ? darshanImages.length - 1 : prevIndex - 1
     );
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
   };
 
   return (
@@ -141,71 +129,63 @@ const DarshanSlideshow = () => {
               "आज के दर्शन छवियों के माध्यम से दिव्य उपस्थिति का अनुभव करें"}
           </p>
 
-          <div className="grid lg:grid-cols-2 gap-10 mb-16">
-            {/* Today's Darshan Slideshow */}
-            <div className="relative">
-              {isLoading ? (
-                <div className="h-96 bg-gray-100 animate-pulse rounded-lg"></div>
-              ) : darshanImages.length > 0 ? (
-                <div className="overflow-hidden rounded-lg shadow-lg bg-card">
-                  <div className="relative h-96">
-                    <img 
-                      src={darshanImages[currentDarshanIndex]?.image_url} 
-                      alt={language === 'en' ? darshanImages[currentDarshanIndex]?.title : darshanImages[currentDarshanIndex]?.title_hi}
-                      className="w-full h-full object-cover transition-all duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-xl font-semibold">
-                        {language === 'en' ? darshanImages[currentDarshanIndex]?.title : darshanImages[currentDarshanIndex]?.title_hi}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Clock className="w-4 h-4 text-temple-gold" />
-                        <span>{darshanImages[currentDarshanIndex]?.time}</span>
-                      </div>
+          <div className="max-w-3xl mx-auto">
+            {isLoading ? (
+              <div className="h-96 bg-gray-100 animate-pulse rounded-lg"></div>
+            ) : darshanImages.length > 0 ? (
+              <div className="overflow-hidden rounded-lg shadow-lg bg-card">
+                <div className="relative h-96">
+                  <img 
+                    src={darshanImages[currentDarshanIndex]?.image_url} 
+                    alt={language === 'en' ? darshanImages[currentDarshanIndex]?.title : darshanImages[currentDarshanIndex]?.title_hi}
+                    className="w-full h-full object-cover transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <h3 className="text-xl font-semibold">
+                      {language === 'en' ? darshanImages[currentDarshanIndex]?.title : darshanImages[currentDarshanIndex]?.title_hi}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Clock className="w-4 h-4 text-temple-gold" />
+                      <span>{darshanImages[currentDarshanIndex]?.time}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between p-4">
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={prevDarshan}
-                      className="rounded-full"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <div className="flex gap-1">
-                      {darshanImages.map((_, index) => (
-                        <div 
-                          key={index} 
-                          className={`w-2 h-2 rounded-full ${currentDarshanIndex === index ? 'bg-temple-gold' : 'bg-muted'}`}
-                        ></div>
-                      ))}
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={nextDarshan}
-                      className="rounded-full"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
+                </div>
+                <div className="flex justify-between p-4">
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    onClick={prevDarshan}
+                    className="rounded-full"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <div className="flex gap-1">
+                    {darshanImages.map((_, index) => (
+                      <div 
+                        key={index} 
+                        className={`w-2 h-2 rounded-full ${currentDarshanIndex === index ? 'bg-temple-gold' : 'bg-muted'}`}
+                      ></div>
+                    ))}
                   </div>
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    onClick={nextDarshan}
+                    className="rounded-full"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
                 </div>
-              ) : (
-                <div className="h-96 bg-gray-100 flex items-center justify-center rounded-lg">
-                  <p className="text-muted-foreground">No darshan images available</p>
-                </div>
-              )}
-            </div>
-
-            {/* Notice Board */}
-            <div className="relative">
-              <NoticeBoard />
-            </div>
+              </div>
+            ) : (
+              <div className="h-96 bg-gray-100 flex items-center justify-center rounded-lg">
+                <p className="text-muted-foreground">No darshan images available</p>
+              </div>
+            )}
           </div>
 
-          <Separator className="mb-10 bg-temple-gold/20" />
+          <Separator className="my-10 bg-temple-gold/20" />
         </div>
       </div>
     </section>

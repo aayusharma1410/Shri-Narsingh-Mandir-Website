@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -36,12 +35,7 @@ const HomePage = () => {
       <Navbar />
       <Hero />
       <div className="container mx-auto px-4 py-8">
-        <section className="my-8">
-          <h2 className="text-2xl font-bold mb-4 text-center text-temple-maroon">
-            {language === 'en' ? 'Today\'s Darshan' : 'आज का दर्शन'}
-          </h2>
-          <DarshanSlideshow />
-        </section>
+        <DarshanSlideshow />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <NoticeBoard />
