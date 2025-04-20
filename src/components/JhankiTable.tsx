@@ -1,16 +1,11 @@
 
 import { useState } from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from '@/components/ui/table';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 
-interface JhankiStory {
+interface JhankiItem {
   id: number;
   name: string;
   name_hi: string;
@@ -18,232 +13,256 @@ interface JhankiStory {
   story_hi: string;
 }
 
+const jhankiData: JhankiItem[] = [
+  { 
+    id: 1, 
+    name: "Lord Narsingh's Appearance", 
+    name_hi: "भगवान नृसिंह का प्रकट्य",
+    story: "The story of Lord Narsingh appearing from a pillar to protect His devotee Prahlad.", 
+    story_hi: "भगवान नृसिंह के एक स्तंभ से प्रकट होकर अपने भक्त प्रहलाद की रक्षा करने की कहानी।"
+  },
+  { 
+    id: 2, 
+    name: "Hiranyakashipu's Penance", 
+    name_hi: "हिरण्यकशिपु की तपस्या",
+    story: "The demon king performed severe penance to gain immortality from Lord Brahma.", 
+    story_hi: "राक्षस राजा ने ब्रह्मा जी से अमरत्व प्राप्त करने के लिए कठोर तपस्या की।"
+  },
+  { 
+    id: 3, 
+    name: "Prahlad's Devotion", 
+    name_hi: "प्रहलाद की भक्ति",
+    story: "Despite his father's threats, Prahlad remained devoted to Lord Vishnu.", 
+    story_hi: "अपने पिता की धमकियों के बावजूद, प्रहलाद भगवान विष्णु के प्रति समर्पित रहे।"
+  },
+  { 
+    id: 4, 
+    name: "Lord Vishnu's Promise", 
+    name_hi: "भगवान विष्णु का वादा",
+    story: "Lord Vishnu promised to protect His devotees in any situation.", 
+    story_hi: "भगवान विष्णु ने किसी भी परिस्थिति में अपने भक्तों की रक्षा करने का वादा किया।"
+  },
+  { 
+    id: 5, 
+    name: "Holika Dahan", 
+    name_hi: "होलिका दहन",
+    story: "Hiranyakashipu asked his sister Holika to take Prahlad into a fire, but she was burnt instead.", 
+    story_hi: "हिरण्यकशिपु ने अपनी बहन होलिका से प्रहलाद को आग में ले जाने को कहा, लेकिन उसके बजाय वह जल गई।"
+  },
+  { 
+    id: 6, 
+    name: "The Final Challenge", 
+    name_hi: "अंतिम चुनौती",
+    story: "Hiranyakashipu challenged Prahlad to show Lord Vishnu in a pillar.", 
+    story_hi: "हिरण्यकशिपु ने प्रहलाद को एक स्तंभ में भगवान विष्णु को दिखाने की चुनौती दी।"
+  },
+  { 
+    id: 7, 
+    name: "The Pillar's Breaking", 
+    name_hi: "स्तंभ का टूटना",
+    story: "When Hiranyakashipu struck the pillar in anger, it broke and Lord Narsingh appeared.", 
+    story_hi: "जब हिरण्यकशिपु ने क्रोध में स्तंभ पर प्रहार किया, तो वह टूट गया और भगवान नृसिंह प्रकट हुए।"
+  },
+  { 
+    id: 8, 
+    name: "The Half-Man Half-Lion Form", 
+    name_hi: "आधा-मानव आधा-सिंह रूप",
+    story: "Lord Vishnu took the form of half-man half-lion, which wasn't covered in Hiranyakashipu's boons.", 
+    story_hi: "भगवान विष्णु ने आधा-मानव आधा-सिंह का रूप लिया, जो हिरण्यकशिपु के वरदानों में शामिल नहीं था।"
+  },
+  { 
+    id: 9, 
+    name: "Twilight Hour", 
+    name_hi: "संध्या काल",
+    story: "Lord Narsingh appeared at twilight, when it was neither day nor night.", 
+    story_hi: "भगवान नृसिंह संध्या काल में प्रकट हुए, जब न दिन था और न ही रात।"
+  },
+  { 
+    id: 10, 
+    name: "On the Threshold", 
+    name_hi: "देहली पर",
+    story: "The demon was killed on the threshold, neither inside nor outside.", 
+    story_hi: "राक्षस को देहली पर मारा गया, न अंदर, न बाहर।"
+  },
+  { 
+    id: 11, 
+    name: "Lord's Claws", 
+    name_hi: "भगवान के नाखून",
+    story: "Lord used His claws, which were neither a weapon nor a non-weapon.", 
+    story_hi: "भगवान ने अपने नाखूनों का उपयोग किया, जो न तो हथियार थे और न ही गैर-हथियार।"
+  },
+  { 
+    id: 12, 
+    name: "On the Lap", 
+    name_hi: "गोद में",
+    story: "The demon was placed on Lord's lap, neither on earth nor in the sky.", 
+    story_hi: "राक्षस को भगवान की गोद में रखा गया, न तो धरती पर और न ही आकाश में।"
+  },
+  { 
+    id: 13, 
+    name: "Protection of Devotees", 
+    name_hi: "भक्तों की सुरक्षा",
+    story: "This avatar demonstrated Lord Vishnu's promise to protect His true devotees.", 
+    story_hi: "इस अवतार ने अपने सच्चे भक्तों की रक्षा करने के भगवान विष्णु के वादे को प्रदर्शित किया।"
+  },
+  { 
+    id: 14, 
+    name: "Lord's Anger", 
+    name_hi: "भगवान का क्रोध",
+    story: "The Lord was so angry that no one could calm Him down except Goddess Lakshmi.", 
+    story_hi: "भगवान इतने क्रोधित थे कि देवी लक्ष्मी के अलावा कोई भी उन्हें शांत नहीं कर सकता था।"
+  },
+  { 
+    id: 15, 
+    name: "Prahlad's Prayer", 
+    name_hi: "प्रहलाद की प्रार्थना",
+    story: "Prahlad prayed to the Lord to calm down and show mercy.", 
+    story_hi: "प्रहलाद ने भगवान से शांत होने और दया दिखाने की प्रार्थना की।"
+  },
+  { 
+    id: 16, 
+    name: "Narsingh's Blessing", 
+    name_hi: "नृसिंह का आशीर्वाद",
+    story: "Lord Narsingh blessed Prahlad and made him the king.", 
+    story_hi: "भगवान नृसिंह ने प्रहलाद को आशीर्वाद दिया और उन्हें राजा बनाया।"
+  },
+  { 
+    id: 17, 
+    name: "The Cosmic Form", 
+    name_hi: "विश्वरूप",
+    story: "After killing Hiranyakashipu, Lord showed His cosmic form to the devas.", 
+    story_hi: "हिरण्यकशिपु को मारने के बाद, भगवान ने देवताओं को अपना विश्वरूप दिखाया।"
+  },
+  { 
+    id: 18, 
+    name: "Lakshmi's Arrival", 
+    name_hi: "लक्ष्मी का आगमन",
+    story: "Goddess Lakshmi appeared to pacify Lord Narsingh.", 
+    story_hi: "भगवान नृसिंह को शांत करने के लिए देवी लक्ष्मी प्रकट हुईं।"
+  },
+  { 
+    id: 19, 
+    name: "The Divine Couple", 
+    name_hi: "दिव्य जोड़ी",
+    story: "After being pacified, Lord Narsingh and Goddess Lakshmi blessed the universe together.", 
+    story_hi: "शांत होने के बाद, भगवान नृसिंह और देवी लक्ष्मी ने एक साथ ब्रह्मांड को आशीर्वाद दिया।"
+  },
+  { 
+    id: 20, 
+    name: "The Shaligram Form", 
+    name_hi: "शालिग्राम रूप",
+    story: "In Hasampur, Lord Narsingh appeared in a Shaligram form under a musical stone.", 
+    story_hi: "हासमपुर में, भगवान नृसिंह एक बाजनी शिला के नीचे शालिग्राम रूप में प्रकट हुए।"
+  },
+  { 
+    id: 21, 
+    name: "The Temple's Founding", 
+    name_hi: "मंदिर की स्थापना",
+    story: "The temple was established after the miraculous appearance of the Lord.", 
+    story_hi: "भगवान के चमत्कारिक प्रकटीकरण के बाद मंदिर की स्थापना की गई थी।"
+  },
+  { 
+    id: 22, 
+    name: "Daily Worship", 
+    name_hi: "दैनिक पूजा",
+    story: "The Shaligram form is worshipped daily with devotion and rituals.", 
+    story_hi: "शालिग्राम रूप की दैनिक भक्ति और अनुष्ठानों के साथ पूजा की जाती है।"
+  },
+  { 
+    id: 23, 
+    name: "Narsingh Jayanti", 
+    name_hi: "नृसिंह जयंती",
+    story: "The appearance day of Lord Narsingh is celebrated with great fervor at the temple.", 
+    story_hi: "भगवान नृसिंह के प्रकटीकरण दिवस को मंदिर में बड़े उत्साह के साथ मनाया जाता है।"
+  },
+  { 
+    id: 24, 
+    name: "Special Aartis", 
+    name_hi: "विशेष आरतियां",
+    story: "Morning and evening aartis are performed in traditional style with full devotion.", 
+    story_hi: "सुबह और शाम की आरतियां पारंपरिक शैली में पूर्ण भक्ति के साथ की जाती हैं।"
+  },
+  { 
+    id: 25, 
+    name: "Poshak Seva", 
+    name_hi: "पोशाक सेवा",
+    story: "Devotees offer special garments to Lord Narsingh on special occasions.", 
+    story_hi: "भक्त विशेष अवसरों पर भगवान नृसिंह को विशेष वस्त्र अर्पित करते हैं।"
+  },
+];
+
 const JhankiTable = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
+  const [searchTerm, setSearchTerm] = useState("");
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-  
-  // Sample data for Jhanki stories
-  const jhankiStories: JhankiStory[] = [
-    {
-      id: 1,
-      name: "Shri Narsingh Avatar",
-      name_hi: "श्री नरसिंह अवतार",
-      story: "The fourth avatar of Lord Vishnu, who appeared to protect his devotee Prahlad.",
-      story_hi: "भगवान विष्णु का चौथा अवतार, जो अपने भक्त प्रह्लाद की रक्षा के लिए प्रकट हुए थे।"
-    },
-    {
-      id: 2,
-      name: "Krishna Leela",
-      name_hi: "कृष्ण लीला",
-      story: "Depicts Lord Krishna's divine plays during his childhood in Vrindavan.",
-      story_hi: "वृंदावन में बचपन के दौरान भगवान कृष्ण की दिव्य लीलाओं को दर्शाती है।"
-    },
-    {
-      id: 3,
-      name: "Ram Darbar",
-      name_hi: "राम दरबार",
-      story: "Depicts Lord Ram's court after his coronation as the King of Ayodhya.",
-      story_hi: "अयोध्या के राजा के रूप में राजतिलक के बाद भगवान राम के दरबार को दर्शाती है।"
-    },
-    {
-      id: 4,
-      name: "Shiv Parivar",
-      name_hi: "शिव परिवार",
-      story: "Shows Lord Shiva with his family including Parvati, Ganesh, and Kartikeya.",
-      story_hi: "भगवान शिव को पार्वती, गणेश और कार्तिकेय सहित उनके परिवार के साथ दिखाती है।"
-    },
-    {
-      id: 5,
-      name: "Ganesh Sthapana",
-      name_hi: "गणेश स्थापना",
-      story: "The ceremonial installation of Lord Ganesh, the remover of obstacles.",
-      story_hi: "विघ्नहर्ता भगवान गणेश की औपचारिक स्थापना।"
-    },
-    {
-      id: 6,
-      name: "Durga Mata",
-      name_hi: "दुर्गा माता",
-      story: "Depicts Goddess Durga victorious after slaying the demon Mahishasura.",
-      story_hi: "महिषासुर का वध करने के बाद विजयी देवी दुर्गा को दर्शाती है।"
-    },
-    {
-      id: 7,
-      name: "Saraswati Puja",
-      name_hi: "सरस्वती पूजा",
-      story: "Worship of Goddess Saraswati, the deity of knowledge and arts.",
-      story_hi: "ज्ञान और कला की देवी सरस्वती की पूजा।"
-    },
-    {
-      id: 8,
-      name: "Vishnu Shayanam",
-      name_hi: "विष्णु शयनम्",
-      story: "Lord Vishnu reclining on Sheshnag in the cosmic ocean.",
-      story_hi: "कॉस्मिक महासागर में शेषनाग पर विश्राम करते हुए भगवान विष्णु।"
-    },
-    {
-      id: 9,
-      name: "Lakshmi Narayan",
-      name_hi: "लक्ष्मी नारायण",
-      story: "The divine couple Goddess Lakshmi and Lord Vishnu seated together.",
-      story_hi: "दिव्य जोड़ी देवी लक्ष्मी और भगवान विष्णु एक साथ विराजमान।"
-    },
-    {
-      id: 10,
-      name: "Hanuman Chalisa",
-      name_hi: "हनुमान चालीसा",
-      story: "Depicts Lord Hanuman, the epitome of devotion and strength.",
-      story_hi: "भक्ति और शक्ति के प्रतीक भगवान हनुमान को दर्शाती है।"
-    },
-    {
-      id: 11,
-      name: "Radha Krishna",
-      name_hi: "राधा कृष्ण",
-      story: "The divine love between Radha and Krishna, symbolizing devotion.",
-      story_hi: "राधा और कृष्ण के बीच दिव्य प्रेम, भक्ति का प्रतीक।"
-    },
-    {
-      id: 12,
-      name: "Ganga Avtaran",
-      name_hi: "गंगा अवतरण",
-      story: "The descent of River Ganges from the heavens to Earth.",
-      story_hi: "स्वर्ग से पृथ्वी पर गंगा नदी का अवतरण।"
-    },
-    {
-      id: 13,
-      name: "Dashavatar",
-      name_hi: "दशावतार",
-      story: "The ten primary incarnations of Lord Vishnu over different cosmic ages.",
-      story_hi: "विभिन्न युगों में भगवान विष्णु के दस प्रमुख अवतार।"
-    },
-    {
-      id: 14,
-      name: "Navagraha",
-      name_hi: "नवग्रह",
-      story: "The nine celestial bodies that influence human life according to Vedic astrology.",
-      story_hi: "वैदिक ज्योतिष के अनुसार मानव जीवन को प्रभावित करने वाले नौ आकाशीय पिंड।"
-    },
-    {
-      id: 15,
-      name: "Kali Mata",
-      name_hi: "काली माता",
-      story: "The fierce form of Goddess Durga, destroyer of evil forces.",
-      story_hi: "देवी दुर्गा का उग्र रूप, बुरी शक्तियों का विनाश करने वाली।"
-    },
-    {
-      id: 16,
-      name: "Surya Dev",
-      name_hi: "सूर्य देव",
-      story: "Worship of the Sun God, the source of energy and life.",
-      story_hi: "ऊर्जा और जीवन के स्रोत सूर्य देव की पूजा।"
-    },
-    {
-      id: 17,
-      name: "Santoshi Mata",
-      name_hi: "संतोषी माता",
-      story: "The goddess of satisfaction, born from the combined energies of other goddesses.",
-      story_hi: "संतोष की देवी, अन्य देवियों की संयुक्त शक्तियों से उत्पन्न।"
-    },
-    {
-      id: 18,
-      name: "Kartikeya",
-      name_hi: "कार्तिकेय",
-      story: "The son of Lord Shiva, commander of the army of devas.",
-      story_hi: "भगवान शिव के पुत्र, देवताओं की सेना के सेनापति।"
-    },
-    {
-      id: 19,
-      name: "Annapurna Devi",
-      name_hi: "अन्नपूर्णा देवी",
-      story: "The goddess of food and nourishment, an aspect of Parvati.",
-      story_hi: "भोजन और पोषण की देवी, पार्वती का एक रूप।"
-    },
-    {
-      id: 20,
-      name: "Dattatreya",
-      name_hi: "दत्तात्रेय",
-      story: "The combined form of the trinity: Brahma, Vishnu, and Shiva.",
-      story_hi: "त्रिमूर्ति का संयुक्त रूप: ब्रह्मा, विष्णु और शिव।"
-    },
-    {
-      id: 21,
-      name: "Sita Swayamvar",
-      name_hi: "सीता स्वयंवर",
-      story: "The event where Sita chose Ram as her husband by garlanding him.",
-      story_hi: "वह घटना जहां सीता ने राम को माला पहनाकर अपने पति के रूप में चुना था।"
-    },
-    {
-      id: 22,
-      name: "Krishna Arjun Rath",
-      name_hi: "कृष्ण अर्जुन रथ",
-      story: "Lord Krishna giving Bhagavad Gita discourse to Arjun on the battlefield.",
-      story_hi: "युद्धक्षेत्र में भगवान कृष्ण द्वारा अर्जुन को भगवद गीता का उपदेश।"
-    },
-    {
-      id: 23,
-      name: "Samudra Manthan",
-      name_hi: "समुद्र मंथन",
-      story: "The churning of the ocean by devas and asuras to obtain amrit.",
-      story_hi: "अमृत प्राप्त करने के लिए देवताओं और असुरों द्वारा समुद्र का मंथन।"
-    },
-    {
-      id: 24,
-      name: "Gayatri Mata",
-      name_hi: "गायत्री माता",
-      story: "The personification of the Gayatri Mantra, representing enlightenment.",
-      story_hi: "गायत्री मंत्र का साकार रूप, ज्ञान का प्रतिनिधित्व करती हुई।"
-    },
-    {
-      id: 25,
-      name: "Satyanarayan Katha",
-      name_hi: "सत्यनारायण कथा",
-      story: "The holy narrative of Lord Vishnu in his form as Satyanarayan.",
-      story_hi: "सत्यनारायण के रूप में भगवान विष्णु की पवित्र कथा।"
-    },
-  ];
+
+  const filteredData = jhankiData.filter(item => {
+    const searchLower = searchTerm.toLowerCase();
+    return language === 'en' 
+      ? item.name.toLowerCase().includes(searchLower) || item.story.toLowerCase().includes(searchLower)
+      : item.name_hi.toLowerCase().includes(searchLower) || item.story_hi.toLowerCase().includes(searchLower);
+  });
 
   return (
-    <div className="container mx-auto my-8 px-4">
-      <h2 className="text-2xl font-bold mb-6 text-temple-maroon text-center">
-        {t('jhanki.title')}
-      </h2>
-      <div className="overflow-x-auto">
-        <Table className="w-full">
-          <TableHeader>
-            <TableRow className="bg-temple-cream">
-              <TableHead className="w-20 text-temple-maroon font-bold">
-                {t('jhanki.columnHeaders.sno')}
-              </TableHead>
-              <TableHead className="text-temple-maroon font-bold">
-                {t('jhanki.columnHeaders.name')}
-              </TableHead>
-              <TableHead className="text-temple-maroon font-bold">
-                {t('jhanki.columnHeaders.story')}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {jhankiStories.map((jhanki) => (
-              <TableRow 
-                key={jhanki.id}
-                className={`
-                  transition-all duration-200 
-                  ${hoveredRow === jhanki.id ? 'bg-temple-gold/10' : 'hover:bg-temple-cream/30'}`
-                }
-                onMouseEnter={() => setHoveredRow(jhanki.id)}
-                onMouseLeave={() => setHoveredRow(null)}
-              >
-                <TableCell className="font-medium">{jhanki.id}</TableCell>
-                <TableCell className="font-medium text-temple-maroon">
-                  {language === 'en' ? jhanki.name : jhanki.name_hi}
-                </TableCell>
-                <TableCell>
-                  {language === 'en' ? jhanki.story : jhanki.story_hi}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <Card className="border-temple-gold/20">
+        <CardContent className="pt-6">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-temple-maroon mb-4 text-center">
+              {language === 'en' ? 'Jhanki Stories' : 'झांकी कथाएं'}
+            </h2>
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input 
+                placeholder={language === 'en' ? "Search stories..." : "कथाएं खोजें..."}
+                className="pl-10" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-temple-gold/10 text-temple-maroon">
+                  <th className="py-3 px-4 text-left border-b border-temple-gold/20">
+                    {language === 'en' ? 'S.No' : 'क्र.सं.'}
+                  </th>
+                  <th className="py-3 px-4 text-left border-b border-temple-gold/20">
+                    {language === 'en' ? 'Jhanki Name' : 'झांकी का नाम'}
+                  </th>
+                  <th className="py-3 px-4 text-left border-b border-temple-gold/20">
+                    {language === 'en' ? 'Story' : 'कथा'}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((item) => (
+                  <tr 
+                    key={item.id}
+                    className={`transition-colors duration-200 ${
+                      hoveredRow === item.id 
+                        ? 'bg-temple-gold/10' 
+                        : 'hover:bg-temple-gold/5'
+                    }`}
+                    onMouseEnter={() => setHoveredRow(item.id)}
+                    onMouseLeave={() => setHoveredRow(null)}
+                  >
+                    <td className="py-3 px-4 border-b border-temple-gold/10">{item.id}</td>
+                    <td className="py-3 px-4 border-b border-temple-gold/10 font-medium">
+                      {language === 'en' ? item.name : item.name_hi}
+                    </td>
+                    <td className="py-3 px-4 border-b border-temple-gold/10">
+                      {language === 'en' ? item.story : item.story_hi}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

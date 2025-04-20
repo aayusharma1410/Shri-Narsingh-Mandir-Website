@@ -44,23 +44,6 @@ const poshakTypes = [
   'Designer' // डिजाइनर
 ];
 
-// Define the reasons array separately to avoid the issue
-const reasonsEn = [
-  'Offering new garments to the deity is a time-honored tradition that signifies respect, devotion, and reverence.',
-  'It is believed that Poshak Seva helps in fulfilling wishes, removing obstacles, and bringing divine blessings.',
-  'Devotees perform this seva to mark special occasions in their lives, such as birthdays, anniversaries, or spiritual milestones.',
-  'Bhagwan Narsingh is known as the divine protector. Offering poshak is a way to seek his blessings for strength, courage, and protection from all forms of negativity.',
-  'Performing this seva not only pleases the deity but also purifies the heart of the devotee and strengthens the connection between the soul and the divine.'
-];
-
-const reasonsHi = [
-  'देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है।',
-  'यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है।',
-  'भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं।',
-  'भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है।',
-  'इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है।'
-];
-
 const PoshakSevaSection = () => {
   const { toast } = useToast();
   const { language, t } = useLanguage();
@@ -116,8 +99,10 @@ const PoshakSevaSection = () => {
     }
   };
 
-  // Use the appropriate reasons array based on current language
-  const reasons = language === 'en' ? reasonsEn : reasonsHi;
+  // Get reasons based on current language
+  const reasons = language === 'en' 
+    ? t('poshakSeva.reasons').split(',').map(item => item.trim())
+    : t('poshakSeva.reasons').split(',').map(item => item.trim());
 
   return (
     <div className="container mx-auto px-4 space-y-8">
