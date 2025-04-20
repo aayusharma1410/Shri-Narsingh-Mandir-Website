@@ -70,7 +70,53 @@ const AboutSection = () => {
             <Card className="border-temple-gold/30">
               <CardContent className="pt-6 prose max-w-none">
                 <div className="mb-4 whitespace-pre-line">
-                  {t('about.narsinghKatha')}
+                <p className="text-justify">
+    {language === 'en'
+      ? "Lord Vishnu incarnated as Narsingh (half-man, half-lion) to protect his devotee Prahlad and kill the demon king Hiranyakashipu."
+      : "भगवान विष्णु ने अपने भक्त प्रह्लाद की रक्षा करने और अत्याचारी राक्षस राजा हिरण्यकशिपु का वध करने के लिए नृसिंह अवतार (आधा नर – आधा सिंह रूप) लिया था।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "Hiranyakashipu performed penance and received a boon from Brahma — he couldn't be killed by man or animal, during day or night, inside or outside, by weapon or tool. He became arrogant and banned the worship of Vishnu."
+      : "हिरण्यकशिपु ने ब्रह्मा जी से वरदान प्राप्त किया था — कि वह ना दिन में मरेगा, ना रात में, ना घर में, ना बाहर, ना मनुष्य से, ना जानवर से, ना अस्त्र से, ना शस्त्र से। इसके कारण वह घमंडी हो गया और भगवान विष्णु की पूजा पर रोक लगा दी।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "His son Prahlad was a great devotee of Lord Vishnu. Despite his father's anger, he kept chanting 'Narayana'."
+      : "उसका पुत्र प्रह्लाद भगवान विष्णु का परम भक्त था। पिता के विरोध के बावजूद वह 'नारायण' का जप करता रहा।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "Hiranyakashipu tried to kill Prahlad many times — by poison, elephants, and fire — but Vishnu always saved him."
+      : "हिरण्यकशिपु ने प्रह्लाद को विष, हाथियों और आग से मारने की कोशिश की, लेकिन भगवान विष्णु ने हर बार उसकी रक्षा की।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "One day, Hiranyakashipu asked, 'Is your God in this pillar?' Prahlad replied, 'Yes, He is everywhere.' Hiranyakashipu hit the pillar, and Lord Narsingh emerged in fierce form."
+      : "एक दिन हिरण्यकशिपु ने पूछा, 'क्या तेरा भगवान इस खंभे में है?' प्रह्लाद ने कहा, 'हाँ, वह हर जगह है।' तब खंभे से भगवान नृसिंह उग्र रूप में प्रकट हुए।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "At twilight, on the doorstep, Lord Narsingh placed Hiranyakashipu on His lap and tore him with claws — thus not breaking the boon."
+      : "संध्या समय, घर की देहरी पर भगवान नृसिंह ने हिरण्यकशिपु को अपनी जंघा पर रखकर नखों से चीर डाला — जिससे वरदान भी नहीं टूटा।"}
+  </p>
+
+  <p className="text-justify">
+    {language === 'en'
+      ? "After the killing, the Lord was furious. Only Prahlad's loving prayers could calm Him. He blessed Prahlad with eternal devotion."
+      : "वध के बाद भगवान क्रोधित थे, लेकिन प्रह्लाद की भक्ति ने उन्हें शांत किया। उन्होंने प्रह्लाद को सदा भक्ति का वरदान दिया।"}
+  </p>
+
+  <p className="text-justify font-semibold">
+    {language === 'en'
+      ? "Glory to Lord Narsingh! This story teaches us that true devotion has power, good always wins, and God protects His devotees."
+      : "श्री नृसिंह भगवान की जय! यह कथा हमें सिखाती है कि सच्ची भक्ति में शक्ति होती है, धर्म की विजय होती है और भगवान अपने भक्तों की रक्षा करते हैं।"}
+  </p>
                 </div>
               </CardContent>
             </Card>
