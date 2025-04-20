@@ -22,14 +22,15 @@ const HomePage = () => {
     if (!metaDescription) {
       const meta = document.createElement('meta');
       meta.name = "description";
-      meta.content = language === 'en' 
+      meta.setAttribute("content", language === 'en' 
         ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।";
+        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।");
       document.head.appendChild(meta);
     } else {
-      metaDescription.content = language === 'en' 
+      // Fix: Use setAttribute instead of directly accessing content property
+      metaDescription.setAttribute("content", language === 'en' 
         ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।";
+        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।");
     }
     
     // Add keywords meta tag
@@ -37,7 +38,7 @@ const HomePage = () => {
     if (!metaKeywords) {
       const meta = document.createElement('meta');
       meta.name = "keywords";
-      meta.content = "Shri Narsingh Temple, Hasampur, नृसिंह मंदिर, हासमपुर, Sikar, Rajasthan, temple, Hindu temple, Lord Narsingh, darshan, aarti";
+      meta.setAttribute("content", "Shri Narsingh Temple, Hasampur, नृसिंह मंदिर, हासमपुर, Sikar, Rajasthan, temple, Hindu temple, Lord Narsingh, darshan, aarti");
       document.head.appendChild(meta);
     }
     
