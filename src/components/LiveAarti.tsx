@@ -11,7 +11,35 @@ const LiveAarti = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [selectedAarti, setSelectedAarti] = useState("om-jai-jagdish");
   const sectionRef = useRef<HTMLDivElement>(null);
-  
+
+  const calculateNextAartiTime = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const nextAarti = new Date();
+
+    // Schedule based on current time
+    if (currentHour < 5 || (currentHour === 5 && currentMinute < 15)) {
+      // Next is Mangla Aarti at 5:15 AM
+      nextAarti.setHours(5, 15, 0);
+    } else if (currentHour < 11 || (currentHour === 11 && currentMinute < 15)) {
+      // Next is Bhog Aarti at 11:15 AM
+      nextAarti.setHours(11, 15, 0);
+    } else if (currentHour < 19 || (currentHour === 19 && currentMinute < 15)) {
+      // Next is Sandhya Aarti at 7:15 PM
+      nextAarti.setHours(19, 15, 0);
+    } else if (currentHour < 20 || (currentHour === 20 && currentMinute < 15)) {
+      // Next is Shayan Bhog Aarti at 8:15 PM
+      nextAarti.setHours(20, 15, 0);
+    } else {
+      // Next is tomorrow's Mangla Aarti
+      nextAarti.setDate(nextAarti.getDate() + 1);
+      nextAarti.setHours(5, 15, 0);
+    }
+
+    return nextAarti;
+  };
+
   useEffect(() => {
     setIsLoaded(true);
     
@@ -48,11 +76,7 @@ const LiveAarti = () => {
     setIsMuted(!isMuted);
   };
 
-  const nextScheduledTime = new Date();
-  nextScheduledTime.setHours(18, 30, 0);
-  if (nextScheduledTime < new Date()) {
-    nextScheduledTime.setDate(nextScheduledTime.getDate() + 1);
-  }
+  const nextScheduledTime = calculateNextAartiTime();
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString('en-US', {

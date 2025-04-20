@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Globe, User, Home } from "lucide-react";
+import { Menu, Globe, User } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginDialog from './LoginDialog';
@@ -29,7 +30,6 @@ const Navbar = () => {
         try {
           const displayName = user.email?.split('@')[0] || 'User';
           setUsername(displayName);
-          
           setIsAdmin(user.email === 'shrilakshminarsinghhasampur@gmail.com');
         } catch (error) {
           console.error("Error fetching username:", error);
