@@ -306,15 +306,15 @@ const AartiDialog = () => {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="morning" className="flex items-center gap-2">
             <Music className="h-4 w-4" />
-            {language === 'en' ? 'Morning Aarti' : 'प्रातः आरती'}
+            {language === 'en' ? 'Om Jai Jagdish Hare' : 'ॐ जय जगदीश हरे'}
           </TabsTrigger>
           <TabsTrigger value="evening" className="flex items-center gap-2">
             <Music className="h-4 w-4" />
-            {language === 'en' ? 'Evening Aarti' : 'संध्या आरती'}
+            {language === 'en' ? 'Aarti Narsingh Baba ki' : 'आरती नृसिंह बाबाकी'}
           </TabsTrigger>
           <TabsTrigger value="night" className="flex items-center gap-2">
             <Music className="h-4 w-4" />
-            {language === 'en' ? 'Night Aarti' : 'रात्रि आरती'}
+            {language === 'en' ? 'Bhog Aarti' : 'भोग  आरती'}
           </TabsTrigger>
         </TabsList>
         

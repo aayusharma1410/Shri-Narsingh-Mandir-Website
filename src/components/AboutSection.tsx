@@ -51,16 +51,17 @@ const AboutSection = () => {
                 </div>
 
                 <p className="text-justify">
-                  {language === 'en' 
-                    ? "Shri Lakshmi Narsingh Mandir in Hasampur has a rich history dating back several centuries. It is renowned for its divine spiritual energy and architectural beauty. The temple was established by devotees who were guided by divine intervention to this sacred spot. Over the years, it has become an important pilgrimage site for devotees of Lord Narsingh."
-                    : "हसमपुर में श्री लक्ष्मी नरसिंह मंदिर का इतिहास कई शताब्दियों पुराना है। यह अपनी दिव्य आध्यात्मिक ऊर्जा और वास्तुकला सौंदर्य के लिए प्रसिद्ध है। मंदिर की स्थापना भक्तों द्वारा की गई थी जिन्हें दिव्य हस्तक्षेप के माध्यम से इस पवित्र स्थान की ओर मार्गदर्शित किया गया था। वर्षों के दौरान, यह भगवान नरसिंह के भक्तों के लिए एक महत्वपूर्ण तीर्थ स्थल बन गया है।"}
-                </p>
-                
-                <p className="text-justify">
-                  {language === 'en' 
-                    ? "The temple has witnessed many miracles and continues to fulfill the wishes of true devotees who come with pure hearts. The idol of Lord Narsingh installed in the temple is believed to be self-manifested (Swayambhu) and holds immense spiritual power."
-                    : "मंदिर ने कई चमत्कारों को देखा है और शुद्ध हृदय से आने वाले सच्चे भक्तों की इच्छाओं को पूरा करना जारी रखता है। मंदिर में स्थापित भगवान नरसिंह की मूर्ति को स्वयंभू माना जाता है और इसमें अपार आध्यात्मिक शक्ति है।"}
-                </p>
+  {language === 'en' 
+    ? "Devotee supreme and embodiment of sacrifice, Shri Shri 1008 Swami Vishnudass Ji Maharaj, founder of the Hasampur Peeth, was born in the year 1444 (Samvat). According to sacred legends, a lion once attacked a cow. To protect the frightened cow, Swami Ji placed himself before the lion. Deeply moved by his devotion, sacrifice, and pure love, Lord Narsingh appeared with a thunderous roar and instructed Swami Ji to remove a heavy boulder. The rock shifted effortlessly at Swami Ji’s mere touch, and a divine Shaligram form of Lord Narsingh manifested amidst sounds of conches, bells, and traditional instruments."
+    : "भक्त शिरोमणि त्यागमूर्ति श्री श्री १००८ श्री स्वामी विष्णुदास जी महाराज, हसामपुर पीठ के संस्थापक, का जन्म संवत १४४४ में हुआ। प्राकट्य प्रसंग की सुनी हुई कथानुसार सिंह ने एक गऊ पर आक्रमण कर दिया। भयभीत गऊ की रक्षा के लिए स्वामी जी ने स्वयं को सिंह के सामने प्रस्तुत किया। उनकी अनन्य भक्ति, असीम त्याग और निष्कलंक प्रेम से द्रवित होकर नृसिंह भगवान ने सिंहगर्जना करते हुए दर्शन दिए और एक भारी शिला को हटाने का आदेश दिया, जो स्वामी जी के स्पर्श मात्र से हट गई। उसी क्षण शंख, घंटा, घडियाल की ध्वनि के साथ श्री नृसिंह भगवान की शालिग्राम मूर्ति का प्राकट्य हुआ।"}
+</p>
+
+<p className="text-justify">
+  {language === 'en' 
+    ? "In devotion to this divine form, Swami Ji's son Shri Shri 1008 Shri Gangadas Ji Maharaj was born in the year 1476 (Samvat). Following in his father’s footsteps, he carried forward the legacy of immense devotion, penance, and divine love, and glorified the temple’s name across all directions."
+    : "इस दिव्य मूर्ति की सेवा स्वरूप स्वामी जी के पुत्र श्री श्री १००८ श्री गंगादास जी महाराज का जन्म संवत १४७६ में हुआ। उन्होंने अपने पिता की भांति ही असीम भक्ति, त्याग, तपस्या और प्रभु प्रेम के मार्ग पर चलते हुए मंदिर की कीर्ति को दसों दिशाओं में फैलाया।"}
+</p>
+
               </CardContent>
             </Card>
           </TabsContent>
