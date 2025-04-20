@@ -12,7 +12,7 @@ const AboutSection = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-center text-temple-maroon">
-          {language === 'en' ? 'About Shri Lakshmi Narsingh Mandir' : 'श्री लक्ष्मी नरसिंह मंदिर के बारे में'}
+          {language === 'en' ? 'About Shri Lakshmi Narsingh Mandir' : 'श्री नृसिंह मंदिर के बारे में'}
         </h1>
 
         <Tabs
