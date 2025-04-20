@@ -46,8 +46,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     // Initial check for session without auto-login
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+      // Explicitly set session and user to null to prevent default login
+      setSession(null);
+      setUser(null);
       setLoading(false);
     });
 
