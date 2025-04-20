@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
@@ -22,9 +21,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
-  // Ensure database is set up when component mounts
   useEffect(() => {
     const setupDatabase = async () => {
       try {
@@ -38,14 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    // Listen for auth changes
+    // Only listen to auth changes without automatic login
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
@@ -54,12 +45,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
+    // Initial check for session without auto-login
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
     return () => subscription.unsubscribe();
   }, []);
 
-  /**
-   * Saves or updates user details in the 'user_details' table in Supabase.
-   */
   const saveUserToDatabase = async (userId: string, email: string, username: string) => {
     try {
       console.log("Saving user to database:", { userId, email, username });

@@ -1,4 +1,3 @@
-
 import { GalleryImage, GalleryCategory } from '@/types/gallery';
 
 export const galleryImages: GalleryImage[] = [
@@ -26,28 +25,28 @@ export const galleryImages: GalleryImage[] = [
     category: "darshan",
     created_at: new Date().toISOString()
   },
-  { 
-    id: 4, 
-    image_url: "/lovable-uploads/eb2af739-3b7b-411b-ae85-7d7f864aba86.png", 
-    title: "Shri Narsingh Darshan",
-    alt: "Shri Narsingh Darshan", 
+  {
+    id: 4,
+    image_url: "/lovable-uploads/1dda7531-87ab-45fc-a698-3d3a28d25d05.png",
+    title: "Morning Darshan",
+    alt: "Morning Darshan",
     category: "darshan",
     created_at: new Date().toISOString()
   },
-  { 
-    id: 5, 
-    image_url: "/lovable-uploads/ce4e2728-1e57-4787-9769-5ffb97c2a7f6.png", 
-    title: "Decorated Shrine",
-    alt: "Decorated Shrine", 
-    category: "shringar",
+  {
+    id: 5,
+    image_url: "/lovable-uploads/9f9d2654-52ad-44c3-92d3-8f92b067dade.png",
+    title: "Afternoon Darshan",
+    alt: "Afternoon Darshan",
+    category: "darshan",
     created_at: new Date().toISOString()
   },
-  { 
-    id: 6, 
-    image_url: "/lovable-uploads/679567b7-197f-4de6-8181-b6266467e36c.png", 
-    title: "Festival Celebration",
-    alt: "Festival Celebration", 
-    category: "events",
+  {
+    id: 6,
+    image_url: "/lovable-uploads/0dc387c4-682c-498b-a4d8-b35159ef10a5.png",
+    title: "Evening Special Darshan",
+    alt: "Evening Special Darshan",
+    category: "darshan",
     created_at: new Date().toISOString()
   },
   { 
