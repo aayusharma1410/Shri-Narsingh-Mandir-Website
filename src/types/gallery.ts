@@ -1,6 +1,6 @@
 
 export interface GalleryImage {
-  id: number;
+  id: string | number;
   image_url?: string; // Making it optional since we might have src instead
   src?: string; // Adding src for backward compatibility
   title?: string; // Making title optional

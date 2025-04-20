@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import SignUpForm from './SignUpForm';
 import { AtSign, Lock } from 'lucide-react';
-import { toast } from '@/components/ui/toast';
+import { toast } from '@/hooks/use-toast';
 
 interface LoginDialogProps {
   open: boolean;
