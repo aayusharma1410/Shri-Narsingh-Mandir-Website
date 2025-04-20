@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 type LanguageContextType = {
@@ -21,35 +20,8 @@ const translations = {
       logout: 'Logout',
       user: 'User',
       donate: 'Donate',
-      policies: 'Mandir Policies'
-    },
-    about: {
-      narsinghKatha: `The Story of Lord Narsingh Avatar
-
-In Sanatan Dharma, whenever dharma is in decline and adharma rises, Lord Vishnu takes avatar on Earth. His ten principal avatars are known as 'Dashavatar'. Among these, the fourth avatar was Narsingh, which the Lord took to destroy the demon Hiranyakashipu and protect his devotee Prahlad. This avatar was unique as the Lord appeared neither fully human nor fully animal — he manifested as half-lion and half-human.
-
-Long ago, sage Kashyap's wife Diti gave birth to two demon brothers — Hiranyaksha and Hiranyakashipu. Both were extremely powerful and arrogant. They terrorized the devas and spread chaos in the universe. When Hiranyaksha hid the Earth in the cosmic waters, Lord Vishnu took the Varaha avatar and killed him, restoring Earth to its place.
-
-Enraged by his brother's death, Hiranyakashipu vowed revenge against Lord Vishnu. He performed severe penance to please Lord Brahma and asked for a boon that no being could kill him — neither human nor animal; neither by day nor by night; neither inside nor outside; neither in sky nor on earth; and not by any weapon. Lord Brahma granted this boon.
-
-This boon made Hiranyakashipu even more arrogant. He expanded his power across the three worlds and declared himself God. He ordered everyone to worship only him. Anyone who took Lord Vishnu's name was punished.
-
-However, his son Prahlad was a supreme devotee of Lord Vishnu from childhood. He constantly remembered Narayan, sang His glory, and spread the message of devotion. When Hiranyakashipu learned that his own son was disobeying his orders, he became furious.
-
-Hiranyakashipu tried many times to stop Prahlad from worshipping Vishnu, but Prahlad never wavered. Then he tried to kill Prahlad — through poison, by having elephants trample him, by placing him in fire (with Holika), but each time Lord Vishnu protected His devotee. Prahlad survived every attempt.
-
-One day, in anger, Hiranyakashipu asked Prahlad:
-"Where is your Vishnu? Is He in this pillar too?"
-Prahlad calmly replied:
-"Yes, He is everywhere — even in this pillar."
-
-Hiranyakashipu struck the pillar in rage, and at that moment, Lord Vishnu emerged in His Narsingh avatar — half-lion, half-human. This form was neither fully human nor fully animal — thus adhering to Lord Brahma's boon.
-
-As Narsingh, the Lord caught Hiranyakashipu at the threshold of his palace — neither inside nor outside. It was twilight — neither day nor night. He placed him on His thighs — neither earth nor sky — and tore him apart with His nails — neither weapon nor projectile. Thus, every condition of the boon was fulfilled in Hiranyakashipu's death.
-
-Afterward, Lord Narsingh became extremely fierce. No deity could calm Him. Then His supreme devotee Prahlad approached His feet and humbly prayed. Pleased by his devotion, Lord Narsingh became peaceful and blessed Prahlad.
-
-Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story teaches us that devotion has power. The Lord Himself protects His true devotees, no matter how difficult the circumstances. Pride, tyranny, and adharma must end — and dharma, truth, and devotion always triumph.`
+      policies: 'Mandir Policies',
+      poshakSeva: 'Poshak Seva'
     },
     donation: {
       title: 'Donate to the Mandir',
@@ -125,6 +97,41 @@ Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story tea
       passwordRequirements: 'Password must be at least 8 characters',
       submitInfo: 'By creating an account, you agree to our Terms and Privacy Policy'
     },
+    poshakSeva: {
+      title: 'Poshak Seva',
+      description: 'Poshak Seva is one of the most sacred and heartfelt offerings a devotee can make at Shri Lakshmi Narsingh Mandir, Hasampur.',
+      whyImportant: 'Why Poshak Seva is Important:',
+      reasons: [
+        'Offering new garments to the deity is a time-honored tradition that signifies respect, devotion, and reverence.',
+        'It is believed that Poshak Seva helps in fulfilling wishes, removing obstacles, and bringing divine blessings.',
+        'Devotees perform this seva to mark special occasions in their lives, such as birthdays, anniversaries, or spiritual milestones.',
+        'Bhagwan Narsingh is known as the divine protector. Offering poshak is a way to seek his blessings for strength, courage, and protection from all forms of negativity.',
+        'Performing this seva not only pleases the deity but also purifies the heart of the devotee and strengthens the connection between the soul and the divine.'
+      ],
+      bookTitle: 'Book Poshak Seva',
+      formLabels: {
+        fullName: 'Full Name',
+        email: 'Email Address',
+        mobile: 'Mobile Number',
+        date: 'Date of Seva',
+        poshakType: 'Type of Poshak',
+        occasion: 'Occasion (Optional)',
+        notes: 'Additional Notes (Optional)'
+      },
+      submitButton: 'Book Poshak Seva',
+      submitting: 'Submitting...',
+      successTitle: 'Booking Successful',
+      successMessage: 'Thank you for booking the Poshak Seva. The Shri Lakshmi Narsingh Mandir Committee, Hasampur will contact you soon regarding further details and confirmation.',
+      blessing: 'May Bhagwan Narsingh bless you and your family with divine grace.'
+    },
+    jhanki: {
+      title: 'Jhanki Stories',
+      columnHeaders: {
+        sno: 'S.No',
+        name: 'Jhanki Name',
+        story: 'Story'
+      }
+    }
   },
   hi: {
     nav: {
@@ -137,7 +144,8 @@ Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story tea
       logout: 'लॉगआउट',
       user: 'उपयोगकर्ता',
       donate: 'दान करें',
-      policies: 'मंदिर नीतियां'
+      policies: 'मंदिर नीतियां',
+      poshakSeva: 'पोशाक सेवा'
     },
     donation: {
       title: 'मंदिर को दान करें',
@@ -213,11 +221,45 @@ Thus ended the evil Hiranyakashipu and triumphed devotee Prahlad. This story tea
       passwordRequirements: 'पासवर्ड कम से कम 8 अक्षर का होना चाहिए',
       submitInfo: 'खाता बनाकर, आप हमारी शर्तों और गोपनीयता नीति से सहमत हैं'
     },
+    poshakSeva: {
+      title: 'पोशाक सेवा',
+      description: 'पोशाक सेवा श्री लक्ष्मी नरसिंह मंदिर, हसमपुर में एक भक्त द्वारा किया जा सकने वाला सबसे पवित्र और हृदयस्पर्शी चढ़ावा है।',
+      whyImportant: 'पोशाक सेवा क्यों महत्वपूर्ण है:',
+      reasons: [
+        'देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है।',
+        'यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है।',
+        'भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं।',
+        'भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है।',
+        'इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है।'
+      ],
+      bookTitle: 'पोशाक सेवा बुक करें',
+      formLabels: {
+        fullName: 'पूरा नाम',
+        email: 'ईमेल पता',
+        mobile: 'मोबाइल नंबर',
+        date: 'सेवा की तिथि',
+        poshakType: 'पोशाक का प्रकार',
+        occasion: 'अवसर (वैकल्पिक)',
+        notes: 'अतिरिक्त नोट्स (वैकल्पिक)'
+      },
+      submitButton: 'पोशाक सेवा बुक करें',
+      submitting: 'प्रस्तुत किया जा रहा है...',
+      successTitle: 'बुकिंग सफल',
+      successMessage: 'पोशाक सेवा बुक करने के लिए धन्यवाद। श्री लक्ष्मी नरसिंह मंदिर समिति, हसमपुर आपसे जल्द ही आगे की जानकारी और पुष्टि के संबंध में संपर्क करेगी।',
+      blessing: 'भगवान नरसिंह आपको और आपके परिवार को दिव्य कृपा से आशीर्वाद दें।'
+    },
+    jhanki: {
+      title: 'झांकी कथाएं',
+      columnHeaders: {
+        sno: 'क्र.सं.',
+        name: 'झांकी का नाम',
+        story: 'कथा'
+      }
+    }
   }
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  // Change default to Hindi
   const [language, setLanguage] = useState<'en' | 'hi'>('hi');
 
   const t = (key: string) => {

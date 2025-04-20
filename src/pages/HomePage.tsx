@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
+import JhankiTable from '@/components/JhankiTable';
 import PraktotsavSchedule from '@/components/PraktotsavSchedule';
 import PraktotsavScheduleDialog from '@/components/PraktotsavScheduleDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -23,7 +24,7 @@ const HomePage = () => {
       // If user is logged in, load language from their preferences
       loadUserPreferences();
     }
-  }, []);
+  }, [user]);
 
   // Load language preference from user_details if the user is logged in
   const loadUserPreferences = async () => {
@@ -58,6 +59,7 @@ const HomePage = () => {
         <Hero />
         <PraktotsavSchedule />
         <DarshanSlideshow />
+        <JhankiTable />
       </main>
       <Footer />
       <PraktotsavScheduleDialog />

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X, Globe, User } from "lucide-react";
+import { Menu, X, Globe, User, Home } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginDialog from './LoginDialog';
@@ -22,6 +23,7 @@ const Navbar = () => {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const { user, signOut } = useAuth();
   const [username, setUsername] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -38,6 +40,11 @@ const Navbar = () => {
           } else {
             setUsername(user.email?.split('@')[0] || 'User');
           }
+          
+          // Check if the user is an admin (specific email)
+          if (user.email === 'shrilakshminarsinghhasampur@gmail.com') {
+            setIsAdmin(true);
+          }
         } catch (error) {
           console.error("Error fetching username:", error);
           setUsername(user.email?.split('@')[0] || 'User');
@@ -45,6 +52,8 @@ const Navbar = () => {
       };
       
       fetchUsername();
+    } else {
+      setIsAdmin(false);
     }
   }, [user]);
 
@@ -83,7 +92,7 @@ const Navbar = () => {
     { name: t('nav.liveAarti'), path: "/live-aarti" },
     { name: t('nav.gallery'), path: "/gallery" },
     { name: t('nav.timings'), path: "/timings" },
-    { name: "Poshak Seva", path: "/poshak-seva" },
+    { name: t('nav.poshakSeva'), path: "/poshak-seva" },
   ];
 
   return (
@@ -134,7 +143,7 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  {user.email === 'shrilakshminarsinghhasampur@gmail.com' && (
+                  {isAdmin && (
                     <Link
                       to="/admin"
                       className={`transition-colors duration-200 ${
@@ -215,7 +224,7 @@ const Navbar = () => {
 
                   {user ? (
                     <>
-                      {user.email === 'shrilakshminarsinghhasampur@gmail.com' && (
+                      {isAdmin && (
                         <Link
                           to="/admin"
                           className="px-4 py-2 text-base hover:bg-gray-100 rounded-md"

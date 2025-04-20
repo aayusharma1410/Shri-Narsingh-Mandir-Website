@@ -58,7 +58,13 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
     
     try {
       await signIn(loginData.email, loginData.password);
+      // Close the dialog automatically on successful login
       onOpenChange(false);
+      // Reset form
+      setLoginData({
+        email: '',
+        password: '',
+      });
       toast({
         title: "Success",
         description: "Successfully logged in",

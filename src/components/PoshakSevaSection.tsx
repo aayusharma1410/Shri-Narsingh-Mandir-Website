@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useLanguage } from '@/contexts/LanguageContext';
 import {
   Form,
   FormControl,
@@ -36,15 +37,16 @@ const formSchema = z.object({
 });
 
 const poshakTypes = [
-  'Silk',
-  'Cotton',
-  'Floral',
-  'Silver',
-  'Designer'
+  'Silk', // सिल्क
+  'Cotton', // कॉटन
+  'Floral', // फूलों वाला
+  'Silver', // चांदी
+  'Designer' // डिजाइनर
 ];
 
 const PoshakSevaSection = () => {
   const { toast } = useToast();
+  const { language, t } = useLanguage();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -63,7 +65,9 @@ const PoshakSevaSection = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
+    
     try {
+      console.log('Submitting form data:', values);
       const { error } = await supabase
         .from('poshak_seva_bookings')
         .insert([{
@@ -72,18 +76,22 @@ const PoshakSevaSection = () => {
           mobile_number: values.mobileNumber,
           seva_date: values.sevaDate,
           poshak_type: values.poshakType,
-          occasion: values.occasion,
-          additional_notes: values.additionalNotes,
+          occasion: values.occasion || null,
+          additional_notes: values.additionalNotes || null,
         }]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
 
       setShowSuccess(true);
       form.reset();
     } catch (error: any) {
+      console.error('Form submission error:', error);
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to submit booking',
+        title: language === 'en' ? 'Error' : 'त्रुटि',
+        description: error.message || (language === 'en' ? 'Failed to submit booking' : 'बुकिंग जमा करने में विफल'),
         variant: 'destructive',
       });
     } finally {
@@ -94,24 +102,22 @@ const PoshakSevaSection = () => {
   return (
     <div className="container mx-auto px-4 space-y-8">
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-6">Poshak Seva</h1>
+        <h1 className="text-3xl font-bold mb-6">{t('poshakSeva.title')}</h1>
         <p className="text-lg mb-4">
-          Poshak Seva is one of the most sacred and heartfelt offerings a devotee can make at Shri Lakshmi Narsingh Mandir, Hasampur.
+          {t('poshakSeva.description')}
         </p>
         <div className="prose max-w-none mb-8">
-          <h2 className="text-xl font-semibold mb-4">Why Poshak Seva is Important:</h2>
+          <h2 className="text-xl font-semibold mb-4">{t('poshakSeva.whyImportant')}</h2>
           <ul className="list-disc text-left pl-6 space-y-2">
-            <li>Offering new garments to the deity is a time-honored tradition that signifies respect, devotion, and reverence.</li>
-            <li>It is believed that Poshak Seva helps in fulfilling wishes, removing obstacles, and bringing divine blessings.</li>
-            <li>Devotees perform this seva to mark special occasions in their lives, such as birthdays, anniversaries, or spiritual milestones.</li>
-            <li>Bhagwan Narsingh is known as the divine protector. Offering poshak is a way to seek his blessings for strength, courage, and protection from all forms of negativity.</li>
-            <li>Performing this seva not only pleases the deity but also purifies the heart of the devotee and strengthens the connection between the soul and the divine.</li>
+            {t('poshakSeva.reasons').map((reason, index) => (
+              <li key={index}>{reason}</li>
+            ))}
           </ul>
         </div>
       </div>
 
       <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-semibold mb-6">Book Poshak Seva</h2>
+        <h2 className="text-2xl font-semibold mb-6">{t('poshakSeva.bookTitle')}</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -119,9 +125,9 @@ const PoshakSevaSection = () => {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.fullName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your full name" {...field} />
+                    <Input placeholder={t('poshakSeva.formLabels.fullName')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,9 +139,9 @@ const PoshakSevaSection = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.email')}</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Enter your email" {...field} />
+                    <Input type="email" placeholder="example@mail.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,9 +153,9 @@ const PoshakSevaSection = () => {
               name="mobileNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mobile Number</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.mobile')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your mobile number" {...field} />
+                    <Input placeholder="9XXXXXXXXX" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -161,7 +167,7 @@ const PoshakSevaSection = () => {
               name="sevaDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date of Seva</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.date')}</FormLabel>
                   <FormControl>
                     <Input type="date" {...field} />
                   </FormControl>
@@ -175,11 +181,11 @@ const PoshakSevaSection = () => {
               name="poshakType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Type of Poshak</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormLabel>{t('poshakSeva.formLabels.poshakType')}</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select poshak type" />
+                        <SelectValue placeholder={language === 'en' ? "Select poshak type" : "पोशाक प्रकार चुनें"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -200,9 +206,9 @@ const PoshakSevaSection = () => {
               name="occasion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Occasion (Optional)</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.occasion')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Birthday, Anniversary" {...field} />
+                    <Input placeholder={language === 'en' ? "e.g., Birthday, Anniversary" : "जैसे, जन्मदिन, वर्षगांठ"} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -214,9 +220,9 @@ const PoshakSevaSection = () => {
               name="additionalNotes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Additional Notes (Optional)</FormLabel>
+                  <FormLabel>{t('poshakSeva.formLabels.notes')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Any special requests or notes" {...field} />
+                    <Textarea placeholder={language === 'en' ? "Any special requests or notes" : "कोई विशेष अनुरोध या नोट्स"} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -224,7 +230,7 @@ const PoshakSevaSection = () => {
             />
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Book Poshak Seva"}
+              {isSubmitting ? t('poshakSeva.submitting') : t('poshakSeva.submitButton')}
             </Button>
           </form>
         </Form>
@@ -233,11 +239,11 @@ const PoshakSevaSection = () => {
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Booking Successful</DialogTitle>
+            <DialogTitle>{t('poshakSeva.successTitle')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p>Thank you for booking the Poshak Seva. The Shri Lakshmi Narsingh Mandir Committee, Hasampur will contact you soon regarding further details and confirmation.</p>
-            <p>May Bhagwan Narsingh bless you and your family with divine grace.</p>
+            <p>{t('poshakSeva.successMessage')}</p>
+            <p>{t('poshakSeva.blessing')}</p>
           </div>
         </DialogContent>
       </Dialog>
