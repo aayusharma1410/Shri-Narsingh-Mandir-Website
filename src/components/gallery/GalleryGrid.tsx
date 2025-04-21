@@ -1,19 +1,27 @@
+
 import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import GalleryModal from "./GalleryModal";
 import { supabase } from "@/lib/supabase";
 import { GalleryImage } from "@/types/gallery";
+import { galleryImages as fallbackGalleryData } from '@/data/galleryData';
 
 const GalleryGrid = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
       setIsLoading(true);
+      setFetchError(null);
+
       try {
+        let allImages: GalleryImage[] = [];
+        let hasImages = false;
+
         // First try to fetch from gallery_images table
         const { data: dbImages, error: dbError } = await supabase
           .from('gallery_images')
@@ -37,11 +45,10 @@ const GalleryGrid = () => {
           console.error('Error fetching gallery images from storage:', storageError);
         }
 
-        let allImages: GalleryImage[] = [];
-
         // Add database images if any
         if (dbImages && dbImages.length > 0) {
           allImages = [...dbImages];
+          hasImages = true;
         }
 
         // Add storage images if any
@@ -59,12 +66,21 @@ const GalleryGrid = () => {
             }));
 
           allImages = [...allImages, ...storageImagesFormatted];
+          hasImages = true;
         }
 
+        // If no images from DB or storage, use fallback gallery data
+        if (!hasImages) {
+          console.log('Using fallback gallery data');
+          allImages = fallbackGalleryData;
+        }
+
+        console.log('Final gallery images:', allImages.length);
         setImages(allImages);
       } catch (error) {
         console.error('Error in fetchGalleryImages:', error);
-        setImages([]);
+        setFetchError('Failed to load gallery images');
+        setImages(fallbackGalleryData); // Fallback to static data
       } finally {
         setIsLoading(false);
       }
@@ -83,6 +99,10 @@ const GalleryGrid = () => {
         ))}
       </div>
     );
+  }
+
+  if (fetchError) {
+    console.error('Gallery fetch error:', fetchError);
   }
 
   if (!images || images.length === 0) {
@@ -114,6 +134,10 @@ const GalleryGrid = () => {
                   src={image.image_url} 
                   alt={image.title} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  onError={(e) => {
+                    console.error(`Failed to load image: ${image.image_url}`);
+                    e.currentTarget.src = '/placeholder.svg'; // Fallback image
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">

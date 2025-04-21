@@ -77,7 +77,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Large Map Section */}
+          {/* Large Map Section - Full Width */}
           <div className="w-screen md:w-[90vw] lg:w-full relative left-1/2 right-1/2 -ml-[50vw] md:-ml-[45vw] lg:ml-0 md:left-0 md:right-0 md:mx-auto mt-10">
             <div className="rounded-lg shadow bg-white p-4">
               <h2 className="text-lg font-semibold mb-2 text-temple-maroon text-center">

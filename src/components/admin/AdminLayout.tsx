@@ -1,14 +1,11 @@
-
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Sidebar, SidebarProvider, SidebarContent } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { isUserAdmin } from '@/lib/supabase-helpers';
-import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Home, Image, Bell, LogOut } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { useToast } from '@/hooks/use-toast';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -16,8 +13,8 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const { user, loading, signOut } = useAuth();
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [checkingAdmin, setCheckingAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -29,18 +26,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       }
 
       try {
-        // Only allow specific admin email
+        // Only allow specific admin email - without auto-login logic
         if (user.email === 'shrilakshminarsinghhasampur@gmail.com') {
-          console.log('Admin email detected:', user.email);
           setIsAdmin(true);
-          
-          // Also ensure they have admin flag in user_details
-          const { error } = await supabase
-            .from('user_details')
-            .update({ is_admin: true })
-            .eq('user_id', user.id);
-            
-          if (error) console.error('Error updating admin status:', error);
         } else {
           console.log('Non-admin email detected:', user.email);
           setIsAdmin(false);
@@ -73,6 +61,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     );
   }
 
+  // If no user or not admin, redirect to login
   if (!user) {
     toast({
       title: "Access Denied",
