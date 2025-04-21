@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Facebook, Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -25,22 +24,18 @@ const AartiVideoPlayer = ({
   return (
     <div className="relative bg-black rounded-xl overflow-hidden shadow-xl">
       <div className="relative pt-[56.25%] bg-temple-maroon/20">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-temple-gold/20 flex items-center justify-center animate-pulse">
-              <Facebook className="h-10 w-10 text-temple-gold" />
-            </div>
-            <p className="text-white font-medium">
-              {isPlaying 
-                ? (language === 'en' ? 'Aarti is now live' : 'आरती अभी लाइव है')
-                : (language === 'en' ? 'Next aarti will begin soon' : 'अगली आरती जल्द ही शुरू होगी')}
-            </p>
-            <p className="text-white/70 text-sm mt-2">
-              {language === 'en' 
-                ? 'Click play to watch on Facebook Live' 
-                : 'फेसबुक लाइव पर देखने के लिए प्ले बटन पर क्लिक करें'}
-            </p>
-          </div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <Button 
+            onClick={onPlayToggle}
+            variant="ghost" 
+            size="icon"
+            className="w-20 h-20 rounded-full bg-temple-gold/20 hover:bg-temple-gold/30 text-white hover:text-white transition-all duration-300 mb-4"
+          >
+            <Play className="h-12 w-12" />
+          </Button>
+          <p className="text-white font-medium text-lg">
+            {language === 'en' ? 'Click to watch Live Aarti' : 'लाइव आरती देखने के लिए क्लिक करें'}
+          </p>
         </div>
         
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">

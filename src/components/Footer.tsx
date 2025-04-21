@@ -1,7 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Clock, MapPin, Phone, Mail, Instagram } from "lucide-react";
+import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -47,6 +46,15 @@ const Footer = () => {
                    rel="noopener noreferrer"
                    className="hover:text-temple-gold transition-colors">
                   @shrinarsinhgtemple
+                </a>
+              </li>
+              <li className="flex items-start">
+                <Facebook className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <a href="https://www.facebook.com/events/695352646486362/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="hover:text-temple-gold transition-colors">
+                  Shri Narsingh Temple
                 </a>
               </li>
             </ul>

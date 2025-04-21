@@ -8,7 +8,6 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import LiveAartiPage from "./pages/LiveAartiPage";
-import GalleryPage from "./pages/GalleryPage";
 import TimingsPage from "./pages/TimingsPage";
 import PoliciesPage from "./pages/PoliciesPage";
 import NotFound from "./pages/NotFound";
@@ -27,7 +26,6 @@ const App = () => (
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/live-aarti" element={<LiveAartiPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/timings" element={<TimingsPage />} />
             <Route path="/policies" element={<PoliciesPage />} />
             <Route path="/poshak-seva" element={<PoshakSevaPage />} />
