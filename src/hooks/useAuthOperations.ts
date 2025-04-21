@@ -1,4 +1,3 @@
-
 import { supabase } from '@/lib/supabase';
 import { saveUserToDatabase } from '@/utils/userDatabaseUtils';
 import { useToast } from '@/hooks/use-toast';
@@ -32,18 +31,16 @@ export const useAuthOperations = () => {
     }
   };
 
-  // Email sign-up
+  // Email sign-up with verification
   const signUp = async (email: string, password: string, username: string) => {
     try {
-      // Remove the config call that doesn't exist in the current Supabase version
-      // Instead, we'll just use the options directly in the signUp method
+      // Using the correct Supabase v2 signup syntax
       const { error, data } = await supabase.auth.signUp({ 
         email, 
         password,
         options: {
           data: { username },
-          emailRedirectTo: window.location.origin,
-          // This ensures email confirmation is required (this is the default behavior)
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         }
       });
       

@@ -23,6 +23,37 @@ const NoticeBoard = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Default notices to use when database is not available
+  const defaultNotices: Notice[] = [
+    {
+      id: 1,
+      title: "Temple Renovation",
+      title_hi: "मंदिर का जीर्णोद्धार",
+      content: "We are pleased to announce that temple renovation work will begin next month.",
+      content_hi: "हमें यह घोषणा करते हुए प्रसन्नता हो रही है कि मंदिर के जीर्णोद्धार का कार्य अगले महीने से प्रारंभ होगा।",
+      is_important: true,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 2,
+      title: "Annual Festival",
+      title_hi: "वार्षिक उत्सव",
+      content: "Annual temple festival will be celebrated from 15th to 21st May with special ceremonies.",
+      content_hi: "वार्षिक मंदिर उत्सव 15 से 21 मई तक विशेष समारोहों के साथ मनाया जाएगा।",
+      is_important: false,
+      created_at: new Date(Date.now() - 86400000).toISOString()
+    },
+    {
+      id: 3,
+      title: "Bhajan Sandhya",
+      title_hi: "भजन संध्या",
+      content: "Join us for a special Bhajan Sandhya program every Saturday evening at 7 PM.",
+      content_hi: "हर शनिवार शाम 7 बजे होने वाले विशेष भजन संध्या कार्यक्रम में हमारे साथ शामिल हों।",
+      is_important: false,
+      created_at: new Date(Date.now() - 172800000).toISOString()
+    }
+  ];
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
@@ -38,46 +69,23 @@ const NoticeBoard = () => {
         
         if (error) {
           console.error('Error fetching notices:', error);
-          // If there's an error, we'll fall back to static data
-          setNotices([
-            {
-              id: 1,
-              title: "Temple Renovation",
-              title_hi: "मंदिर का जीर्णोद्धार",
-              content: "We are pleased to announce that temple renovation work will begin next month.",
-              content_hi: "हमें यह घोषणा करते हुए प्रसन्नता हो रही है कि मंदिर के जीर्णोद्धार का कार्य अगले महीने से प्रारंभ होगा।",
-              is_important: true,
-              created_at: new Date().toISOString()
-            },
-            {
-              id: 2,
-              title: "Annual Festival",
-              title_hi: "वार्षिक उत्सव",
-              content: "Annual temple festival will be celebrated from 15th to 21st May with special ceremonies.",
-              content_hi: "वार्षिक मंदिर उत्सव 15 से 21 मई तक विशेष समारोहों के साथ मनाया जाएगा।",
-              is_important: false,
-              created_at: new Date(Date.now() - 86400000).toISOString()
-            }
-          ]);
-          toast({
-            title: "Unable to load notices",
-            description: "Using default notices instead",
-            variant: "destructive"
-          });
+          // If there's an error, we'll use the default notices
+          setNotices(defaultNotices);
+          console.log('Using default notices instead');
         } else {
           console.log('Notices fetched successfully:', data);
-          setNotices(data || []);
-          if (data && data.length === 0) {
-            console.log('No notices found in the database');
+          // If we got data but it's empty, use default notices
+          if (!data || data.length === 0) {
+            console.log('No notices found in the database, using default notices');
+            setNotices(defaultNotices);
+          } else {
+            setNotices(data);
           }
         }
       } catch (error) {
         console.error('Error in fetchNotices:', error);
-        toast({
-          title: "Error loading notices",
-          description: "Please try again later",
-          variant: "destructive"
-        });
+        // In case of any exception, use default notices
+        setNotices(defaultNotices);
       } finally {
         setIsLoading(false);
       }

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -46,7 +45,7 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
-    } else if (BLOCKED_EMAILS.includes(formData.email)) {
+    } else if (BLOCKED_EMAILS.includes(formData.email.toLowerCase())) {
       newErrors.email = 'This email is not allowed to register';
     }
     
@@ -212,4 +211,3 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
 };
 
 export default SignUpForm;
-
