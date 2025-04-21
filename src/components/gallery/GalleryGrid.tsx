@@ -5,6 +5,7 @@ import GalleryModal from "./GalleryModal";
 import { supabase } from "@/lib/supabase";
 import { GalleryImage } from "@/types/gallery";
 import { galleryImages as fallbackGalleryData } from '@/data/galleryData';
+import { toast } from "@/components/ui/use-toast";
 
 const GalleryGrid = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
@@ -22,6 +23,8 @@ const GalleryGrid = () => {
         let allImages: GalleryImage[] = [];
         let hasImages = false;
 
+        console.log('Attempting to fetch gallery images from Supabase...');
+
         // First try to fetch from gallery_images table
         const { data: dbImages, error: dbError } = await supabase
           .from('gallery_images')
@@ -30,6 +33,13 @@ const GalleryGrid = () => {
           
         if (dbError) {
           console.error('Error fetching gallery images from DB:', dbError);
+          if (dbError.code === '42P01') {
+            console.log('The gallery_images table does not exist yet');
+          }
+        } else if (dbImages && dbImages.length > 0) {
+          console.log(`Found ${dbImages.length} images in the gallery_images table`);
+          allImages = [...dbImages];
+          hasImages = true;
         }
 
         // Then fetch images from gallery storage bucket
@@ -43,16 +53,8 @@ const GalleryGrid = () => {
 
         if (storageError) {
           console.error('Error fetching gallery images from storage:', storageError);
-        }
-
-        // Add database images if any
-        if (dbImages && dbImages.length > 0) {
-          allImages = [...dbImages];
-          hasImages = true;
-        }
-
-        // Add storage images if any
-        if (storageImages && storageImages.length > 0) {
+        } else if (storageImages && storageImages.length > 0) {
+          console.log(`Found ${storageImages.length} images in the storage bucket`);
           const storageBaseUrl = supabase.storage.from('gallery').getPublicUrl('').data.publicUrl;
           
           const storageImagesFormatted = storageImages
@@ -71,16 +73,29 @@ const GalleryGrid = () => {
 
         // If no images from DB or storage, use fallback gallery data
         if (!hasImages) {
-          console.log('Using fallback gallery data');
+          console.log('No images found in Supabase. Using fallback data with', fallbackGalleryData.length, 'images');
           allImages = fallbackGalleryData;
+          
+          // Show toast notification
+          toast({
+            title: "Using default gallery images",
+            description: "Could not retrieve images from the database",
+            variant: "default"
+          });
         }
 
-        console.log('Final gallery images:', allImages.length);
+        console.log('Final gallery images loaded:', allImages.length);
         setImages(allImages);
       } catch (error) {
         console.error('Error in fetchGalleryImages:', error);
         setFetchError('Failed to load gallery images');
         setImages(fallbackGalleryData); // Fallback to static data
+        
+        toast({
+          title: "Error loading gallery",
+          description: "Using default images instead",
+          variant: "destructive"
+        });
       } finally {
         setIsLoading(false);
       }

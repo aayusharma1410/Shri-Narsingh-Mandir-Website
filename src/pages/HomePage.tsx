@@ -50,7 +50,7 @@ const HomePage = () => {
             <NoticeBoard />
           </div>
 
-          {/* 25-row Table: now wider */}
+          {/* 25-row Table: now wider and with improved hover */}
           <div className="w-full mx-auto mt-8">
             <div className="rounded-lg overflow-x-auto bg-white shadow">
               <table className="min-w-full table-auto">
@@ -65,11 +65,11 @@ const HomePage = () => {
                   {stories.map((row) => (
                     <tr
                       key={row.s_no}
-                      className="border-b last:border-b-0 even:bg-temple-cream/20 transition-colors hover:bg-temple-gold/20"
+                      className="border-b last:border-b-0 even:bg-temple-cream/20 transition-colors hover:bg-temple-gold/30"
                     >
-                      <td className="px-4 py-2 text-center">{row.s_no}</td>
-                      <td className="px-4 py-2 text-center">{row.avatar}</td>
-                      <td className="px-4 py-2">{row.story}</td>
+                      <td className="px-4 py-3 text-center">{row.s_no}</td>
+                      <td className="px-4 py-3 text-center font-medium">{row.avatar}</td>
+                      <td className="px-4 py-3">{row.story}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -77,9 +77,9 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Large Map Section - Full Width */}
-          <div className="w-screen md:w-[90vw] lg:w-full relative left-1/2 right-1/2 -ml-[50vw] md:-ml-[45vw] lg:ml-0 md:left-0 md:right-0 md:mx-auto mt-10">
-            <div className="rounded-lg shadow bg-white p-4">
+          {/* Large Map Section - Full Width with improved responsiveness */}
+          <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
+            <div className="rounded-lg shadow bg-white p-4 mx-4">
               <h2 className="text-lg font-semibold mb-2 text-temple-maroon text-center">
                 {language === "en"
                   ? "How to Reach Hasampur Temple"
@@ -93,7 +93,7 @@ const HomePage = () => {
                   height="400"
                   allowFullScreen
                   loading="lazy"
-                  className="border-0 w-full h-[350px] md:h-[420px] lg:h-[480px]"
+                  className="border-0 w-full h-[350px] md:h-[450px] lg:h-[500px]"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>

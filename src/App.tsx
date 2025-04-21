@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,7 +13,6 @@ import GalleryPage from "./pages/GalleryPage";
 import TimingsPage from "./pages/TimingsPage";
 import PoliciesPage from "./pages/PoliciesPage";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import PoshakSevaPage from "./pages/PoshakSevaPage";
 
 const queryClient = new QueryClient();

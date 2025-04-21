@@ -12,7 +12,7 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, username: string) => Promise<void>;
   signOut: () => Promise<void>;
-  /** New: Google sign-in */
+  /** Google sign-in */
   signInWithGoogle: () => Promise<void>;
 };
 
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session ?? null); // never force a specific user, just reflect Supabase's session
+      setSession(session ?? null);
       setUser(session?.user ?? null);
       setLoading(false);
     });

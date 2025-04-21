@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/lib/supabase';
-import { galleryImages } from '@/data/galleryData';
+import { toast } from "@/components/ui/use-toast";
 
 interface Notice {
   id: number;
@@ -26,7 +26,10 @@ const NoticeBoard = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        // First try to fetch from notices table in Supabase
+        console.log('Fetching notices from Supabase...');
+        setIsLoading(true);
+        
+        // Try to fetch from notices table in Supabase
         const { data, error } = await supabase
           .from('notices')
           .select('*')
@@ -56,11 +59,25 @@ const NoticeBoard = () => {
               created_at: new Date(Date.now() - 86400000).toISOString()
             }
           ]);
+          toast({
+            title: "Unable to load notices",
+            description: "Using default notices instead",
+            variant: "destructive"
+          });
         } else {
+          console.log('Notices fetched successfully:', data);
           setNotices(data || []);
+          if (data && data.length === 0) {
+            console.log('No notices found in the database');
+          }
         }
       } catch (error) {
         console.error('Error in fetchNotices:', error);
+        toast({
+          title: "Error loading notices",
+          description: "Please try again later",
+          variant: "destructive"
+        });
       } finally {
         setIsLoading(false);
       }
