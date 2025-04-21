@@ -96,6 +96,102 @@ export const galleryImages: GalleryImage[] = [
     alt: "Shri Narsingh Temple Darshan", 
     category: "darshan",
     created_at: new Date().toISOString()
+  },
+  {
+    id: 101,
+    image_url: "/lovable-uploads/94c00f78-f5ad-49e0-9e1d-623ca425a2dc.png",
+    title: "श्री नृसिंह भगवान का दिव्य मुखौटा",
+    alt: "Shri Narsingh Bhagwan Mask",
+    category: "darshan",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 102,
+    image_url: "/lovable-uploads/a0a336ea-adbb-4270-994b-47c2473bd9c4.png",
+    title: "श्री मंदिर श्रृंगार",
+    alt: "Shri Mandir Shringar",
+    category: "shringar",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 103,
+    image_url: "/lovable-uploads/4e588833-9355-4e08-80a0-4efd66e96609.png",
+    title: "श्री नृसिंह मंदिर स्पेशल",
+    alt: "Shri Narsingh Temple Special",
+    category: "events",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 104,
+    image_url: "/lovable-uploads/934c3072-1589-4b28-b2e1-540d02f85a9b.png",
+    title: "श्री मंदिर अंदरूनी दृश्य",
+    alt: "Mandir Internal View",
+    category: "mandir",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 105,
+    image_url: "/lovable-uploads/54d5606e-9168-4ca0-a47c-64d5301366ba.png",
+    title: "संपर्क व दर्शन",
+    alt: "Contact and Darshan",
+    category: "darshan",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 106,
+    image_url: "/lovable-uploads/9634463c-817e-4c3e-8aa6-be3cf618e8e7.png",
+    title: "मूर्ति श्रृंगार",
+    alt: "Murti Shringar",
+    category: "shringar",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 107,
+    image_url: "/lovable-uploads/be2852e5-1f92-449c-971f-73db71254667.png",
+    title: "धार्मिक आयोजन",
+    alt: "Dharmik Ayojan",
+    category: "events",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 108,
+    image_url: "/lovable-uploads/2b21ae80-5a3e-4df8-b7c8-ce77872feb38.png",
+    title: "मंदिर की झलक",
+    alt: "Temple Glimpse",
+    category: "mandir",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 109,
+    image_url: "/lovable-uploads/6dad6b0e-0865-493e-b882-319e76612984.png",
+    title: "मंदिर उत्सव",
+    alt: "Mandir Utsav",
+    category: "events",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 110,
+    image_url: "/lovable-uploads/d0cf5cba-069e-4db5-8c2b-14e744a057ae.png",
+    title: "अद्भुत दर्शन",
+    alt: "Adbhut Darshan",
+    category: "darshan",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 111,
+    image_url: "/lovable-uploads/3e47f622-d426-418c-afed-adf755d2e033.png",
+    title: "निर्मल दर्शन",
+    alt: "Nirmal Darshan",
+    category: "darshan",
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 112,
+    image_url: "/lovable-uploads/36ba0f51-d17c-447c-a819-b5af7b1a85ee.png",
+    title: "मंदिर प्रांगण का दृश्य",
+    alt: "Mandir Courtyard View",
+    category: "mandir",
+    created_at: new Date().toISOString()
   }
 ];
 
