@@ -20,6 +20,8 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [signupError, setSignupError] = useState('');
 
+  const BLOCKED_EMAILS = ['shrilakshminarsinghhasampur@gmail.com'];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -44,6 +46,8 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
+    } else if (BLOCKED_EMAILS.includes(formData.email)) {
+      newErrors.email = 'This email is not allowed to register';
     }
     
     if (!formData.password) {
@@ -208,3 +212,4 @@ const SignUpForm = ({ onToggleForm }: { onToggleForm: () => void }) => {
 };
 
 export default SignUpForm;
+
