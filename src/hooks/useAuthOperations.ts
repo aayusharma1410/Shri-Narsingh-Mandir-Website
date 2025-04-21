@@ -35,13 +35,24 @@ export const useAuthOperations = () => {
   // Email sign-up
   const signUp = async (email: string, password: string, username: string) => {
     try {
+      // First, configure email confirmation settings
+      const { error: configError } = await supabase.auth.config({
+        autoConfirmSignUp: false, // Ensure email confirmation is required
+      }).catch(() => ({ error: null }));
+      
+      if (configError) {
+        console.warn('Could not configure auth settings:', configError);
+      }
+      
       const { error, data } = await supabase.auth.signUp({ 
         email, 
         password,
         options: {
-          data: { username }
+          data: { username },
+          emailRedirectTo: window.location.origin
         }
       });
+      
       if (error) {
         if (error.status === 429) {
           throw new Error(language === 'en' 
@@ -50,9 +61,15 @@ export const useAuthOperations = () => {
         }
         throw error;
       }
+      
+      // Save user to database even if email isn't verified yet
       if (data.user) {
         await saveUserToDatabase(data.user.id, email, username, language);
+        console.log('User data saved to database:', data.user.id, email, username);
+      } else {
+        console.error('User data not available after signup');
       }
+      
       toast({
         title: language === 'en' ? "Account Created!" : "खाता बनाया गया!",
         description: language === 'en' 
@@ -81,11 +98,12 @@ export const useAuthOperations = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
+        options: {
+          redirectTo: window.location.origin
+        }
       });
       if (error) throw error;
-      // The redirect will happen after successful Google login, so this will run after redirect.
-      // Once redirected back and logged-in, user is set in AuthContext and useEffect
-      // We try to save the user info when the session updates, see below.
+      // The redirect will happen after successful Google login
     } catch (error: any) {
       toast({
         title: "Google Login Error",
@@ -95,10 +113,6 @@ export const useAuthOperations = () => {
       throw error;
     }
   };
-
-  // This helper will be used in AuthContext (on session change)
-  // - whenever session changes, ensure user's info is up-to-date in DB.
-  // - see AuthContext -- in session update
 
   const signOut = async () => {
     try {

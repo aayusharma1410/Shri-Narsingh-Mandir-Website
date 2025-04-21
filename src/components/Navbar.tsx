@@ -22,7 +22,6 @@ const Navbar = () => {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const { user, signOut } = useAuth();
   const [username, setUsername] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -30,7 +29,6 @@ const Navbar = () => {
         try {
           const displayName = user.email?.split('@')[0] || 'User';
           setUsername(displayName);
-          setIsAdmin(user.email === 'shrilakshminarsinghhasampur@gmail.com');
         } catch (error) {
           console.error("Error fetching username:", error);
           setUsername(user.email?.split('@')[0] || 'User');
@@ -38,8 +36,6 @@ const Navbar = () => {
       };
       
       fetchUsername();
-    } else {
-      setIsAdmin(false);
     }
   }, [user]);
 
@@ -129,18 +125,6 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      className={`transition-colors duration-200 ${
-                        isScrolled
-                          ? "text-gray-700 hover:text-temple-gold"
-                          : "text-white hover:text-temple-gold"
-                      }`}
-                    >
-                      Admin
-                    </Link>
-                  )}
                   <div className="flex items-center gap-2">
                     <User className={`h-4 w-4 ${isScrolled ? "text-gray-700" : "text-white"}`} />
                     <span className={`${isScrolled ? "text-gray-700" : "text-white"}`}>
@@ -210,14 +194,6 @@ const Navbar = () => {
 
                   {user ? (
                     <>
-                      {isAdmin && (
-                        <Link
-                          to="/admin"
-                          className="px-4 py-2 text-base hover:bg-gray-100 rounded-md"
-                        >
-                          Admin Panel
-                        </Link>
-                      )}
                       <div className="px-4 py-2 text-base">
                         <User className="h-4 w-4 inline mr-2" />
                         {username}

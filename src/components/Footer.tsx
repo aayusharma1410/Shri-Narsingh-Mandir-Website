@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Clock, MapPin, Phone, Mail } from "lucide-react";
+import { Clock, MapPin, Phone, Mail, Instagram } from "lucide-react";
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -39,6 +39,15 @@ const Footer = () => {
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>contact@shrinarsinhgtemple.org</span>
+              </li>
+              <li className="flex items-start">
+                <Instagram className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <a href="https://www.instagram.com/p/DItYel0Tew8T3UZeMnAQAfTKSIFjneiuj5CpqM0/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="hover:text-temple-gold transition-colors">
+                  @shrinarsinhgtemple
+                </a>
               </li>
             </ul>
           </div>

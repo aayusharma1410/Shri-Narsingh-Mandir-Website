@@ -19,9 +19,9 @@ export const galleryImages: GalleryImage[] = [
   },
   { 
     id: 3, 
-    image_url: "/lovable-uploads/7f5e03d3-8c83-4f35-84d4-942efc47d2b2.png", 
-    title: "Evening Darshan",
-    alt: "Evening Darshan", 
+    image_url: "https://www.instagram.com/p/DItYel0Tew8T3UZeMnAQAfTKSIFjneiuj5CpqM0/media/?size=l",
+    title: "Instagram Temple Special",
+    alt: "Instagram Temple Special", 
     category: "darshan",
     created_at: new Date().toISOString()
   },
