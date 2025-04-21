@@ -8,19 +8,15 @@ export const useAuthOperations = () => {
   const { toast } = useToast();
   const { language } = useLanguage();
 
+  // Email/password sign-in
   const signIn = async (email: string, password: string) => {
     try {
       const { error, data } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      
-      // Ensure username is available in the UI
       if (data.user) {
         const username = data.user.user_metadata?.username || data.user.email?.split('@')[0] || 'user';
-        
-        // Update user_details table
         await saveUserToDatabase(data.user.id, data.user.email!, username, language);
       }
-      
       toast({
         title: language === 'en' ? "Successful Login!" : "सफल प्रवेश!",
         description: language === 'en' ? "You have successfully logged in." : "आपने सफलतापूर्वक प्रवेश किया है।",
@@ -36,6 +32,7 @@ export const useAuthOperations = () => {
     }
   };
 
+  // Email sign-up
   const signUp = async (email: string, password: string, username: string) => {
     try {
       const { error, data } = await supabase.auth.signUp({ 
@@ -45,7 +42,6 @@ export const useAuthOperations = () => {
           data: { username }
         }
       });
-      
       if (error) {
         if (error.status === 429) {
           throw new Error(language === 'en' 
@@ -54,11 +50,9 @@ export const useAuthOperations = () => {
         }
         throw error;
       }
-      
       if (data.user) {
         await saveUserToDatabase(data.user.id, email, username, language);
       }
-      
       toast({
         title: language === 'en' ? "Account Created!" : "खाता बनाया गया!",
         description: language === 'en' 
@@ -67,13 +61,11 @@ export const useAuthOperations = () => {
       });
     } catch (error: any) {
       let errorMessage = error.message;
-      
       if (error.code === "over_email_send_rate_limit" || error.status === 429) {
         errorMessage = language === 'en' 
           ? "Too many signup attempts. Please wait a minute and try again."
           : "बहुत अधिक साइन-अप प्रयास। कृपया एक मिनट रुकें और फिर से प्रयास करें।";
       }
-      
       toast({
         title: language === 'en' ? "Account Creation Error" : "खाता बनाने में त्रुटि",
         description: errorMessage,
@@ -83,6 +75,30 @@ export const useAuthOperations = () => {
       throw error;
     }
   };
+
+  // Sign-in with Google Provider
+  const signInWithGoogle = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+      if (error) throw error;
+      // The redirect will happen after successful Google login, so this will run after redirect.
+      // Once redirected back and logged-in, user is set in AuthContext and useEffect
+      // We try to save the user info when the session updates, see below.
+    } catch (error: any) {
+      toast({
+        title: "Google Login Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
+  // This helper will be used in AuthContext (on session change)
+  // - whenever session changes, ensure user's info is up-to-date in DB.
+  // - see AuthContext -- in session update
 
   const signOut = async () => {
     try {
@@ -104,5 +120,5 @@ export const useAuthOperations = () => {
     }
   };
 
-  return { signIn, signUp, signOut };
+  return { signIn, signUp, signOut, signInWithGoogle };
 };

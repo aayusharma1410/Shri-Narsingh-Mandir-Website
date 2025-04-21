@@ -12,6 +12,8 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, username: string) => Promise<void>;
   signOut: () => Promise<void>;
+  /** New: Google sign-in */
+  signInWithGoogle: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,7 +22,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const { signIn, signUp, signOut } = useAuthOperations();
+
+  const { signIn, signUp, signOut, signInWithGoogle } = useAuthOperations();
 
   useEffect(() => {
     const setupDatabase = async () => {
@@ -30,12 +33,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.error('Failed to set up database:', error);
       }
     };
-    
     setupDatabase();
   }, []);
 
   useEffect(() => {
-    // Only listen to auth changes without automatic login
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
@@ -44,11 +45,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    // Initial check for session without auto-login
     supabase.auth.getSession().then(({ data: { session } }) => {
-      // Explicitly set session and user to null to prevent default login
-      setSession(null);
-      setUser(null);
+      setSession(session ?? null); // never force a specific user, just reflect Supabase's session
+      setUser(session?.user ?? null);
       setLoading(false);
     });
 
@@ -56,7 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ session, user, loading, signIn, signUp, signOut, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

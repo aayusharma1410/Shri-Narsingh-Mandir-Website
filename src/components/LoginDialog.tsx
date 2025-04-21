@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import SignUpForm from './SignUpForm';
-import { AtSign, Lock } from 'lucide-react';
+import { AtSign, Lock, LogIn } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface LoginDialogProps {
@@ -17,8 +17,9 @@ interface LoginDialogProps {
 
 const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
   const { t } = useLanguage();
-  const { signIn } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [loginData, setLoginData] = useState({
     email: '',
@@ -36,31 +37,19 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
-    if (!loginData.email.trim()) {
-      newErrors.email = 'Email is required';
-    }
-    
-    if (!loginData.password) {
-      newErrors.password = 'Password is required';
-    }
-    
+    if (!loginData.email.trim()) newErrors.email = 'Email is required';
+    if (!loginData.password) newErrors.password = 'Password is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
-    
     setIsLoading(true);
-    
     try {
       await signIn(loginData.email, loginData.password);
-      // Close the dialog automatically on successful login
       onOpenChange(false);
-      // Reset form
       setLoginData({
         email: '',
         password: '',
@@ -77,6 +66,26 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    try {
+      await signInWithGoogle();
+      onOpenChange(false);
+      toast({
+        title: "Success",
+        description: "Logged in with Google",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Google Login Error",
+        description: error.message || "Google login failed",
+        variant: "destructive",
+      });
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -103,6 +112,20 @@ const LoginDialog = ({ open, onOpenChange }: LoginDialogProps) => {
                 <div className="h-20 w-20 rounded-full bg-temple-gold/20 flex items-center justify-center animate-glow">
                   <span className="text-3xl font-serif text-temple-gold">ॐ</span>
                 </div>
+              </div>
+
+              {/* Google Login Button */}
+              <div className="flex flex-col space-y-2 mb-4">
+                <Button 
+                  onClick={handleGoogleLogin} 
+                  className="w-full bg-[white] border text-temple-maroon hover:bg-temple-gold/20 font-medium flex items-center justify-center gap-2"
+                  disabled={googleLoading}
+                  type="button"
+                >
+                  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+                  {googleLoading ? "Signing in..." : "Log in with Google"}
+                </Button>
+                <div className="text-center text-xs text-muted-foreground">Or use your email below</div>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-5">
