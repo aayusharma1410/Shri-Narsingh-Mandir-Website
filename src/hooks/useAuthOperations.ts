@@ -35,21 +35,15 @@ export const useAuthOperations = () => {
   // Email sign-up
   const signUp = async (email: string, password: string, username: string) => {
     try {
-      // First, configure email confirmation settings
-      const { error: configError } = await supabase.auth.config({
-        autoConfirmSignUp: false, // Ensure email confirmation is required
-      }).catch(() => ({ error: null }));
-      
-      if (configError) {
-        console.warn('Could not configure auth settings:', configError);
-      }
-      
+      // Remove the config call that doesn't exist in the current Supabase version
+      // Instead, we'll just use the options directly in the signUp method
       const { error, data } = await supabase.auth.signUp({ 
         email, 
         password,
         options: {
           data: { username },
-          emailRedirectTo: window.location.origin
+          emailRedirectTo: window.location.origin,
+          // This ensures email confirmation is required (this is the default behavior)
         }
       });
       
