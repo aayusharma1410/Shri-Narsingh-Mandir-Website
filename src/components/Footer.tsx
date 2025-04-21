@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { LuClock, LuMapPin, LuPhone, LuMail } from "lucide-react";
+import { Clock, MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -17,7 +17,7 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <LuMapPin className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <MapPin className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>
                   {language === "en"
                     ? "Hasampur, Sikar District, Rajasthan 332502"
@@ -25,7 +25,7 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-start">
-                <LuClock className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <Clock className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>
                   {language === "en"
                     ? "Open Daily: 5:00 AM - 9:00 PM"
@@ -33,11 +33,11 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-start">
-                <LuPhone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>+91 98765 43210</span>
               </li>
               <li className="flex items-start">
-                <LuMail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>contact@shrinarsinhgtemple.org</span>
               </li>
             </ul>
