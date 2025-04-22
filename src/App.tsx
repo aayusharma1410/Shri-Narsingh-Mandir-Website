@@ -12,6 +12,7 @@ import TimingsPage from "./pages/TimingsPage";
 import PoliciesPage from "./pages/PoliciesPage";
 import NotFound from "./pages/NotFound";
 import PoshakSevaPage from "./pages/PoshakSevaPage";
+import GalleryPage from "./pages/GalleryPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/live-aarti" element={<LiveAartiPage />} />
             <Route path="/timings" element={<TimingsPage />} />
             <Route path="/policies" element={<PoliciesPage />} />

@@ -1,9 +1,11 @@
+
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
 import NoticeBoard from '@/components/NoticeBoard';
 import Footer from '@/components/Footer';
+import PraktotsavScheduleDialog from '@/components/PraktotsavScheduleDialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const stories = Array.from({ length: 25 }).map((_, i) => ({
@@ -39,7 +41,25 @@ const HomePage = () => {
     <div className="min-h-screen overflow-x-hidden">
       <Navbar />
       <Hero />
-      <div className="container mx-auto px-2 md:px-0 py-8">
+
+      {/* Praktotsav Schedule as pop/dialog */}
+      <PraktotsavScheduleDialog />
+
+      {/* Festival schedule image before darshan */}
+      <div className="w-full max-w-2xl mx-auto my-2">
+        <h2 className="text-xl md:text-2xl font-serif font-bold text-center mb-3 text-temple-maroon">
+          श्री नर्सिंह प्रकटोत्सव की समय सारिणी
+        </h2>
+        <div className="rounded-xl overflow-hidden border-4 border-temple-gold shadow-lg mb-4">
+          <img 
+            src="/lovable-uploads/3b249839-500d-4be2-9ae5-cbd73116e2a1.png"
+            alt="Praktotsav Timetable"
+            className="w-full h-auto object-contain"
+          />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-2 md:px-0 pb-0 pt-2">
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
           <div className="w-full max-w-2xl mx-auto">
@@ -72,8 +92,9 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="w-full relative bg-white">
-            <div className="max-w-7xl mx-auto">
+          {/* MAP, remove gap and touch footer */}
+          <div className="w-full relative bg-white" style={{ marginBottom: '-2rem' }}>
+            <div className="max-w-7xl mx-auto pb-0">
               <h2 className="text-2xl font-semibold mb-6 text-temple-maroon text-center">
                 {language === "en"
                   ? "How to Reach Hasampur Temple"
@@ -111,6 +132,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      {/* Remove gap below map so footer touches */}
+      <div className="bg-white" style={{ height: 0, marginTop: 0 }} />
       <Footer />
     </div>
   );

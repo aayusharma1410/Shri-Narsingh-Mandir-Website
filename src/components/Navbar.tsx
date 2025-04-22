@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -41,8 +42,8 @@ const Navbar = () => {
   const navLinks = [
     { name: t('nav.home'), path: "/" },
     { name: t('nav.about'), path: "/about" },
+    { name: t('nav.gallery') || "गैलरी", path: "/gallery" }, // New Gallery Link (forced Hindi fallback)
     { name: t('nav.liveAarti'), path: "/live-aarti" },
-    { name: t('nav.timings'), path: "/timings" },
     { name: t('nav.poshakSeva'), path: "/poshak-seva" },
   ];
 
