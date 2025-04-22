@@ -7,7 +7,6 @@ import DailySchedule from '@/components/DailySchedule';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-// Table Row Stories (Dummy Content)
 const stories = Array.from({ length: 25 }).map((_, i) => ({
   s_no: i + 1,
   avatar: `User${i + 1}`,
@@ -56,12 +55,10 @@ const HomePage = () => {
         </div>
         <DarshanSlideshow />
         <div className="flex flex-col items-center my-8 gap-4">
-          {/* Center NoticeBoard and make it fixed width on desktop */}
           <div className="w-full max-w-2xl mx-auto">
             <NoticeBoard />
           </div>
 
-          {/* 25-row Table with improved hover */}
           <div className="w-full mx-auto mt-8">
             <div className="rounded-lg overflow-x-auto bg-white shadow">
               <table className="min-w-full table-auto">
@@ -88,9 +85,8 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Full-width Map Section */}
-          <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white">
-            <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="w-full relative bg-white -mx-2 md:mx-0">
+            <div className="max-w-7xl mx-auto py-8">
               <h2 className="text-2xl font-semibold mb-6 text-temple-maroon text-center">
                 {language === "en"
                   ? "How to Reach Hasampur Temple"
@@ -127,7 +123,6 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Daily Schedule */}
           <div className="w-full max-w-xl mx-auto mt-6">
             <DailySchedule isSummerTimings={true} />
           </div>
