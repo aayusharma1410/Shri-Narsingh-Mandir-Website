@@ -54,7 +54,7 @@ const HomePage = () => {
           </p>
         </div>
         <DarshanSlideshow />
-        <div className="flex flex-col items-center my-8 gap-4">
+        <div className="flex flex-col items-center gap-4">
           <div className="w-full max-w-2xl mx-auto">
             <NoticeBoard />
           </div>
@@ -85,14 +85,14 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="w-full relative bg-white -mx-2 md:mx-0">
-            <div className="max-w-7xl mx-auto py-8">
+          <div className="w-full relative bg-white">
+            <div className="max-w-7xl mx-auto">
               <h2 className="text-2xl font-semibold mb-6 text-temple-maroon text-center">
                 {language === "en"
                   ? "How to Reach Hasampur Temple"
                   : "हासमपुर मंदिर कैसे पहुँचे"}
               </h2>
-              <div className="h-[450px] md:h-[550px] relative mb-0">
+              <div className="h-[450px] md:h-[550px] relative">
                 <iframe
                   title="Hasampur Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.9459708397293!2d75.86830677541354!3d27.673900876194365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396cb5251085f91b%3A0x333f18db169ffacf!2sHasampur%2C%20Rajasthan%20332502!5e0!3m2!1sen!2sin!4v1681559233761!5m2!1sen!2sin"
@@ -123,7 +123,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="w-full max-w-xl mx-auto mt-6">
+          <div className="w-full max-w-xl mx-auto">
             <DailySchedule isSummerTimings={true} />
           </div>
         </div>

@@ -7,11 +7,11 @@ const DarshanSlideshow = () => {
   const [currentImage] = useState("/lovable-uploads/acbea974-756b-4308-a7dd-5f93aa907c3a.png");
 
   return (
-    <div id="darshan-slideshow" className="w-full max-w-2xl mx-auto mb-8">
+    <div id="darshan-slideshow" className="w-full max-w-2xl mx-auto mb-4">
       <h2 className="text-2xl font-serif text-center mb-4">
         {language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
       </h2>
-      <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+      <div className="relative aspect-[4/3] rounded-lg overflow-hidden border-4 border-temple-gold/30">
         <img
           src={currentImage}
           alt={language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
