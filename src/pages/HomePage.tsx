@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import DarshanSlideshow from '@/components/DarshanSlideshow';
 import NoticeBoard from '@/components/NoticeBoard';
-import DailySchedule from '@/components/DailySchedule';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -19,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Shri Narsingh Temple | Hasampur, Sikar, Rajasthan" 
-      : "श्र�� नृसिंग मंदिर | हासमपुर, सीकर, राजस्थान";
+      : "श्र�� नृसिंह मंदिर | हासमपुर, सीकर, राजस्थान";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -41,13 +40,6 @@ const HomePage = () => {
       <Navbar />
       <Hero />
       <div className="container mx-auto px-2 md:px-0 py-8">
-        <div className="text-center mb-8">
-          <p className="text-lg text-temple-maroon font-medium">
-            {language === 'en' 
-              ? "यह श्री नृसिंह मंदिर की आधिकारिक वेबसाइट है" 
-              : "This is the official website of Shri Narsingh Temple"}
-          </p>
-        </div>
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
           <div className="w-full max-w-2xl mx-auto">
@@ -116,10 +108,6 @@ const HomePage = () => {
                 </a>
               </div>
             </div>
-          </div>
-
-          <div className="w-full max-w-xl mx-auto">
-            <DailySchedule isSummerTimings={true} />
           </div>
         </div>
       </div>

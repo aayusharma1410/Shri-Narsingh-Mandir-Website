@@ -87,8 +87,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/timings" className="hover:text-temple-gold transition-colors">
-                  {language === "en" ? "Timings" : "समय"}
+                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors">
+                  {language === "en" ? "Poshak Seva" : "पोशाक सेवा"}
                 </Link>
               </li>
               <li>
