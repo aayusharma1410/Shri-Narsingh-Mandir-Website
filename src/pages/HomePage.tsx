@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Shri Narsingh Temple | Hasampur, Sikar, Rajasthan" 
-      : "श्री नृसिंह मंदिर | हासमपुर, सीकर, राजस्थान";
+      : "श्र�� नृसिंग मंदिर | हासमपुर, सीकर, राजस्थान";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -44,13 +44,8 @@ const HomePage = () => {
         <div className="text-center mb-8">
           <p className="text-lg text-temple-maroon font-medium">
             {language === 'en' 
-              ? "This is the official website of Shri Narsingh Temple" 
-              : "यह श्री नृसिंह मंदिर की आधिकारिक वेबसाइट है"}
-          </p>
-          <p className="text-gray-600">
-            {language === 'en' 
-              ? "Hasampur, Sikar, Rajasthan, India" 
-              : "हसामपुर, सीकर, राजस्थान, भारत"}
+              ? "यह श्री नृसिंह मंदिर की आधिकारिक वेबसाइट है" 
+              : "This is the official website of Shri Narsingh Temple"}
           </p>
         </div>
         <DarshanSlideshow />
@@ -92,7 +87,7 @@ const HomePage = () => {
                   ? "How to Reach Hasampur Temple"
                   : "हासमपुर मंदिर कैसे पहुँचे"}
               </h2>
-              <div className="h-[450px] md:h-[550px] relative">
+              <div className="w-full h-[450px] md:h-[550px] relative">
                 <iframe
                   title="Hasampur Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.9459708397293!2d75.86830677541354!3d27.673900876194365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396cb5251085f91b%3A0x333f18db169ffacf!2sHasampur%2C%20Rajasthan%20332502!5e0!3m2!1sen!2sin!4v1681559233761!5m2!1sen!2sin"

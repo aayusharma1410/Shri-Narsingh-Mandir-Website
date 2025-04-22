@@ -11,11 +11,14 @@ const DarshanSlideshow = () => {
       <h2 className="text-2xl font-serif text-center mb-4">
         {language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
       </h2>
-      <div className="relative aspect-[4/3] rounded-lg overflow-hidden border-4 border-temple-gold/30">
+      <div className="relative aspect-[4/3] rounded-lg overflow-hidden 
+        border-4 border-temple-gold 
+        shadow-lg transition-all duration-300 
+        hover:shadow-2xl hover:border-temple-maroon/70">
         <img
           src={currentImage}
           alt={language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
-          className="w-full h-full object-contain rounded-lg shadow-lg"
+          className="w-full h-full object-contain rounded-lg"
         />
       </div>
     </div>
