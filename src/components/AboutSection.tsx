@@ -22,13 +22,22 @@ const AboutSection = () => {
           className="w-full"
         >
           <TabsList className="grid grid-cols-3 mb-8">
-            <TabsTrigger value="history" className="text-sm md:text-base">
+            <TabsTrigger 
+              value="history" 
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+            >
               {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
             </TabsTrigger>
-            <TabsTrigger value="narsingh" className="text-sm md:text-base">
+            <TabsTrigger 
+              value="narsingh" 
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+            >
               {language === 'en' ? 'Narsingh Avatar' : 'नृसिंह अवतार'}
             </TabsTrigger>
-            <TabsTrigger value="features" className="text-sm md:text-base">
+            <TabsTrigger 
+              value="features" 
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+            >
               {language === 'en' ? 'Temple Features' : 'मंदिर की विशेषताएं'}
             </TabsTrigger>
           </TabsList>
