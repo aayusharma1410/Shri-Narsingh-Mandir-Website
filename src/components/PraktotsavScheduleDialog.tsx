@@ -28,7 +28,7 @@ const PraktotsavScheduleDialog = () => {
         </DialogHeader>
         <div className="flex justify-center p-4">
           <img 
-            src="/lovable-uploads/3b249839-500d-4be2-9ae5-cbd73116e2a1.png" 
+            src="/lovable-uploads/eb79f79a-297f-438b-a238-c69a86aa3d3f.png" 
             alt="Narsingh Praktotsav Schedule" 
             className="max-w-full rounded-lg shadow-lg"
           />

@@ -11,22 +11,15 @@ const DarshanSlideshow = () => {
       <h2 className="text-2xl font-serif text-center mb-4">
         {language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
       </h2>
-      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden 
-        border-[6px] border-gradient-to-tr from-temple-gold to-temple-maroon
-        shadow-xl transition-all duration-300 
-        hover:shadow-2xl hover:border-temple-gold/80"
-        style={{
-          boxShadow: '0 8px 32px 0 rgba(153,97,11,0.22), 0 1.5px 0 0 #7e260c',
-          borderImage: 'linear-gradient(135deg, #C59D5F 60%, #7E260C 100%) 1',
-          borderWidth: '6px',
-        }}
-      >
+      <div className="relative aspect-[4/3] rounded-lg overflow-hidden 
+        border-4 border-temple-gold 
+        shadow-lg transition-all duration-300 
+        hover:shadow-2xl hover:border-temple-maroon/70">
         <img
           src={currentImage}
           alt={language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
-          className="w-full h-full object-contain rounded-2xl"
+          className="w-full h-full object-contain rounded-lg"
         />
-        <div className="absolute inset-0 pointer-events-none border-2 border-dotted border-temple-gold/60 rounded-2xl"></div>
       </div>
     </div>
   );
