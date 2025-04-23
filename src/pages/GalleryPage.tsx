@@ -5,11 +5,11 @@ import Footer from '@/components/Footer';
 
 const GalleryPage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <div className="pt-24 pb-12">
+      <main className="pt-24 pb-12">
         <GallerySection />
-      </div>
+      </main>
       <Footer />
     </div>
   );

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -38,11 +39,13 @@ const Navbar = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
 
+  // Insert "गैलरी" link after timings and before poshak seva.
   const navLinks = [
     { name: t('nav.home'), path: "/" },
     { name: t('nav.about'), path: "/about" },
     { name: t('nav.liveAarti'), path: "/live-aarti" },
     { name: t('nav.timings'), path: "/timings" },
+    { name: "गैलरी", path: "/gallery" }, // GALLERY ADDED HERE
     { name: t('nav.poshakSeva'), path: "/poshak-seva" },
   ];
 

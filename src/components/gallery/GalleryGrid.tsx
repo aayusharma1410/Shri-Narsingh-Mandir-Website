@@ -1,175 +1,64 @@
 
-import { useEffect, useState } from "react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import GalleryModal from "./GalleryModal";
-import { supabase } from "@/lib/supabase";
-import { GalleryImage } from "@/types/gallery";
-import { galleryImages as fallbackGalleryData } from '@/data/galleryData';
-import { toast } from "@/components/ui/use-toast";
+const images = [
+  {
+    src: "/lovable-uploads/214bbd7c-3cc1-48f4-9c27-ad653c93a0d4.png",
+    alt: "Mandir 1",
+  },
+  {
+    src: "/lovable-uploads/e931afc9-057b-4c6f-bd47-47526665a6f9.png",
+    alt: "Mandir 2",
+  },
+  {
+    src: "/lovable-uploads/9b63e954-06f4-49a0-8084-e70782580926.png",
+    alt: "Mandir 3",
+  },
+  {
+    src: "/lovable-uploads/a0c1f138-de7c-4a2e-b3bb-bf54fd56d16b.png",
+    alt: "Mandir 4",
+  },
+  {
+    src: "/lovable-uploads/ce663b47-0708-4d47-a0d8-7e8f4b8fb805.png",
+    alt: "Mandir 5",
+  },
+  {
+    src: "/lovable-uploads/9dba9ae0-312c-4cda-85f1-cbd671670016.png",
+    alt: "Mandir 6",
+  },
+  {
+    src: "/lovable-uploads/b088dffc-3cf1-483d-930d-dea60edac677.png",
+    alt: "Mandir 7",
+  },
+  {
+    src: "/lovable-uploads/86e9ef1e-63a8-40c0-af86-156596394985.png",
+    alt: "Mandir 8",
+  },
+  {
+    src: "/lovable-uploads/eef2c643-736e-4bde-856c-4b3d1e4c447b.png",
+    alt: "Mandir 9",
+  },
+  {
+    src: "/lovable-uploads/8d449a70-b1ed-40b5-9216-c19bdbfff0c2.png",
+    alt: "Mandir 10",
+  },
+  {
+    src: "/lovable-uploads/24010e52-3707-4baa-83e5-5e072b316af0.png",
+    alt: "Mandir 11",
+  },
+  {
+    src: "/lovable-uploads/65964d97-ac2f-4fc2-a08b-5f7a041b6042.png",
+    alt: "Mandir 12",
+  },
+];
 
 const GalleryGrid = () => {
-  const [images, setImages] = useState<GalleryImage[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [fetchError, setFetchError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchGalleryImages = async () => {
-      setIsLoading(true);
-      setFetchError(null);
-
-      try {
-        let allImages: GalleryImage[] = [];
-        let hasImages = false;
-
-        console.log('Attempting to fetch gallery images from Supabase...');
-
-        // First try to fetch from gallery_images table
-        const { data: dbImages, error: dbError } = await supabase
-          .from('gallery_images')
-          .select('*')
-          .order('created_at', { ascending: false });
-          
-        if (dbError) {
-          console.error('Error fetching gallery images from DB:', dbError);
-          if (dbError.code === '42P01') {
-            console.log('The gallery_images table does not exist yet');
-          }
-        } else if (dbImages && dbImages.length > 0) {
-          console.log(`Found ${dbImages.length} images in the gallery_images table`);
-          allImages = [...dbImages];
-          hasImages = true;
-        }
-
-        // Then fetch images from gallery storage bucket
-        const { data: storageImages, error: storageError } = await supabase
-          .storage
-          .from('gallery')
-          .list('', {
-            limit: 100,
-            sortBy: { column: 'name', order: 'asc' }
-          });
-
-        if (storageError) {
-          console.error('Error fetching gallery images from storage:', storageError);
-        } else if (storageImages && storageImages.length > 0) {
-          console.log(`Found ${storageImages.length} images in the storage bucket`);
-          const storageBaseUrl = supabase.storage.from('gallery').getPublicUrl('').data.publicUrl;
-          
-          const storageImagesFormatted = storageImages
-            .filter(file => !file.name.startsWith('.')) // Filter out hidden files
-            .map((file, index) => ({
-              id: `storage-${index}`,
-              title: file.name.split('.')[0],
-              image_url: `${storageBaseUrl}/${file.name}`,
-              category: "mandir",
-              created_at: file.created_at || new Date().toISOString()
-            }));
-
-          allImages = [...allImages, ...storageImagesFormatted];
-          hasImages = true;
-        }
-
-        // If no images from DB or storage, use fallback gallery data
-        if (!hasImages) {
-          console.log('No images found in Supabase. Using fallback data with', fallbackGalleryData.length, 'images');
-          allImages = fallbackGalleryData;
-          
-          // Show toast notification
-          toast({
-            title: "Using default gallery images",
-            description: "Could not retrieve images from the database",
-            variant: "default"
-          });
-        }
-
-        console.log('Final gallery images loaded:', allImages.length);
-        setImages(allImages);
-      } catch (error) {
-        console.error('Error in fetchGalleryImages:', error);
-        setFetchError('Failed to load gallery images');
-        setImages(fallbackGalleryData); // Fallback to static data
-        
-        toast({
-          title: "Error loading gallery",
-          description: "Using default images instead",
-          variant: "destructive"
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchGalleryImages();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3, 4, 5, 6].map((index) => (
-          <div key={index} className="animate-pulse">
-            <div className="overflow-hidden rounded-xl shadow-lg bg-gray-200 aspect-[4/3]"></div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (fetchError) {
-    console.error('Gallery fetch error:', fetchError);
-  }
-
-  if (!images || images.length === 0) {
-    return (
-      <div className="py-8 text-center">
-        <p>No gallery images available.</p>
-      </div>
-    );
-  }
-
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {images.map((image, index) => (
-          <div 
-            key={`${image.id}-${index}`} 
-            className="opacity-0 animate-on-scroll"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div 
-              onClick={() => {
-                setSelectedImage(image);
-                setDialogOpen(true);
-              }}
-              className="overflow-hidden rounded-xl shadow-lg cursor-pointer group"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img 
-                  src={image.image_url} 
-                  alt={image.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  onError={(e) => {
-                    console.error(`Failed to load image: ${image.image_url}`);
-                    e.currentTarget.src = '/placeholder.svg'; // Fallback image
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-white font-medium">{image.title}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      {selectedImage && (
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <GalleryModal image={selectedImage} allImages={images} />
-        </Dialog>
-      )}
-    </>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {images.map((img, idx) => (
+        <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+          <img src={img.src} alt={img.alt} className="w-full h-64 object-cover"/>
+        </div>
+      ))}
+    </div>
   );
 };
 
