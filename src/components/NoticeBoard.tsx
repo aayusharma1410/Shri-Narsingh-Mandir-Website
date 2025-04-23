@@ -22,6 +22,7 @@ const NoticeBoard = () => {
   const { language } = useLanguage();
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [tableExists, setTableExists] = useState(true);
 
   // Default notices to use when database is not available
   const defaultNotices: Notice[] = [
@@ -69,6 +70,17 @@ const NoticeBoard = () => {
         
         if (error) {
           console.error('Error fetching notices:', error);
+          
+          // Check if the error is due to table not existing
+          if (error.code === '42P01') {
+            setTableExists(false);
+            toast({
+              title: "Notice Board Setup Required",
+              description: "The 'notices' table doesn't exist in the database. Please run the SQL setup script to create it.",
+              variant: "destructive",
+            });
+          }
+          
           // If there's an error, we'll use the default notices
           setNotices(defaultNotices);
           console.log('Using default notices instead');
@@ -79,6 +91,7 @@ const NoticeBoard = () => {
             console.log('No notices found in the database, using default notices');
             setNotices(defaultNotices);
           } else {
+            setTableExists(true);
             setNotices(data);
           }
         }
@@ -133,6 +146,16 @@ const NoticeBoard = () => {
         <Bell className="w-6 h-6 text-temple-gold ml-auto" />
       </CardHeader>
       <CardContent className="p-6 pt-0">
+        {!tableExists && (
+          <div className="mb-4 p-2 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-amber-600 text-sm">
+              {language === 'en' 
+                ? "The notices table needs to be created in your Supabase database. Showing default notices for now." 
+                : "आपके Supabase डेटाबेस में सूचना तालिका बनाने की आवश्यकता है। अभी के लिए डिफ़ॉल्ट सूचनाएँ दिखा रहे हैं।"}
+            </p>
+          </div>
+        )}
+        
         {notices.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
             <p>{language === 'en' ? "No notices at the moment" : "इस समय कोई सूचना नहीं है"}</p>
@@ -145,7 +168,7 @@ const NoticeBoard = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <h3 className="font-medium text-lg text-temple-maroon">
-                      {language === 'en' ? notice.title : notice.title_hi}
+                      {language === 'en' ? notice.title : (notice.title_hi || notice.title)}
                     </h3>
                     {notice.is_important && (
                       <Badge variant="destructive" className="text-xs">
@@ -157,7 +180,7 @@ const NoticeBoard = () => {
                     {formatDate(notice.created_at)}
                   </p>
                   <p className="text-sm">
-                    {language === 'en' ? notice.content : notice.content_hi}
+                    {language === 'en' ? notice.content : (notice.content_hi || notice.content)}
                   </p>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/supabase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -68,6 +68,17 @@ const PoshakSevaSection = () => {
     
     try {
       console.log('Submitting form data:', values);
+      
+      // Check if the table exists first
+      const { error: checkError } = await supabase
+        .from('poshak_seva_bookings')
+        .select('id')
+        .limit(1);
+        
+      if (checkError && checkError.code === '42P01') {
+        throw new Error('The poshak_seva_bookings table does not exist in the database. Please run the SQL setup script first.');
+      }
+      
       const { error } = await supabase
         .from('poshak_seva_bookings')
         .insert([{
@@ -82,7 +93,7 @@ const PoshakSevaSection = () => {
 
       if (error) {
         console.error('Supabase error:', error);
-        throw error;
+        throw new Error(error.message || 'Failed to submit booking');
       }
 
       setShowSuccess(true);
