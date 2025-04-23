@@ -8,7 +8,8 @@ import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SqlExecutionGuide from '@/components/SqlExecutionGuide';
 import { Button } from '@/components/ui/button';
-import { Database } from 'lucide-react';
+import { Database, Info } from 'lucide-react';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const stories = Array.from({ length: 25 }).map((_, i) => ({
   s_no: i + 1,
@@ -22,7 +23,7 @@ const HomePage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Shri Narsingh Temple | Hasampur, Sikar, Rajasthan" 
-      : "श्र�� नृसिंह मंदिर | हासमपुर, सीकर, राजस्थान";
+      : "श्री नृसिंह मंदिर | हासमपुर, सीकर, राजस्थान";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -46,16 +47,24 @@ const HomePage = () => {
       <div className="container mx-auto px-2 md:px-0 py-8">
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
-          <div className="w-full flex justify-center mb-4">
-            <SqlExecutionGuide
-              trigger={
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Database className="h-4 w-4" />
-                  {language === 'en' ? "Database Setup Instructions" : "डेटाबेस सेटअप निर्देश"}
-                </Button>
-              }
-            />
-          </div>
+          <Alert className="w-full max-w-2xl bg-blue-50 border-blue-200 mb-4">
+            <Info className="h-5 w-5 text-blue-500" />
+            <AlertDescription className="text-blue-700">
+              {language === 'en' 
+                ? "To see notices and use all features, please run the database setup script."
+                : "सूचनाएं देखने और सभी सुविधाओं का उपयोग करने के लिए, कृपया डेटाबेस सेटअप स्क्रिप्ट चलाएं।"}
+            </AlertDescription>
+            <div className="mt-2">
+              <SqlExecutionGuide
+                trigger={
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                    <Database className="h-4 w-4" />
+                    {language === 'en' ? "Database Setup Instructions" : "डेटाबेस सेटअप निर्देश"}
+                  </Button>
+                }
+              />
+            </div>
+          </Alert>
           
           <div className="w-full max-w-2xl mx-auto">
             <NoticeBoard />
