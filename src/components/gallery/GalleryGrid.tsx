@@ -1,61 +1,89 @@
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 const images = [
   {
-    src: "/lovable-uploads/214bbd7c-3cc1-48f4-9c27-ad653c93a0d4.png",
-    alt: "Mandir 1",
+    src: "/lovable-uploads/7f625b19-cd60-4f0e-815b-774a886a698e.png",
+    altEn: "Narsingh Tiger Face Closeup",
+    altHi: "नरसिंह सिंह मुख क्लोजअप",
   },
   {
-    src: "/lovable-uploads/e931afc9-057b-4c6f-bd47-47526665a6f9.png",
-    alt: "Mandir 2",
+    src: "/lovable-uploads/114d810c-7bc8-433e-8da5-8b80adbac600.png",
+    altEn: "Full Altar Narsingh",
+    altHi: "पूर्ण वेदी नरसिंह",
   },
   {
-    src: "/lovable-uploads/9b63e954-06f4-49a0-8084-e70782580926.png",
-    alt: "Mandir 3",
+    src: "/lovable-uploads/20b24d22-a8be-4b63-9a74-fe44c6f8843f.png",
+    altEn: "Narsingh golden Prakatosav",
+    altHi: "नरसिंह स्वर्ण प्रकटोत्सव",
   },
   {
-    src: "/lovable-uploads/a0c1f138-de7c-4a2e-b3bb-bf54fd56d16b.png",
-    alt: "Mandir 4",
+    src: "/lovable-uploads/fab70008-4000-4a0e-8a0a-ece0dd5ee144.png",
+    altEn: "Darshan - White Outfit",
+    altHi: "दर्शन - सफेद पोशाक",
   },
   {
-    src: "/lovable-uploads/ce663b47-0708-4d47-a0d8-7e8f4b8fb805.png",
-    alt: "Mandir 5",
+    src: "/lovable-uploads/16280244-f8b7-4105-b8b6-562659b3ed9c.png",
+    altEn: "Narsingh Altar Flower Arch",
+    altHi: "नरसिंह वेदी पुष्प तोरण",
   },
   {
-    src: "/lovable-uploads/9dba9ae0-312c-4cda-85f1-cbd671670016.png",
-    alt: "Mandir 6",
+    src: "/lovable-uploads/f28caddc-d06c-4910-8e58-0ed8c7d65e26.png",
+    altEn: "Altar Red Shringar",
+    altHi: "वेदी लाल श्रृंगार",
   },
   {
-    src: "/lovable-uploads/b088dffc-3cf1-483d-930d-dea60edac677.png",
-    alt: "Mandir 7",
+    src: "/lovable-uploads/ef89bde4-5c89-4826-98c5-b3a0f6cc27e4.png",
+    altEn: "Red Dress Closeup",
+    altHi: "लाल पोशाक क्लोजअप",
   },
   {
-    src: "/lovable-uploads/86e9ef1e-63a8-40c0-af86-156596394985.png",
-    alt: "Mandir 8",
+    src: "/lovable-uploads/054159d4-7d82-4bfc-97ce-2bfb2eea9143.png",
+    altEn: "Narsingh Altar Wide",
+    altHi: "नरसिंह वेदी चौड़ा",
   },
   {
-    src: "/lovable-uploads/eef2c643-736e-4bde-856c-4b3d1e4c447b.png",
-    alt: "Mandir 9",
+    src: "/lovable-uploads/74292dca-a549-4ab9-b368-1eef3369b839.png",
+    altEn: "Blue-dressed Face Closeup",
+    altHi: "नीली पोशाक में मुख क्लोजअप",
   },
   {
-    src: "/lovable-uploads/8d449a70-b1ed-40b5-9216-c19bdbfff0c2.png",
-    alt: "Mandir 10",
+    src: "/lovable-uploads/fcd644c0-acd1-4dcc-b433-185b6ecdd7da.png",
+    altEn: "Yellow-Orange Dress Full Altar",
+    altHi: "पीली-नारंगी पोशाक वेदी",
   },
   {
-    src: "/lovable-uploads/24010e52-3707-4baa-83e5-5e072b316af0.png",
-    alt: "Mandir 11",
+    src: "/lovable-uploads/e1ec8cb5-cd7f-4ccc-af2d-3d49b63fbdb1.png",
+    altEn: "Yellow-Orange Dress Closeup",
+    altHi: "पीली-नारंगी पोशाक क्लोजअप",
   },
   {
-    src: "/lovable-uploads/65964d97-ac2f-4fc2-a08b-5f7a041b6042.png",
-    alt: "Mandir 12",
+    src: "/lovable-uploads/1680ae5b-154e-44e4-8952-f8c18b49388e.png",
+    altEn: "Yellow-Orange Dress Upper Closeup",
+    altHi: "पीली-नारंगी पोशाक ऊपर क्लोजअप",
   },
 ];
 
 const GalleryGrid = () => {
+  const { language } = useLanguage();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {images.map((img, idx) => (
-        <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-          <img src={img.src} alt={img.alt} className="w-full h-64 object-cover"/>
+        <div
+          key={idx}
+          className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer flex flex-col"
+        >
+          <img
+            src={img.src}
+            alt={language === "en" ? img.altEn : img.altHi}
+            className="w-full h-64 object-cover"
+          />
+          <div className="p-3 flex flex-col items-center">
+            <p className="font-medium text-temple-maroon text-center text-base">
+              {language === "en" ? img.altEn : img.altHi}
+            </p>
+          </div>
         </div>
       ))}
     </div>

@@ -39,14 +39,14 @@ const Navbar = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
 
-  // Insert "गैलरी" link after timings and before poshak seva.
+  // Insert "Gallery" link between Timings and Poshak Seva
   const navLinks = [
-    { name: t('nav.home'), path: "/" },
-    { name: t('nav.about'), path: "/about" },
-    { name: t('nav.liveAarti'), path: "/live-aarti" },
-    { name: t('nav.timings'), path: "/timings" },
-    { name: "गैलरी", path: "/gallery" }, // GALLERY ADDED HERE
-    { name: t('nav.poshakSeva'), path: "/poshak-seva" },
+    { name: language === 'en' ? 'Home' : 'होम', path: "/" },
+    { name: language === 'en' ? 'About' : 'परिचय', path: "/about" },
+    { name: language === 'en' ? 'Live Aarti' : 'आरती दर्शन', path: "/live-aarti" },
+    { name: language === 'en' ? 'Timings' : 'समय सारणी', path: "/timings" },
+    { name: language === 'en' ? 'Gallery' : 'गैलरी', path: "/gallery" },
+    { name: language === 'en' ? 'Poshak Seva' : 'पोशाक सेवा', path: "/poshak-seva" },
   ];
 
   return (
