@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -5,6 +6,9 @@ import DarshanSlideshow from '@/components/DarshanSlideshow';
 import NoticeBoard from '@/components/NoticeBoard';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
+import SqlExecutionGuide from '@/components/SqlExecutionGuide';
+import { Button } from '@/components/ui/button';
+import { Database } from 'lucide-react';
 
 const stories = Array.from({ length: 25 }).map((_, i) => ({
   s_no: i + 1,
@@ -42,6 +46,17 @@ const HomePage = () => {
       <div className="container mx-auto px-2 md:px-0 py-8">
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
+          <div className="w-full flex justify-center mb-4">
+            <SqlExecutionGuide
+              trigger={
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Database className="h-4 w-4" />
+                  {language === 'en' ? "Database Setup Instructions" : "डेटाबेस सेटअप निर्देश"}
+                </Button>
+              }
+            />
+          </div>
+          
           <div className="w-full max-w-2xl mx-auto">
             <NoticeBoard />
           </div>

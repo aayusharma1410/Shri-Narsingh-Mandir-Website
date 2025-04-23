@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/lib/supabase';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 interface Notice {
   id: number;
@@ -74,16 +74,11 @@ const NoticeBoard = () => {
           // Check if the error is due to table not existing
           if (error.code === '42P01') {
             setTableExists(false);
-            toast({
-              title: "Notice Board Setup Required",
-              description: "The 'notices' table doesn't exist in the database. Please run the SQL setup script to create it.",
-              variant: "destructive",
-            });
+            console.log('Notices table does not exist, using default notices');
           }
           
           // If there's an error, we'll use the default notices
           setNotices(defaultNotices);
-          console.log('Using default notices instead');
         } else {
           console.log('Notices fetched successfully:', data);
           // If we got data but it's empty, use default notices
@@ -150,8 +145,8 @@ const NoticeBoard = () => {
           <div className="mb-4 p-2 bg-yellow-50 border border-yellow-200 rounded-md">
             <p className="text-amber-600 text-sm">
               {language === 'en' 
-                ? "The notices table needs to be created in your Supabase database. Showing default notices for now." 
-                : "आपके Supabase डेटाबेस में सूचना तालिका बनाने की आवश्यकता है। अभी के लिए डिफ़ॉल्ट सूचनाएँ दिखा रहे हैं।"}
+                ? "The notices table needs to be created in your Supabase database. Please run the SQL script from sql/notices_table.sql in the Supabase SQL editor." 
+                : "सूचना तालिका को आपके Supabase डेटाबेस में बनाया जाना चाहिए। कृपया Supabase SQL एडिटर में sql/notices_table.sql से SQL स्क्रिप्ट चलाएं।"}
             </p>
           </div>
         )}

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,6 +48,7 @@ const PoshakSevaSection = () => {
   const { language, t } = useLanguage();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tableExists, setTableExists] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,6 +76,7 @@ const PoshakSevaSection = () => {
         .limit(1);
         
       if (checkError && checkError.code === '42P01') {
+        setTableExists(false);
         throw new Error('The poshak_seva_bookings table does not exist in the database. Please run the SQL setup script first.');
       }
       
@@ -110,7 +111,6 @@ const PoshakSevaSection = () => {
     }
   };
 
-  // Get reasons based on current language
   const reasons = language === 'en' 
     ? t('poshakSeva.reasons').split(',').map(item => item.trim())
     : t('poshakSeva.reasons').split(',').map(item => item.trim());
@@ -134,6 +134,17 @@ const PoshakSevaSection = () => {
 
       <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-semibold mb-6">{t('poshakSeva.bookTitle')}</h2>
+        
+        {!tableExists && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-amber-600">
+              {language === 'en' 
+                ? "The booking table needs to be created in your Supabase database. Please run the SQL setup script from sql/poshak_seva_bookings.sql in the Supabase SQL editor." 
+                : "बुकिंग टेबल को आपके Supabase डेटाबेस में बनाया जाना चाहिए। कृपया Supabase SQL एडिटर में sql/poshak_seva_bookings.sql से SQL सेटअप स्क्रिप्ट चलाएं।"}
+            </p>
+          </div>
+        )}
+        
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -245,7 +256,7 @@ const PoshakSevaSection = () => {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="w-full" disabled={isSubmitting || !tableExists}>
               {isSubmitting ? t('poshakSeva.submitting') : t('poshakSeva.submitButton')}
             </Button>
           </form>
