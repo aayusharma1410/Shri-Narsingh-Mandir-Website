@@ -1,8 +1,6 @@
-
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const images = [
-  // ... original 24 images
   { src: "/lovable-uploads/7f625b19-cd60-4f0e-815b-774a886a698e.png" },
   { src: "/lovable-uploads/114d810c-7bc8-433e-8da5-8b80adbac600.png" },
   { src: "/lovable-uploads/20b24d22-a8be-4b63-9a74-fe44c6f8843f.png" },
@@ -27,8 +25,6 @@ const images = [
   { src: "/lovable-uploads/a14b1784-2068-45bc-82cd-93db94df081e.png" },
   { src: "/lovable-uploads/4a1f2dca-56b7-44f2-bf1c-22177fe88ae0.png" },
   { src: "/lovable-uploads/8fc518e9-689c-4416-95ad-ece33b8a34db.png" },
-
-  // 12 images from previous uploads (add their URLs)
   { src: "/lovable-uploads/96f3551d-605e-457c-8298-87a262fac624.png" },
   { src: "/lovable-uploads/9577bbf3-23e3-4946-8e97-3d8165e6fe23.png" },
   { src: "/lovable-uploads/254331c3-94d3-4840-a1b3-1cb946358993.png" },
@@ -41,36 +37,81 @@ const images = [
   { src: "/lovable-uploads/24746a93-d748-4066-8c3e-66aacc8e8a98.png" },
   { src: "/lovable-uploads/4950fa95-d67e-4632-94d6-4ca3c8b49248.png" },
   { src: "/lovable-uploads/8a1999f9-f5b4-4906-a68b-932dbe3470f9.png" },
+  { src: "/lovable-uploads/d6748ab9-ba86-43ed-9152-cefb21daaf10.png" },
+  { src: "/lovable-uploads/c36033bb-02ff-4b42-b558-d1e83771ff7e.png" },
+  { src: "/lovable-uploads/ebc0df1a-b578-4efc-90ee-b08f99ff58c2.png" },
+  { src: "/lovable-uploads/53b33278-c7f2-4170-92f4-c7f4521c9afc.png" },
+  { src: "/lovable-uploads/39262e1c-3850-4267-ab13-214e3daaecd6.png" },
+  { src: "/lovable-uploads/afb5b125-2a34-4d5d-816a-4ef4fee2215c.png" },
+  { src: "/lovable-uploads/ba05b727-c445-43b8-bf38-1a7e7f52a76f.png" },
+  { src: "/lovable-uploads/dda0f0f2-aa8d-4b8c-9e5f-8a8601fd6e62.png" },
+  { src: "/lovable-uploads/eb566ea2-26fe-419c-b158-28e718bc37d2.png" },
+  { src: "/lovable-uploads/27d352ba-6dfa-4e61-be45-7e42260962bb.png" },
+  { src: "/lovable-uploads/c344df14-3852-475c-80f9-c09db77b79b1.png" },
+  { src: "/lovable-uploads/68572ab7-cbe0-431d-a29e-23dd45799e33.png" },
+  // --- Your newly uploaded images below ---
+  { src: "/lovable-uploads/6b1f973a-fc17-4450-abe6-8d8e0e16b07c.png" },
+  { src: "/lovable-uploads/da3e6c3e-0fc4-42b9-9944-72c3bf5444fa.png" },
+  { src: "/lovable-uploads/a911e7b9-9539-40a6-922c-a27368b307f9.png" },
+  { src: "/lovable-uploads/bbb79916-521a-4846-9394-745007e9586b.png" },
+  { src: "/lovable-uploads/4b566f3c-130c-4606-9a4a-6dc8fa6fc08f.png" },
+  { src: "/lovable-uploads/f4096cab-75a2-4b34-8a37-cb345eb06781.png" },
+  { src: "/lovable-uploads/841399d7-9c7a-4c42-bd96-2cb640e49ad7.png" },
+  { src: "/lovable-uploads/73fa08e5-2eb8-4fae-b65a-9d4400b01344.png" },
+  { src: "/lovable-uploads/7710d07a-f630-4c83-a307-1b40d8807f51.png" },
+  { src: "/lovable-uploads/66fc9910-e292-48e3-a8f7-9c280d607e98.png" },
+  { src: "/lovable-uploads/24bfad22-2358-4a02-a411-c1c69ca58ed2.png" },
+  { src: "/lovable-uploads/fff58530-94ce-45c6-8026-01d8730f161f.png" },
+  // images just attached in chat
+  { src: "/lovable-uploads/temple-img-1.jpg" }, // Will reference the uploaded images by order:
+  { src: "/lovable-uploads/temple-img-2.jpg" },
+  { src: "/lovable-uploads/temple-img-3.jpg" },
+  { src: "/lovable-uploads/temple-img-4.jpg" },
+  { src: "/lovable-uploads/temple-img-5.jpg" },
+  { src: "/lovable-uploads/temple-img-6.jpg" },
+  { src: "/lovable-uploads/temple-img-7.jpg" },
+  { src: "/lovable-uploads/temple-img-8.jpg" },
+  { src: "/lovable-uploads/temple-img-9.jpg" },
+  { src: "/lovable-uploads/temple-img-10.jpg" },
+  { src: "/lovable-uploads/temple-img-11.jpg" },
+  { src: "/lovable-uploads/temple-img-12.jpg" },
+];
 
-  // The 12 images you just uploaded (add their URLs)
-  { src: "/lovable-uploads/d6748ab9-ba86-43ed-9152-cefb21daaf10.png" }, // 1
-  { src: "/lovable-uploads/c36033bb-02ff-4b42-b558-d1e83771ff7e.png" }, // 2
-  { src: "/lovable-uploads/ebc0df1a-b578-4efc-90ee-b08f99ff58c2.png" }, // 3
-  { src: "/lovable-uploads/53b33278-c7f2-4170-92f4-c7f4521c9afc.png" }, // 4
-  { src: "/lovable-uploads/39262e1c-3850-4267-ab13-214e3daaecd6.png" }, // 5
-  { src: "/lovable-uploads/afb5b125-2a34-4d5d-816a-4ef4fee2215c.png" }, // 6
-  { src: "/lovable-uploads/ba05b727-c445-43b8-bf38-1a7e7f52a76f.png" }, // 7
-  { src: "/lovable-uploads/dda0f0f2-aa8d-4b8c-9e5f-8a8601fd6e62.png" }, // 8
-  { src: "/lovable-uploads/eb566ea2-26fe-419c-b158-28e718bc37d2.png" }, // 9
-  { src: "/lovable-uploads/27d352ba-6dfa-4e61-be45-7e42260962bb.png" }, // 10
-  { src: "/lovable-uploads/c344df14-3852-475c-80f9-c09db77b79b1.png" }, // 11
-  { src: "/lovable-uploads/68572ab7-cbe0-431d-a29e-23dd45799e33.png" }, // 12
+// Map your attached files to these URLs:
+const attachedImages = [
+  "/lovable-uploads/0bda23a5-5b4f-42ec-8c80-8a3993e25c20.png", // Image 1
+  "/lovable-uploads/d269b19a-7b23-460b-86fa-d2e3bdad986b.png", // Image 2
+  "/lovable-uploads/aa2e6659-c05b-4e44-89ab-280f3f690579.png", // Image 3
+  "/lovable-uploads/d71341d5-5b62-4ef0-b9ec-bb47e90a71a7.png", // Image 4
+  "/lovable-uploads/18764f9c-0efe-493b-acad-4490c876452c.png", // Image 5
+  "/lovable-uploads/0fbd19d6-0779-4ee5-b5a4-ea79b6ea1c5f.png", // Image 6
+  "/lovable-uploads/4e5aad3c-dc43-4a34-adc4-f260478d1a98.png", // Image 7
+  "/lovable-uploads/b6f6688f-9bf0-44fa-8df6-c85338a2e397.png", // Image 8
+  "/lovable-uploads/8db6cbe4-f115-4f1b-bae0-ebdbdcfec12a.png", // Image 9
+  "/lovable-uploads/a452a789-a2a9-4fbb-99a2-2f360b3933e2.png", // Image 10
+  "/lovable-uploads/9343c7e3-6b34-4d10-8e58-c5148be8133d.png", // Image 11
+  "/lovable-uploads/9cdf5541-899d-4e39-957d-56f6adae1b48.png", // Image 12
+];
+
+const allImages = [
+  // Previously added images, then attachedImages
+  ...images,
+  ...attachedImages.map(url => ({ src: url })),
 ];
 
 const GalleryGrid = () => {
-  const { language } = useLanguage();
-
+  // Responsive grid using Tailwind, no captions anywhere
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {images.map((img, idx) => (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {allImages.map((img, idx) => (
         <div
           key={idx}
-          className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer flex flex-col"
+          className="bg-white rounded-lg shadow hover:scale-105 transition-transform cursor-pointer overflow-hidden"
         >
           <img
             src={img.src}
-            alt={`Temple gallery image`}
-            className="w-full h-64 object-cover"
+            alt="Gallery image"
+            className="w-full h-44 sm:h-52 md:h-60 lg:h-64 object-cover"
             loading="lazy"
           />
         </div>
