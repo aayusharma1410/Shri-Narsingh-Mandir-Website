@@ -4,7 +4,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const DarshanSlideshow = () => {
   const { language } = useLanguage();
-  const [currentImage] = useState("/lovable-uploads/acbea974-756b-4308-a7dd-5f93aa907c3a.png");
+  // Using the new image uploaded by the user
+  const [currentImage] = useState("/lovable-uploads/f5a026b3-4a57-43f3-97a6-6b586cf2606b.png");
 
   return (
     <div id="darshan-slideshow" className="w-full max-w-2xl mx-auto mb-4">

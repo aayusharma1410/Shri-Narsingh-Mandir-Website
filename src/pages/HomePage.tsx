@@ -6,6 +6,7 @@ import DarshanSlideshow from '@/components/DarshanSlideshow';
 import NoticeBoard from '@/components/NoticeBoard';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
+import PraktotsavScheduleDialog from '@/components/PraktotsavScheduleDialog';
 
 const stories = Array.from({ length: 25 }).map((_, i) => ({
   s_no: i + 1,
@@ -40,7 +41,16 @@ const HomePage = () => {
     <div className="min-h-screen overflow-x-hidden">
       <Navbar />
       <Hero />
+      <PraktotsavScheduleDialog />
       <div className="container mx-auto px-2 md:px-0 py-8">
+        <div className="mb-8">
+          <img 
+            src="/lovable-uploads/f5a026b3-4a57-43f3-97a6-6b586cf2606b.png" 
+            alt="Narsingh Praktotsav Schedule" 
+            className="max-w-full rounded-lg shadow-lg mx-auto"
+          />
+        </div>
+        
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
           <div className="w-full max-w-2xl mx-auto">

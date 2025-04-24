@@ -68,7 +68,7 @@ const PoshakSevaSection = () => {
     try {
       console.log('Submitting form data:', values);
       
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('poshak_seva_bookings')
         .insert([{
           full_name: values.fullName,

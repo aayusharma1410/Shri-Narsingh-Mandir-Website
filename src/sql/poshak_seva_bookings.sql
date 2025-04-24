@@ -22,18 +22,13 @@ COMMENT ON TABLE poshak_seva_bookings IS 'Stores bookings for Poshak Seva';
 ALTER TABLE poshak_seva_bookings ENABLE ROW LEVEL SECURITY;
 
 -- Drop existing policies to avoid conflicts
-DO $$
-BEGIN
-  DROP POLICY IF EXISTS poshak_seva_anonymous_insert_policy ON poshak_seva_bookings;
-  DROP POLICY IF EXISTS poshak_seva_user_select_policy ON poshak_seva_bookings;
-  DROP POLICY IF EXISTS poshak_seva_admin_policy ON poshak_seva_bookings;
-EXCEPTION WHEN OTHERS THEN
-  -- Do nothing if policies don't exist
-END $$;
+DROP POLICY IF EXISTS poshak_seva_anonymous_insert_policy ON poshak_seva_bookings;
+DROP POLICY IF EXISTS poshak_seva_user_select_policy ON poshak_seva_bookings;
+DROP POLICY IF EXISTS poshak_seva_admin_policy ON poshak_seva_bookings;
 
 -- Policy for anonymous users - can insert but not read
 CREATE POLICY poshak_seva_anonymous_insert_policy ON poshak_seva_bookings
-    FOR INSERT TO anon
+    FOR INSERT 
     WITH CHECK (true);
 
 -- Policy for authenticated users - can read only their own bookings
