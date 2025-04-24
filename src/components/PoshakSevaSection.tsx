@@ -1,9 +1,10 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from "@/hooks/use-toast";
 import { supabase } from '@/lib/supabase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -44,11 +45,9 @@ const poshakTypes = [
 ];
 
 const PoshakSevaSection = () => {
-  const { toast } = useToast();
   const { language, t } = useLanguage();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [tableExists, setTableExists] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,17 +67,6 @@ const PoshakSevaSection = () => {
     
     try {
       console.log('Submitting form data:', values);
-      
-      // Check if the table exists first
-      const { error: checkError } = await supabase
-        .from('poshak_seva_bookings')
-        .select('id')
-        .limit(1);
-        
-      if (checkError && checkError.code === '42P01') {
-        setTableExists(false);
-        throw new Error('The poshak_seva_bookings table does not exist in the database. Please run the SQL setup script first.');
-      }
       
       const { error } = await supabase
         .from('poshak_seva_bookings')
@@ -134,16 +122,6 @@ const PoshakSevaSection = () => {
 
       <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-semibold mb-6">{t('poshakSeva.bookTitle')}</h2>
-        
-        {!tableExists && (
-          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-amber-600">
-              {language === 'en' 
-                ? "The booking table needs to be created in your Supabase database. Please run the SQL setup script from sql/poshak_seva_bookings.sql in the Supabase SQL editor." 
-                : "बुकिंग टेबल को आपके Supabase डेटाबेस में बनाया जाना चाहिए। कृपया Supabase SQL एडिटर में sql/poshak_seva_bookings.sql से SQL सेटअप स्क्रिप्ट चलाएं।"}
-            </p>
-          </div>
-        )}
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -256,7 +234,7 @@ const PoshakSevaSection = () => {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting || !tableExists}>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? t('poshakSeva.submitting') : t('poshakSeva.submitButton')}
             </Button>
           </form>
