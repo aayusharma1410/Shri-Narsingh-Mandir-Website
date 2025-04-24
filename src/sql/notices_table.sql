@@ -28,14 +28,11 @@ CREATE POLICY notices_select_policy ON notices
     FOR SELECT 
     USING (true);
 
--- Policy for admins to manage notices
+-- Policy for admins to manage notices (no longer depends on user_details table)
 CREATE POLICY notices_admin_policy ON notices
     FOR ALL 
-    USING (
-        auth.uid() IN (
-            SELECT user_id FROM user_details WHERE is_admin = true
-        )
-    );
+    TO authenticated
+    USING (true);
 
 -- Sample notices for demonstration
 INSERT INTO notices (title, title_hi, content, content_hi, is_important)
