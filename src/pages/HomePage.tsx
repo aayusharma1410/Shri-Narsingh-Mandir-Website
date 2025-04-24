@@ -8,8 +8,11 @@ import PoshakSevaSection from "@/components/PoshakSevaSection";
 import GallerySection from "@/components/GallerySection";
 import DailySchedule from "@/components/DailySchedule";
 import PraktotsavScheduleDialog from "@/components/PraktotsavScheduleDialog";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [isSummerTimings, setIsSummerTimings] = useState(true);
+  
   return (
     <div className="w-full">
       <PraktotsavScheduleDialog />
@@ -20,7 +23,7 @@ const HomePage = () => {
         <TimingsSection />
         <NoticeBoard />
         <PoshakSevaSection />
-        <DailySchedule />
+        <DailySchedule isSummerTimings={isSummerTimings} />
         <GallerySection />
       </div>
     </div>
