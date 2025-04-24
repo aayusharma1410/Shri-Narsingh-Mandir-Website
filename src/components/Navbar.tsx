@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,11 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe } from "lucide-react";
+import { Menu, Globe, LogOut } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const { language, setLanguage, t } = useLanguage();
+  const { signOut } = useAuth();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,10 @@ const Navbar = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
 
-  // Insert "Gallery" link between Timings and Poshak Seva
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   const navLinks = [
     { name: language === 'en' ? 'Home' : 'होम', path: "/" },
     { name: language === 'en' ? 'About' : 'परिचय', path: "/about" },
@@ -92,6 +96,20 @@ const Navbar = () => {
             >
               <Globe className="h-4 w-4" />
               <span>{language === 'en' ? 'हिंदी' : 'English'}</span>
+            </Button>
+
+            <Button
+              onClick={handleSignOut}
+              variant="outline"
+              size="sm"
+              className={`flex items-center gap-1 ${
+                isScrolled 
+                  ? "border-red-500 text-red-500 hover:bg-red-50" 
+                  : "border-white/20 text-white hover:bg-white/20"
+              }`}
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
             </Button>
           </div>
 
