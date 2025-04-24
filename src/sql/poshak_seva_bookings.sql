@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS poshak_seva_bookings (
 -- Add comment to the table
 COMMENT ON TABLE poshak_seva_bookings IS 'Stores bookings for Poshak Seva';
 
--- Enable Row Level Security
+-- Set up Row Level Security
 ALTER TABLE poshak_seva_bookings ENABLE ROW LEVEL SECURITY;
 
 -- Drop existing policies to avoid conflicts
@@ -26,20 +26,19 @@ DROP POLICY IF EXISTS poshak_seva_anonymous_insert_policy ON poshak_seva_booking
 DROP POLICY IF EXISTS poshak_seva_user_select_policy ON poshak_seva_bookings;
 DROP POLICY IF EXISTS poshak_seva_admin_policy ON poshak_seva_bookings;
 
--- Policy for anonymous users - can insert but not read
+-- Create policies
+-- Policy for anyone to insert bookings
 CREATE POLICY poshak_seva_anonymous_insert_policy ON poshak_seva_bookings
-    FOR INSERT 
-    TO anon
+    FOR INSERT
+    TO anon, authenticated
     WITH CHECK (true);
 
--- Policy for authenticated users - can read only their own bookings
-CREATE POLICY poshak_seva_user_select_policy ON poshak_seva_bookings
-    FOR SELECT 
-    TO authenticated
-    USING (email = auth.email());
+-- Policy for everyone to view all bookings (for demonstration purposes)
+CREATE POLICY poshak_seva_select_policy ON poshak_seva_bookings
+    FOR SELECT
+    USING (true);
 
--- Policy for admins - simplified to avoid dependency on user_details
-CREATE POLICY poshak_seva_admin_policy ON poshak_seva_bookings
-    FOR ALL 
-    TO authenticated
+-- Policy for authenticated users to update bookings
+CREATE POLICY poshak_seva_update_policy ON poshak_seva_bookings
+    FOR UPDATE TO authenticated
     USING (true);

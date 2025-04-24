@@ -39,8 +39,4 @@ CREATE POLICY users_update_policy ON user_details
     FOR UPDATE 
     USING (auth.uid() = user_id);
 
--- Add a default admin user (optional)
-INSERT INTO user_details (user_id, email, username, is_admin)
-VALUES 
-('00000000-0000-0000-0000-000000000000', 'admin@example.com', 'admin', true)
-ON CONFLICT (user_id) DO NOTHING;
+-- Remove the default admin user insertion that was causing the foreign key violation
