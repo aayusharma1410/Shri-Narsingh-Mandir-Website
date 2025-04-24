@@ -29,17 +29,18 @@ DROP POLICY IF EXISTS poshak_seva_admin_policy ON poshak_seva_bookings;
 -- Policy for anonymous users - can insert but not read
 CREATE POLICY poshak_seva_anonymous_insert_policy ON poshak_seva_bookings
     FOR INSERT 
-    TO anon
     WITH CHECK (true);
 
 -- Policy for authenticated users - can read only their own bookings
 CREATE POLICY poshak_seva_user_select_policy ON poshak_seva_bookings
-    FOR SELECT 
-    TO authenticated
+    FOR SELECT TO authenticated
     USING (email = auth.email());
 
--- Policy for admins - simplified to avoid dependency on user_details
+-- Policy for admins - can do everything
 CREATE POLICY poshak_seva_admin_policy ON poshak_seva_bookings
-    FOR ALL 
-    TO authenticated
-    USING (true);
+    FOR ALL TO authenticated
+    USING (
+        auth.uid() IN (
+            SELECT user_id FROM user_details WHERE is_admin = true
+        )
+    );
