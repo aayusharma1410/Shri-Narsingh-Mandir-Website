@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const isLoginPage = location.pathname === '/auth';
+
+  // Add the missing toggleLanguage function
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'hi' : 'en');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
