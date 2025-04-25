@@ -1,11 +1,9 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { toast } from "@/hooks/use-toast";
-import { supabase } from '@/lib/supabase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
@@ -66,27 +64,14 @@ const PoshakSevaSection = () => {
     setIsSubmitting(true);
     
     try {
-      console.log('Submitting form data:', values);
+      console.log('Form data submitted:', values);
       
-      const { data, error } = await supabase
-        .from('poshak_seva_bookings')
-        .insert([{
-          full_name: values.fullName,
-          email: values.email,
-          mobile_number: values.mobileNumber,
-          seva_date: values.sevaDate,
-          poshak_type: values.poshakType,
-          occasion: values.occasion || null,
-          additional_notes: values.additionalNotes || null,
-        }]);
-
-      if (error) {
-        console.error('Supabase error:', error);
-        throw new Error(error.message || 'Failed to submit booking');
-      }
-
-      setShowSuccess(true);
-      form.reset();
+      // Mock successful submission
+      setTimeout(() => {
+        setShowSuccess(true);
+        form.reset();
+        setIsSubmitting(false);
+      }, 1000);
     } catch (error: any) {
       console.error('Form submission error:', error);
       toast({
@@ -94,7 +79,6 @@ const PoshakSevaSection = () => {
         description: error.message || (language === 'en' ? 'Failed to submit booking' : 'बुकिंग जमा करने में विफल'),
         variant: 'destructive',
       });
-    } finally {
       setIsSubmitting(false);
     }
   };

@@ -1,12 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bell } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/contexts/LanguageContext';
-import { supabase } from '@/lib/supabase';
-import { toast } from "@/hooks/use-toast";
 
 interface Notice {
   id: number;
@@ -22,7 +19,6 @@ const NoticeBoard = () => {
   const { language } = useLanguage();
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [tableExists, setTableExists] = useState(true);
 
   // Default notices to use when database is not available
   const defaultNotices: Notice[] = [
@@ -56,50 +52,9 @@ const NoticeBoard = () => {
   ];
 
   useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        console.log('Fetching notices from Supabase...');
-        setIsLoading(true);
-        
-        // Try to fetch from notices table in Supabase
-        const { data, error } = await supabase
-          .from('notices')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(3);
-        
-        if (error) {
-          console.error('Error fetching notices:', error);
-          
-          // Check if the error is due to table not existing
-          if (error.code === '42P01') {
-            setTableExists(false);
-            console.log('Notices table does not exist, using default notices');
-          }
-          
-          // If there's an error, we'll use the default notices
-          setNotices(defaultNotices);
-        } else {
-          console.log('Notices fetched successfully:', data);
-          // If we got data but it's empty, use default notices
-          if (!data || data.length === 0) {
-            console.log('No notices found in the database, using default notices');
-            setNotices(defaultNotices);
-          } else {
-            setTableExists(true);
-            setNotices(data);
-          }
-        }
-      } catch (error) {
-        console.error('Error in fetchNotices:', error);
-        // In case of any exception, use default notices
-        setNotices(defaultNotices);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchNotices();
+    // Simply use the default notices since we've removed Supabase integration
+    setNotices(defaultNotices);
+    setIsLoading(false);
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -141,16 +96,6 @@ const NoticeBoard = () => {
         <Bell className="w-6 h-6 text-temple-gold ml-auto" />
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        {!tableExists && (
-          <div className="mb-4 p-2 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-amber-600 text-sm">
-              {language === 'en' 
-                ? "The notices table needs to be created in your Supabase database. Please run the SQL script from sql/notices_table.sql in the Supabase SQL editor." 
-                : "सूचना तालिका को आपके Supabase डेटाबेस में बनाया जाना चाहिए। कृपया Supabase SQL एडिटर में sql/notices_table.sql से SQL स्क्रिप्ट चलाएं।"}
-            </p>
-          </div>
-        )}
-        
         {notices.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
             <p>{language === 'en' ? "No notices at the moment" : "इस समय कोई सूचना नहीं है"}</p>
