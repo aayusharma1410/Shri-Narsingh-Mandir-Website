@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sheet,
   SheetContent,
@@ -9,11 +10,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe } from "lucide-react";
+import { Menu, Globe, LogIn } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const { user, signOut } = useAuth();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +41,6 @@ const Navbar = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
 
-  // Insert "Gallery" link between Timings and Poshak Seva
   const navLinks = [
     { name: language === 'en' ? 'Home' : 'होम', path: "/" },
     { name: language === 'en' ? 'About' : 'परिचय', path: "/about" },
@@ -47,6 +48,7 @@ const Navbar = () => {
     { name: language === 'en' ? 'Timings' : 'समय सारणी', path: "/timings" },
     { name: language === 'en' ? 'Gallery' : 'गैलरी', path: "/gallery" },
     { name: language === 'en' ? 'Poshak Seva' : 'पोशाक सेवा', path: "/poshak-seva" },
+    { name: language === 'en' ? 'Login' : 'लॉग इन', path: "/auth" },
   ];
 
   return (
@@ -79,6 +81,21 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {user && (
+              <Button 
+                onClick={() => signOut()} 
+                variant="outline" 
+                size="sm"
+                className={`flex items-center gap-1 rounded-full border-2 ${
+                  isScrolled 
+                    ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
+                    : "border-white/20 bg-white/10 text-white hover:bg-white/20"
+                }`}
+              >
+                {language === 'en' ? 'Logout' : 'लॉग आउट'}
+              </Button>
+            )}
 
             <Button 
               onClick={toggleLanguage} 
@@ -124,8 +141,25 @@ const Navbar = () => {
                   </Link>
                 ))}
 
+                {user && (
+                  <Button 
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full justify-start gap-2"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    <span>{language === 'en' ? 'Logout' : 'लॉग आउट'}</span>
+                  </Button>
+                )}
+
                 <Button 
-                  onClick={toggleLanguage} 
+                  onClick={() => {
+                    toggleLanguage();
+                    setIsOpen(false);
+                  }}
                   variant="outline"
                   className="w-full justify-start gap-2 bg-temple-gold/10 text-temple-maroon hover:bg-temple-gold/20"
                 >
