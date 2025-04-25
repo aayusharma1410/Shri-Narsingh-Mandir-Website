@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const isLoginPage = location.pathname === '/auth';
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -37,8 +38,11 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'hi' : 'en');
+  const getTextColorClass = (isScrolled: boolean) => {
+    if (isLoginPage) {
+      return 'text-temple-gold hover:text-orange-500';
+    }
+    return isScrolled ? 'text-gray-700 hover:text-temple-gold' : 'text-white hover:text-temple-gold';
   };
 
   const navLinks = [
@@ -52,17 +56,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md"
-          : "bg-transparent"
-      }`}
-    >
+    <header className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md" : "bg-transparent"
+    }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <span className={`font-bold text-xl ${isScrolled ? 'text-temple-maroon' : 'text-white'}`}>
+            <span className={`font-bold text-xl ${isLoginPage ? 'text-temple-gold' : (isScrolled ? 'text-temple-maroon' : 'text-white')}`}>
               श्री नृसिंह मंदिर
             </span>
           </Link>
@@ -72,11 +72,9 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`transition-colors duration-200 ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-temple-gold"
-                    : "text-white hover:text-temple-gold"
-                } ${location.pathname === link.path ? "font-medium" : "font-normal"}`}
+                className={`transition-colors duration-200 ${getTextColorClass(isScrolled)} ${
+                  location.pathname === link.path ? "font-medium" : "font-normal"
+                }`}
               >
                 {link.name}
               </Link>

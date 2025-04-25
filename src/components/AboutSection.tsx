@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AboutSection = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('history');
 
   return (
@@ -15,28 +14,23 @@ const AboutSection = () => {
           {language === 'en' ? 'About Shri Lakshmi Narsingh Mandir' : 'श्री नृसिंह मंदिर के बारे में'}
         </h1>
 
-        <Tabs
-          defaultValue="history"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
+        <Tabs defaultValue="history" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-3 mb-8">
             <TabsTrigger 
               value="history" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
             >
               {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
             </TabsTrigger>
             <TabsTrigger 
               value="narsingh" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
             >
               {language === 'en' ? 'Narsingh Avatar' : 'नृसिंह अवतार'}
             </TabsTrigger>
             <TabsTrigger 
               value="features" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-temple-gold/20"
+              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
             >
               {language === 'en' ? 'Temple Features' : 'मंदिर की विशेषताएं'}
             </TabsTrigger>
