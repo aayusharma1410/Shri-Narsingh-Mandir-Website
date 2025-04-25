@@ -46,9 +46,9 @@ const Navbar = () => {
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
-      return 'text-temple-gold hover:text-orange-500';
+      return 'text-temple-gold hover:text-white';
     }
-    return isScrolled ? 'text-gray-700 hover:text-temple-gold' : 'text-white hover:text-temple-gold';
+    return isScrolled ? 'text-gray-700 hover:text-white' : 'text-white hover:text-white';
   };
 
   const navLinks = [
@@ -78,9 +78,34 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`transition-colors duration-200 ${getTextColorClass(isScrolled)} ${
-                  location.pathname === link.path ? "font-medium" : "font-normal"
-                }`}
+                className={`
+                  relative px-3 py-2 transition-all duration-300 
+                  ${getTextColorClass(isScrolled)}
+                  before:content-['']
+                  before:absolute
+                  before:bottom-0
+                  before:left-0
+                  before:w-full
+                  before:h-[2px]
+                  before:bg-gradient-to-r
+                  before:from-[#FFD700]
+                  before:via-[#FF8C00]
+                  before:to-[#FF4500]
+                  after:content-['']
+                  after:absolute
+                  after:inset-0
+                  after:bg-gradient-to-r
+                  after:from-[#FFD700]
+                  after:via-[#FF8C00]
+                  after:to-[#FF4500]
+                  after:origin-bottom
+                  after:scale-y-0
+                  after:transition-transform
+                  after:duration-300
+                  hover:after:scale-y-100
+                  after:-z-10
+                  ${location.pathname === link.path ? "font-medium" : "font-normal"}
+                `}
               >
                 {link.name}
               </Link>
