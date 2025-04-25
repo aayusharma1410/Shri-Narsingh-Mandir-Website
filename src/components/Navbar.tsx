@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,6 @@ const Navbar = () => {
 
   const isLoginPage = location.pathname === '/auth';
 
-  // Add the missing toggleLanguage function
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
@@ -79,36 +77,10 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`
-                  relative px-3 py-2 transition-all duration-500
-                  ${getTextColorClass(isScrolled)}
-                  before:content-['']
-                  before:absolute
-                  before:inset-0
-                  before:bg-gradient-to-r
-                  before:from-[#FFD700]
-                  before:via-[#FF8C00]
-                  before:to-[#FF4500]
-                  before:opacity-0
-                  before:blur-lg
-                  before:transition-opacity
-                  before:duration-500
-                  before:-z-10
-                  after:content-['']
-                  after:absolute
-                  after:inset-0
-                  after:bg-gradient-to-r
-                  after:from-[#FFD700]
-                  after:via-[#FF8C00]
-                  after:to-[#FF4500]
-                  after:opacity-0
-                  after:blur-sm
-                  after:transition-opacity
-                  after:duration-500
-                  after:-z-10
-                  hover:before:opacity-50
-                  hover:after:opacity-30
-                  hover:text-white
-                  hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]
+                  relative px-3 py-2 
+                  text-white no-underline
+                  transition-all duration-400 ease-in-out
+                  hover:tracking-[4px]
                   ${location.pathname === link.path ? "font-medium" : "font-normal"}
                 `}
               >
@@ -121,11 +93,15 @@ const Navbar = () => {
                 onClick={() => signOut()} 
                 variant="outline" 
                 size="sm"
-                className={`flex items-center gap-1 rounded-full border-2 ${
-                  isScrolled 
+                className={`
+                  flex items-center gap-1 rounded-full border-2
+                  transition-all duration-400 ease-in-out
+                  hover:tracking-[4px]
+                  ${isScrolled 
                     ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
                     : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-                }`}
+                  }
+                `}
               >
                 {language === 'en' ? 'Logout' : 'लॉग आउट'}
               </Button>
@@ -135,11 +111,15 @@ const Navbar = () => {
               onClick={toggleLanguage} 
               variant="outline" 
               size="sm"
-              className={`flex items-center gap-1 rounded-full border-2 ${
-                isScrolled 
+              className={`
+                flex items-center gap-1 rounded-full border-2
+                transition-all duration-400 ease-in-out
+                hover:tracking-[4px]
+                ${isScrolled 
                   ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
                   : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-              }`}
+                }
+              `}
             >
               <Globe className="h-4 w-4" />
               <span>{language === 'en' ? 'हिंदी' : 'English'}</span>
