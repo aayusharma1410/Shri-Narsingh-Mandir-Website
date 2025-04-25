@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe } from "lucide-react";
+import { Menu, Globe, LogIn } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
