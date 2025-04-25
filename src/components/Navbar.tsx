@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe, LogIn } from "lucide-react";
+import { Menu, Globe } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
@@ -46,9 +46,9 @@ const Navbar = () => {
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
-      return 'text-temple-gold hover:text-white';
+      return 'text-white';
     }
-    return isScrolled ? 'text-gray-700 hover:text-white' : 'text-white hover:text-white';
+    return 'text-white';
   };
 
   const navLinks = [
@@ -79,18 +79,20 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`
-                  relative px-3 py-2 transition-all duration-300 
+                  relative px-3 py-2 transition-all duration-500
                   ${getTextColorClass(isScrolled)}
                   before:content-['']
                   before:absolute
-                  before:bottom-0
-                  before:left-0
-                  before:w-full
-                  before:h-[2px]
+                  before:inset-0
                   before:bg-gradient-to-r
                   before:from-[#FFD700]
                   before:via-[#FF8C00]
                   before:to-[#FF4500]
+                  before:opacity-0
+                  before:blur-lg
+                  before:transition-opacity
+                  before:duration-500
+                  before:-z-10
                   after:content-['']
                   after:absolute
                   after:inset-0
@@ -98,12 +100,15 @@ const Navbar = () => {
                   after:from-[#FFD700]
                   after:via-[#FF8C00]
                   after:to-[#FF4500]
-                  after:origin-bottom
-                  after:scale-y-0
-                  after:transition-transform
-                  after:duration-300
-                  hover:after:scale-y-100
+                  after:opacity-0
+                  after:blur-sm
+                  after:transition-opacity
+                  after:duration-500
                   after:-z-10
+                  hover:before:opacity-50
+                  hover:after:opacity-30
+                  hover:text-white
+                  hover:shadow-[0_0_20px_rgba(255,215,0,0.3)]
                   ${location.pathname === link.path ? "font-medium" : "font-normal"}
                 `}
               >
