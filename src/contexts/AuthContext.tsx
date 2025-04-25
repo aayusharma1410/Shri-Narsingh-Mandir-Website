@@ -1,10 +1,8 @@
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase } from '@/lib/supabase';
-import { User } from '@supabase/supabase-js';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthContextType {
-  user: User | null;
+  user: any | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string, location: string) => Promise<void>;
@@ -14,42 +12,35 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const [user, setUser] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
+    setLoading(true);
+    try {
+      // In a real app, this would call your authentication service
+      setUser({ email, name: 'Test User' });
+    } catch (error) {
+      throw new Error('Invalid credentials');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signUp = async (email: string, password: string, name: string, location: string) => {
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { name, location }
-      }
-    });
-    if (signUpError) throw signUpError;
+    setLoading(true);
+    try {
+      // In a real app, this would call your authentication service
+      setUser({ email, name, location });
+    } catch (error) {
+      throw new Error('Could not create account');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    setUser(null);
   };
 
   return (

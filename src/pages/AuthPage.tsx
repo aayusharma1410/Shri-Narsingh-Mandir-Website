@@ -5,8 +5,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Mail, Phone, Lock, User, MapPin } from "lucide-react";
+import { Mail, Lock, User, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Navbar from "@/components/Navbar";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const AuthPage = () => {
       await signUp(email, password, name, location);
       toast({
         title: "Success!",
-        description: "Your account has been created. Please verify your email.",
+        description: "Your account has been created.",
       });
       navigate("/");
     } catch (error) {
@@ -80,140 +81,143 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-temple-maroon">श्री नृसिंह मंदिर</h2>
-          <p className="text-muted-foreground mt-2">Sign in to your account or create a new one</p>
-        </div>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-temple-maroon">श्री नृसिंह मंदिर</h2>
+            <p className="text-muted-foreground mt-2">Sign in to your account or create a new one</p>
+          </div>
 
-        <Tabs defaultValue="signin" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Sign In</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
-          </TabsList>
+          <Tabs defaultValue="signin" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="signin">Sign In</TabsTrigger>
+              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="signin">
-            <form onSubmit={handleSignIn} className="space-y-4">
-              <div className="space-y-2">
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    className="pl-10"
-                  />
+            <TabsContent value="signin">
+              <form onSubmit={handleSignIn} className="space-y-4">
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
                 </div>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-          </TabsContent>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </Button>
+              </form>
+            </TabsContent>
 
-          <TabsContent value="signup">
-            <form onSubmit={handleSignUp} className="space-y-4">
-              <div className="space-y-2">
-                <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    name="name"
-                    placeholder="Full Name"
-                    required
-                    className="pl-10"
-                  />
+            <TabsContent value="signup">
+              <form onSubmit={handleSignUp} className="space-y-4">
+                <div className="space-y-2">
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      name="name"
+                      placeholder="Full Name"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      name="location"
+                      placeholder="Location"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      required
+                      className="pl-10"
+                    />
+                  </div>
                 </div>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    className="pl-10"
-                  />
-                </div>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    name="location"
-                    placeholder="Location"
-                    required
-                    className="pl-10"
-                  />
-                </div>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    className="pl-10"
-                  />
-                </div>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Sign Up"}
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? "Creating account..." : "Sign Up"}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
 
-        <div className="mt-6 flex items-center justify-center space-x-4">
-          <a
-            href="https://www.instagram.com/shrinarsinghmandirofficial/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-temple-gold transition-colors"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.facebook.com/profile.php?id=61571381196072"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-temple-gold transition-colors"
-          >
-            Facebook
-          </a>
-          <a
-            href="mailto:shrilakshminarsinghhasampur@gmail.com"
-            className="text-muted-foreground hover:text-temple-gold transition-colors"
-          >
-            Email
-          </a>
-          <a
-            href="tel:+917073990477"
-            className="text-muted-foreground hover:text-temple-gold transition-colors"
-          >
-            Phone
-          </a>
+          <div className="mt-6 flex items-center justify-center space-x-4">
+            <a
+              href="https://www.instagram.com/shrinarsinghmandirofficial/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-temple-gold transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61571381196072"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-temple-gold transition-colors"
+            >
+              Facebook
+            </a>
+            <a
+              href="mailto:shrilakshminarsinghhasampur@gmail.com"
+              className="text-muted-foreground hover:text-temple-gold transition-colors"
+            >
+              Email
+            </a>
+            <a
+              href="tel:+917073990477"
+              className="text-muted-foreground hover:text-temple-gold transition-colors"
+            >
+              Phone
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
