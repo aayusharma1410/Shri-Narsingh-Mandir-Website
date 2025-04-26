@@ -47,7 +47,7 @@ const poshakTypes = [
 ];
 
 const PoshakSevaSection = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage(); // Re-adding the t function here
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
