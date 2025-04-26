@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe, LogIn } from "lucide-react";
+import { Menu, Globe, ArrowLeft } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
@@ -44,9 +44,9 @@ const Navbar = () => {
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
-      return 'text-white';
+      return isScrolled ? 'text-yellow-400' : 'text-white';
     }
-    return 'text-white';
+    return isScrolled ? 'text-yellow-400' : 'text-white';
   };
 
   const navLinks = [
@@ -65,11 +65,25 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className={`font-bold text-xl ${isLoginPage ? 'text-temple-gold' : (isScrolled ? 'text-temple-maroon' : 'text-white')}`}>
-              श्री नृसिंह मंदिर
-            </span>
-          </Link>
+          <div className="flex items-center space-x-4">
+            {isLoginPage && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className={getTextColorClass(isScrolled)}
+                asChild
+              >
+                <Link to="/">
+                  <ArrowLeft className="h-5 w-5" />
+                </Link>
+              </Button>
+            )}
+            <Link to="/" className="flex items-center space-x-2">
+              <span className={`font-bold text-xl ${getTextColorClass(isScrolled)}`}>
+                श्री नृसिंह मंदिर
+              </span>
+            </Link>
+          </div>
 
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (

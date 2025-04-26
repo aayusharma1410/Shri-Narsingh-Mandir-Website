@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -6,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import Navbar from '@/components/Navbar';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -47,92 +47,95 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-temple-gold/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center text-temple-maroon">
-            {isLogin ? 'Welcome Back' : 'Create Account'}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            {!isLogin && (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-temple-gold/10 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center text-temple-maroon">
+              {isLogin ? 'Welcome Back' : 'Create Account'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
-            )}
-            {!isLogin && (
-              <>
+              {!isLogin && (
                 <div className="space-y-2">
                   <Input
                     type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
                   />
                 </div>
-                <div className="space-y-2">
-                  <Input
-                    type="text"
-                    placeholder="State"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Input
-                    type="text"
-                    placeholder="Country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
-            <div className="space-y-2">
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              )}
+              {!isLogin && (
+                <>
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="City"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="State"
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="Country"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
+              <div className="space-y-2">
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
+              </Button>
+            </form>
+            <div className="mt-4 text-center">
+              <Button
+                variant="link"
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-temple-maroon hover:text-temple-gold"
+              >
+                {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+              </Button>
             </div>
-            <Button 
-              type="submit" 
-              className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
-            </Button>
-          </form>
-          <div className="mt-4 text-center">
-            <Button
-              variant="link"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-temple-maroon hover:text-temple-gold"
-            >
-              {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };
 
