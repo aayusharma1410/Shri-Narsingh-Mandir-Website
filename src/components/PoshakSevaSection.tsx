@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { supabase } from '@/integrations/supabase/client';
 
 const formSchema = z.object({
   fullName: z.string().min(3, 'Name must be at least 3 characters'),
@@ -47,7 +48,7 @@ const poshakTypes = [
 ];
 
 const PoshakSevaSection = () => {
-  const { language, t } = useLanguage(); // Re-adding the t function here
+  const { language, t } = useLanguage();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,12 +71,29 @@ const PoshakSevaSection = () => {
     try {
       console.log('Form data submitted:', values);
       
-      // Mock successful submission
-      setTimeout(() => {
-        setShowSuccess(true);
-        form.reset();
-        setIsSubmitting(false);
-      }, 1000);
+      // Insert data into Supabase
+      const { data, error } = await supabase
+        .from('poshak_seva_bookings')
+        .insert([
+          {
+            full_name: values.fullName,
+            email: values.email,
+            mobile_number: values.mobileNumber,
+            seva_date: values.sevaDate,
+            poshak_type: values.poshakType,
+            occasion: values.occasion || null,
+            additional_notes: values.additionalNotes || null,
+          }
+        ]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw new Error(error.message);
+      }
+
+      console.log('Booking saved successfully:', data);
+      setShowSuccess(true);
+      form.reset();
     } catch (error: any) {
       console.error('Form submission error:', error);
       toast({
@@ -83,6 +101,7 @@ const PoshakSevaSection = () => {
         description: error.message || (language === 'en' ? 'Failed to submit booking' : 'बुकिंग जमा करने में विफल'),
         variant: 'destructive',
       });
+    } finally {
       setIsSubmitting(false);
     }
   };
