@@ -1,223 +1,107 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { Mail, Lock, User, MapPin } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Navbar from "@/components/Navbar";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 const AuthPage = () => {
-  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    
+    setLoading(true);
+
     try {
-      await signIn(email, password);
-      navigate("/");
+      if (isLogin) {
+        await signIn(email, password);
+      } else {
+        await signUp(email, password, username);
+      }
+      navigate('/');
       toast({
-        title: "Welcome back!",
-        description: "You have successfully signed in.",
+        title: isLogin ? 'Welcome back!' : 'Account created successfully!',
+        description: isLogin ? 'You have been logged in.' : 'Please check your email to verify your account.',
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
-        title: "Error",
-        description: "Invalid email or password.",
-        variant: "destructive",
+        variant: 'destructive',
+        title: 'Error',
+        description: error.message,
       });
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const location = formData.get("location") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
-    
-    if (password !== confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match.",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-      return;
-    }
-    
-    try {
-      await signUp(email, password, name, location);
-      toast({
-        title: "Success!",
-        description: "Your account has been created.",
-      });
-      navigate("/");
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to create account. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="w-full max-w-md space-y-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-temple-maroon">श्री नृसिंह मंदिर</h2>
-            <p className="text-muted-foreground mt-2">Sign in to your account or create a new one</p>
+    <div className="min-h-screen bg-temple-gold/10 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl text-center text-temple-maroon">
+            {isLogin ? 'Welcome Back' : 'Create Account'}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            {!isLogin && (
+              <div className="space-y-2">
+                <Input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+            )}
+            <div className="space-y-2">
+              <Input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button 
+              type="submit" 
+              className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
+            </Button>
+          </form>
+          <div className="mt-4 text-center">
+            <Button
+              variant="link"
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-temple-maroon hover:text-temple-gold"
+            >
+              {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+            </Button>
           </div>
-
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Signing in..." : "Sign In"}
-                </Button>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      name="name"
-                      placeholder="Full Name"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      name="location"
-                      placeholder="Location"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="Confirm Password"
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Creating account..." : "Sign Up"}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-6 flex items-center justify-center space-x-4">
-            <a
-              href="https://www.instagram.com/shrinarsinghmandirofficial/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-temple-gold transition-colors"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.facebook.com/profile.php?id=61571381196072"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-temple-gold transition-colors"
-            >
-              Facebook
-            </a>
-            <a
-              href="mailto:shrilakshminarsinghhasampur@gmail.com"
-              className="text-muted-foreground hover:text-temple-gold transition-colors"
-            >
-              Email
-            </a>
-            <a
-              href="tel:+917073990477"
-              className="text-muted-foreground hover:text-temple-gold transition-colors"
-            >
-              Phone
-            </a>
-          </div>
-        </div>
-      </div>
-    </>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

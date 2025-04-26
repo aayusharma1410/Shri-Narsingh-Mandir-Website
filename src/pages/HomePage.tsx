@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -7,12 +6,6 @@ import NoticeBoard from '@/components/NoticeBoard';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import PraktotsavScheduleDialog from '@/components/PraktotsavScheduleDialog';
-
-const stories = Array.from({ length: 25 }).map((_, i) => ({
-  s_no: i + 1,
-  avatar: `User${i + 1}`,
-  story: "This is a sample short story for avatar " + (i + 1)
-}));
 
 const HomePage = () => {
   const { language } = useLanguage();
@@ -58,29 +51,11 @@ const HomePage = () => {
           </div>
 
           <div className="w-full mx-auto mt-8">
-            <div className="rounded-lg overflow-x-auto bg-white shadow">
-              <table className="min-w-full table-auto">
-                <thead>
-                  <tr className="bg-temple-gold/30">
-                    <th className="px-4 py-2 w-12">S. No</th>
-                    <th className="px-4 py-2 w-40">Avatar's Name</th>
-                    <th className="px-4 py-2">Story</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stories.map((row) => (
-                    <tr
-                      key={row.s_no}
-                      className="border-b last:border-b-0 even:bg-temple-cream/20 transition-colors hover:bg-temple-gold/30"
-                    >
-                      <td className="px-4 py-3 text-center">{row.s_no}</td>
-                      <td className="px-4 py-3 text-center font-medium">{row.avatar}</td>
-                      <td className="px-4 py-3">{row.story}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <img 
+              src="/lovable-uploads/f5a026b3-4a57-43f3-97a6-6b586cf2606b.png"
+              alt="Temple Schedule"
+              className="max-w-full rounded-lg shadow-lg mx-auto"
+            />
           </div>
 
           <div className="w-full relative bg-white">
