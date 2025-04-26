@@ -72,7 +72,7 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center space-x-6">
-            {navLinks.map((link) => (
+            {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -103,7 +103,7 @@ const Navbar = () => {
                   }
                 `}
               >
-                {language === 'en' ? 'Logout' : 'लॉग आउट'}
+                {user.user_metadata.username || 'Profile'}
               </Button>
             )}
 
@@ -144,7 +144,7 @@ const Navbar = () => {
                 <SheetTitle>श्री नृसिंह मंदिर</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col space-y-4">
-                {navLinks.map((link) => (
+                {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}

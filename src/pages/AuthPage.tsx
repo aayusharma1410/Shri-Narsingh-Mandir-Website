@@ -13,6 +13,9 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [country, setCountry] = useState('');
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -72,6 +75,34 @@ const AuthPage = () => {
                   required
                 />
               </div>
+            )}
+            {!isLogin && (
+              <>
+                <div className="space-y-2">
+                  <Input
+                    type="text"
+                    placeholder="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    type="text"
+                    placeholder="State"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    type="text"
+                    placeholder="Country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                  />
+                </div>
+              </>
             )}
             <div className="space-y-2">
               <Input

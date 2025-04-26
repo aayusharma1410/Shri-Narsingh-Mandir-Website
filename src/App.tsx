@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import PoshakSevaPage from "./pages/PoshakSevaPage";
 import GalleryPage from "./pages/GalleryPage";
 import AuthPage from "./pages/AuthPage";
+import LoginPopup from "@/components/LoginPopup";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +25,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <LoginPopup />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />
