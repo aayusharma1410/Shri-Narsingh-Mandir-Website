@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +28,10 @@ import {
 const formSchema = z.object({
   fullName: z.string().min(3, 'Name must be at least 3 characters'),
   email: z.string().email('Invalid email address'),
-  mobileNumber: z.string().min(10, 'Invalid mobile number'),
+  mobileNumber: z.string()
+    .min(10, 'Mobile number must be at least 10 digits')
+    .max(15, 'Mobile number must not exceed 15 digits')
+    .regex(/^[0-9]+$/, 'Mobile number must contain only digits'),
   sevaDate: z.string().min(1, 'Please select a date'),
   poshakType: z.string().min(1, 'Please select poshak type'),
   occasion: z.string().optional(),
@@ -43,7 +47,7 @@ const poshakTypes = [
 ];
 
 const PoshakSevaSection = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

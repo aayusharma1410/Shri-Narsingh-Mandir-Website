@@ -9,6 +9,54 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      poshak_seva_bookings: {
+        Row: {
+          additional_notes: string | null
+          admin_notes: string | null
+          amount_paid: number | null
+          created_at: string | null
+          email: string
+          full_name: string
+          id: number
+          mobile_number: string
+          occasion: string | null
+          payment_status: string | null
+          poshak_type: string
+          seva_date: string
+          status: string | null
+        }
+        Insert: {
+          additional_notes?: string | null
+          admin_notes?: string | null
+          amount_paid?: number | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: number
+          mobile_number: string
+          occasion?: string | null
+          payment_status?: string | null
+          poshak_type: string
+          seva_date: string
+          status?: string | null
+        }
+        Update: {
+          additional_notes?: string | null
+          admin_notes?: string | null
+          amount_paid?: number | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: number
+          mobile_number?: string
+          occasion?: string | null
+          payment_status?: string | null
+          poshak_type?: string
+          seva_date?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           avatar_url: string | null
