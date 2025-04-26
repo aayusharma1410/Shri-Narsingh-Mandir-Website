@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Globe, ArrowLeft } from "lucide-react";
+import { Menu, Globe, ArrowLeft, LogOut } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
@@ -44,7 +45,7 @@ const Navbar = () => {
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
-      return isScrolled ? 'text-yellow-400' : 'text-white';
+      return 'text-yellow-400';
     }
     return isScrolled ? 'text-yellow-400' : 'text-white';
   };
@@ -92,7 +93,7 @@ const Navbar = () => {
                 to={link.path}
                 className={`
                   relative px-3 py-2 
-                  text-white no-underline
+                  ${getTextColorClass(isScrolled)} no-underline
                   transition-all duration-400 ease-in-out
                   hover:tracking-[4px]
                   ${location.pathname === link.path ? "font-medium" : "font-normal"}
@@ -178,7 +179,7 @@ const Navbar = () => {
                     variant="outline"
                     className="w-full justify-start gap-2"
                   >
-                    <LogIn className="h-4 w-4" />
+                    <LogOut className="h-4 w-4" />
                     <span>{language === 'en' ? 'Logout' : 'लॉग आउट'}</span>
                   </Button>
                 )}
