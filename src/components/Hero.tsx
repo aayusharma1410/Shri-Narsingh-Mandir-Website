@@ -47,7 +47,7 @@ const Hero = () => {
       <div className="container relative z-10 px-6 py-32 mx-auto text-center">
         <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-block mb-4 px-6 py-2 bg-black/30 backdrop-blur-sm rounded-full border border-temple-gold/50">
-            <p className="font-serif text-temple-gold">{t('hero.welcome')}</p>
+            <p className="font-serif text-temple-gold">{language === 'en' ? 'Welcome to the Official Website of Shri Narsingh Mandir' : 'श्री नृसिंह मंदिर की आधिकारिक वेबसाइट पर स्वागत है'}</p>
           </div>
           
           <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white hero-text-stroke text-shadow-lg">
@@ -55,7 +55,7 @@ const Hero = () => {
           </h1>
           
           <h2 className={`font-serif text-2xl md:text-3xl text-white mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {t('hero.subtitle')}
+            {language === 'en' ? 'A Sacred Space for Spiritual Connection' : 'आध्यात्मिक संबंध के लिए एक पवित्र स्थान'}
           </h2>
           
           <p className={`text-white/80 mb-8 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
