@@ -1,9 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bell } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 
 interface Notice {
   id: number;
@@ -17,45 +20,23 @@ interface Notice {
 
 const NoticeBoard = () => {
   const { language } = useLanguage();
-  const [notices, setNotices] = useState<Notice[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Default notices to use when database is not available
-  const defaultNotices: Notice[] = [
-    {
-      id: 1,
-      title: "Temple Renovation",
-      title_hi: "मंदिर का जीर्णोद्धार",
-      content: "We are pleased to announce that temple renovation work will begin next month.",
-      content_hi: "हमें यह घोषणा करते हुए प्रसन्नता हो रही है कि मंदिर के जीर्णोद्धार का कार्य अगले महीने से प्रारंभ होगा।",
-      is_important: true,
-      created_at: new Date().toISOString()
-    },
-    {
-      id: 2,
-      title: "Annual Festival",
-      title_hi: "वार्षिक उत्सव",
-      content: "Annual temple festival will be celebrated from 15th to 21st May with special ceremonies.",
-      content_hi: "वार्षिक मंदिर उत्सव 15 से 21 मई तक विशेष समारोहों के साथ मनाया जाएगा।",
-      is_important: false,
-      created_at: new Date(Date.now() - 86400000).toISOString()
-    },
-    {
-      id: 3,
-      title: "Bhajan Sandhya",
-      title_hi: "भजन संध्या",
-      content: "Join us for a special Bhajan Sandhya program every Saturday evening at 7 PM.",
-      content_hi: "हर शनिवार शाम 7 बजे होने वाले विशेष भजन संध्या कार्यक्रम में हमारे साथ शामिल हों।",
-      is_important: false,
-      created_at: new Date(Date.now() - 172800000).toISOString()
+  const { data: notices, isLoading } = useQuery({
+    queryKey: ['notices'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('notices')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching notices:', error);
+        throw error;
+      }
+
+      return data as Notice[];
     }
-  ];
-
-  useEffect(() => {
-    // Simply use the default notices since we've removed Supabase integration
-    setNotices(defaultNotices);
-    setIsLoading(false);
-  }, []);
+  });
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -96,7 +77,7 @@ const NoticeBoard = () => {
         <Bell className="w-6 h-6 text-temple-gold ml-auto" />
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        {notices.length === 0 ? (
+        {!notices || notices.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
             <p>{language === 'en' ? "No notices at the moment" : "इस समय कोई सूचना नहीं है"}</p>
           </div>
@@ -108,7 +89,7 @@ const NoticeBoard = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <h3 className="font-medium text-lg text-temple-maroon">
-                      {language === 'en' ? notice.title : (notice.title_hi || notice.title)}
+                      {language === 'en' ? notice.title : notice.title_hi}
                     </h3>
                     {notice.is_important && (
                       <Badge variant="destructive" className="text-xs">
@@ -120,7 +101,7 @@ const NoticeBoard = () => {
                     {formatDate(notice.created_at)}
                   </p>
                   <p className="text-sm">
-                    {language === 'en' ? notice.content : (notice.content_hi || notice.content)}
+                    {language === 'en' ? notice.content : notice.content_hi}
                   </p>
                 </div>
               </div>

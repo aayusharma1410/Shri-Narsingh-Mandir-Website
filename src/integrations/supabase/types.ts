@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      notices: {
+        Row: {
+          content: string
+          content_hi: string
+          created_at: string | null
+          created_by: string | null
+          id: number
+          is_important: boolean | null
+          title: string
+          title_hi: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          content_hi: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: number
+          is_important?: boolean | null
+          title: string
+          title_hi: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          content_hi?: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: number
+          is_important?: boolean | null
+          title?: string
+          title_hi?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       poshak_seva_bookings: {
         Row: {
           additional_notes: string | null
@@ -65,6 +101,7 @@ export type Database = {
           created_at: string | null
           full_name: string | null
           id: string
+          is_admin: boolean | null
           language_preference: string | null
           state: string | null
           updated_at: string | null
@@ -77,6 +114,7 @@ export type Database = {
           created_at?: string | null
           full_name?: string | null
           id: string
+          is_admin?: boolean | null
           language_preference?: string | null
           state?: string | null
           updated_at?: string | null
@@ -89,6 +127,7 @@ export type Database = {
           created_at?: string | null
           full_name?: string | null
           id?: string
+          is_admin?: boolean | null
           language_preference?: string | null
           state?: string | null
           updated_at?: string | null
