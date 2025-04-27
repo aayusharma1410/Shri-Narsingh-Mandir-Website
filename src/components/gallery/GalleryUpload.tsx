@@ -1,16 +1,49 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Upload } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const GalleryUpload = () => {
   const [uploading, setUploading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
   const { language } = useLanguage();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('is_admin')
+          .eq('id', user.id)
+          .single();
+          
+        if (error) {
+          console.error('Error checking admin status:', error);
+          setIsAdmin(false);
+          return;
+        }
+        
+        setIsAdmin(data?.is_admin || false);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+      }
+    };
+    
+    checkAdminStatus();
+  }, [user]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -41,7 +74,8 @@ const GalleryUpload = () => {
           {
             title: file.name,
             image_url: publicUrl,
-            category: 'general'
+            category: 'general',
+            uploaded_by: user?.id
           }
         ]);
 
@@ -69,6 +103,9 @@ const GalleryUpload = () => {
       setUploading(false);
     }
   };
+
+  // Don't render anything if user is not admin
+  if (!isAdmin) return null;
 
   return (
     <div className="mb-6">
