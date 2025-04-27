@@ -1,1 +1,4 @@
-project_id = "efughnabhmwgqiftgigs"
+
+[functions.send-notice-notification]
+verify_jwt = true
+
