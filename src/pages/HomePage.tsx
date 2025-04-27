@@ -37,7 +37,14 @@ const HomePage = () => {
       <Hero />
       <PraktotsavScheduleDialog />
       <div className="container mx-auto px-2 md:px-0 py-8">
-        {/* Removed the image under the notice board */}
+        {/* Add the Praktotsav schedule image */}
+        <div className="w-full max-w-4xl mx-auto mb-8">
+          <img 
+            src="/lovable-uploads/d825fb41-d828-4d31-8d63-a5402da86735.png"
+            alt={language === 'en' ? "Narsingh Praktotsav Schedule" : "नृसिंह प्रकटोत्सव समय-सारणी"}
+            className="w-full rounded-lg shadow-lg"
+          />
+        </div>
         
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
@@ -90,3 +97,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
