@@ -20,6 +20,7 @@ interface Notice {
 
 const NoticeBoard = () => {
   const { language } = useLanguage();
+  const [visibleNotices, setVisibleNotices] = useState<number[]>([]);
 
   const { data: notices, isLoading } = useQuery({
     queryKey: ['notices'],
@@ -37,6 +38,18 @@ const NoticeBoard = () => {
       return data as Notice[];
     }
   });
+
+  // Effect to animate notices into view
+  useEffect(() => {
+    if (!notices) return;
+    
+    // Show notices one by one with delay
+    const timer = setTimeout(() => {
+      setVisibleNotices(notices.map(notice => notice.id));
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [notices]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -84,7 +97,10 @@ const NoticeBoard = () => {
         ) : (
           <div className="space-y-4">
             {notices.map((notice, index) => (
-              <div key={notice.id} className="animate-on-scroll opacity-0" style={{ animationDelay: `${index * 150}ms` }}>
+              <div 
+                key={notice.id} 
+                className={`transition-opacity duration-500 ${visibleNotices.includes(notice.id) ? 'opacity-100' : 'opacity-0'}`}
+              >
                 {index > 0 && <Separator className="my-4" />}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
