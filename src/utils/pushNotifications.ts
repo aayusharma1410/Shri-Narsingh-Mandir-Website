@@ -1,5 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
+import { Json } from "@/integrations/supabase/types";
 
 export async function registerServiceWorker() {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
@@ -26,10 +27,17 @@ export async function saveSubscription(subscription: PushSubscription) {
   // Convert subscription to a plain object that can be stored in the database
   const subscriptionJSON = subscription.toJSON();
   
+  // Convert the subscriptionJSON to a format compatible with Supabase's Json type
+  const subscriptionData = {
+    endpoint: subscriptionJSON.endpoint,
+    expirationTime: subscriptionJSON.expirationTime,
+    keys: subscriptionJSON.keys
+  } as unknown as Json;
+  
   const { error } = await supabase
     .from('notification_subscriptions')
     .insert({
-      subscription: subscriptionJSON
+      subscription: subscriptionData
     });
 
   if (error) throw error;
