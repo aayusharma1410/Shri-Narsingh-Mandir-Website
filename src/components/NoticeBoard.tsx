@@ -1,14 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import { useToast } from '@/hooks/use-toast';
-import { registerServiceWorker, subscribeUserToPush, saveSubscription } from '@/utils/pushNotifications';
 
 interface Notice {
   id: number;
@@ -23,8 +20,6 @@ interface Notice {
 const NoticeBoard = () => {
   const { language } = useLanguage();
   const [visibleNotices, setVisibleNotices] = useState<number[]>([]);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const { toast } = useToast();
 
   const { data: notices, isLoading } = useQuery({
     queryKey: ['notices'],
@@ -42,52 +37,6 @@ const NoticeBoard = () => {
       return data as Notice[];
     }
   });
-
-  useEffect(() => {
-    checkNotificationSubscription();
-  }, []);
-
-  const checkNotificationSubscription = async () => {
-    if (!('Notification' in window)) return;
-    
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.getSubscription();
-    setIsSubscribed(!!subscription);
-  };
-
-  const handleSubscribe = async () => {
-    try {
-      if (!('Notification' in window)) {
-        throw new Error('This browser does not support notifications');
-      }
-
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        throw new Error('Notification permission was not granted');
-      }
-
-      const registration = await registerServiceWorker();
-      const subscription = await subscribeUserToPush(registration);
-      await saveSubscription(subscription);
-
-      setIsSubscribed(true);
-      toast({
-        title: language === 'en' ? "Notifications Enabled" : "सूचनाएं सक्षम",
-        description: language === 'en' 
-          ? "You will now receive notifications when notices are updated" 
-          : "अब आपको नोटिस अपडेट होने पर सूचनाएं मिलेंगी"
-      });
-    } catch (error) {
-      console.error('Error subscribing to notifications:', error);
-      toast({
-        variant: "destructive",
-        title: language === 'en' ? "Error" : "त्रुटि",
-        description: language === 'en' 
-          ? "Failed to enable notifications" 
-          : "सूचनाएं सक्षम करने में विफल"
-      });
-    }
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -125,31 +74,15 @@ const NoticeBoard = () => {
 
   return (
     <Card className="h-full overflow-hidden">
-      <CardHeader className="pb-3 flex flex-row items-center">
-        <div>
-          <CardTitle className="text-2xl text-temple-maroon">
-            {language === 'en' ? "Notice Board" : "सूचना पट्ट"}
-          </CardTitle>
-          <CardDescription>
-            {language === 'en' 
-              ? "Important temple announcements" 
-              : "महत्वपूर्ण मंदिर घोषणाएँ"}
-          </CardDescription>
-        </div>
-        <div className="flex items-center gap-2 ml-auto">
-          {!isSubscribed && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              onClick={handleSubscribe}
-            >
-              <Bell className="w-4 h-4" />
-              {language === 'en' ? "Enable Notifications" : "सूचनाएं सक्षम करें"}
-            </Button>
-          )}
-          <Bell className="w-6 h-6 text-temple-gold" />
-        </div>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-2xl text-temple-maroon">
+          {language === 'en' ? "Notice Board" : "सूचना पट्ट"}
+        </CardTitle>
+        <CardDescription>
+          {language === 'en' 
+            ? "Important temple announcements" 
+            : "महत्वपूर्ण मंदिर घोषणाएँ"}
+        </CardDescription>
       </CardHeader>
       <CardContent className="p-6 pt-0">
         {!notices || notices.length === 0 ? (

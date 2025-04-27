@@ -45,27 +45,6 @@ export type Database = {
         }
         Relationships: []
       }
-      notification_subscriptions: {
-        Row: {
-          created_at: string | null
-          id: number
-          subscription: Json
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          subscription: Json
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          subscription?: Json
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       poshak_seva_bookings: {
         Row: {
           additional_notes: string | null
