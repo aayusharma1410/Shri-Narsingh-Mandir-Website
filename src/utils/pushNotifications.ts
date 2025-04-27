@@ -23,13 +23,14 @@ export async function subscribeUserToPush(registration: ServiceWorkerRegistratio
 }
 
 export async function saveSubscription(subscription: PushSubscription) {
+  // Convert subscription to a plain object that can be stored in the database
+  const subscriptionJSON = subscription.toJSON();
+  
   const { error } = await supabase
     .from('notification_subscriptions')
-    .insert([
-      {
-        subscription: subscription.toJSON()
-      }
-    ]);
+    .insert({
+      subscription: subscriptionJSON
+    });
 
   if (error) throw error;
 }
