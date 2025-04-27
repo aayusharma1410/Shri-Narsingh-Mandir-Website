@@ -1,9 +1,32 @@
 
+import { useEffect, useState } from "react";
 import GalleryGrid from "./gallery/GalleryGrid";
+import GalleryUpload from "./gallery/GalleryUpload";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { GalleryImage } from "@/types/gallery";
 
 const GallerySection = () => {
   const { language } = useLanguage();
+  const [images, setImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      const { data, error } = await supabase
+        .from('gallery_images')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching gallery images:', error);
+        return;
+      }
+
+      setImages(data || []);
+    };
+
+    fetchGalleryImages();
+  }, []);
 
   return (
     <section className="max-w-6xl mx-auto px-4">
@@ -17,7 +40,8 @@ const GallerySection = () => {
             : "यहाँ मंदिर से जुड़ी सुंदर झलकियाँ देखें।"}
         </p>
       </div>
-      <GalleryGrid />
+      <GalleryUpload />
+      <GalleryGrid images={images} />
     </section>
   );
 };
