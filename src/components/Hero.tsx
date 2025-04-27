@@ -55,11 +55,11 @@ const Hero = () => {
           </h1>
           
           <h2 className={`font-serif text-2xl md:text-3xl text-white mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {language === 'en' ? 'A Sacred Space for Spiritual Connection' : 'आध्यात्मिक संबंध के लिए एक पवित्र स्थान'}
+            {language === 'en' ? 'Official Website of Shri Narsingh Mandir, Hasampur' : 'आध्यात्मिक संबंध के लिए एक पवित्र स्थान'}
           </h2>
           
           <p className={`text-white/80 mb-8 transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {language === 'en' ? 'Hasampur, Sikar, Rajasthan, India' : 'हसामपुर, सीकर, राजस्थान, भारत'}
+            {language === 'en' ? 'Hasampur, Sikar, Rajasthan, India. This website is the official online platform of Shri Narsingh Mandir.' : 'हसामपुर, सीकर, राजस्थान, भारत'}
           </p>
           
           <div className={`transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
