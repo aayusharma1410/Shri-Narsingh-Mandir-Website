@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -36,26 +37,12 @@ const HomePage = () => {
       <Hero />
       <PraktotsavScheduleDialog />
       <div className="container mx-auto px-2 md:px-0 py-8">
-        <div className="mb-8">
-          <img 
-            src="/lovable-uploads/f5a026b3-4a57-43f3-97a6-6b586cf2606b.png" 
-            alt="Narsingh Praktotsav Schedule" 
-            className="max-w-full rounded-lg shadow-lg mx-auto"
-          />
-        </div>
+        {/* Removed the image under the notice board */}
         
         <DarshanSlideshow />
         <div className="flex flex-col items-center gap-4">
           <div className="w-full max-w-2xl mx-auto">
             <NoticeBoard />
-          </div>
-
-          <div className="w-full mx-auto mt-8">
-            <img 
-              src="/lovable-uploads/f5a026b3-4a57-43f3-97a6-6b586cf2606b.png"
-              alt="Temple Schedule"
-              className="max-w-full rounded-lg shadow-lg mx-auto"
-            />
           </div>
 
           <div className="w-full relative bg-white">
