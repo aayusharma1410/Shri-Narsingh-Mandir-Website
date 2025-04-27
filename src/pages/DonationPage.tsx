@@ -1,6 +1,6 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { DonationDialog } from "@/components/DonationDialog";
+import DonationDialog from "@/components/DonationDialog";
 import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
 

@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import PoshakSevaPage from "./pages/PoshakSevaPage";
 import GalleryPage from "./pages/GalleryPage";
 import AuthPage from "./pages/AuthPage";
+import DonationPage from "./pages/DonationPage";
 import LoginPopup from "@/components/LoginPopup";
 
 const queryClient = new QueryClient();
