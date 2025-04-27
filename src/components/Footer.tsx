@@ -122,14 +122,11 @@ const Footer = () => {
         <hr className="border-temple-gold/30 my-8" />
         
         <div className="text-center text-sm text-white/70">
-     <p>
-  © {new Date().getFullYear()} {language === "en" 
-    ? "Shri Narsingh Temple, Hasampur. All Rights Reserved." + " " + 
-      "This website is the official online platform of Shri Narsingh Mandir.".split('. ').join('.<br />') 
-    : "श्री नृसिंह मंदिर, हासमपुर। सर्वाधिकार सुरक्षित।" + " " +
-      "यह वेबसाइट श्री नृसिंह मंदिर का आधिकारिक ऑनलाइन प्लेटफॉर्म है।".split('। ').join('।<br />')}
-</p>
-
+          <p>
+            © {new Date().getFullYear()} {language === "en" 
+              ? "Shri Narsingh Temple, Hasampur. All Rights Reserved." 
+              : "श्री नृसिंह मंदिर, हासमपुर। सर्वाधिकार सुरक्षित।"}
+          </p>
         </div>
       </div>
     </footer>
