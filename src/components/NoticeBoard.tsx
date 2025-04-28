@@ -72,7 +72,7 @@ const NoticeBoard = () => {
   }
 
   return (
-    <Card className="h-full overflow-hidden notice-board-section">
+    <Card className="h-full overflow-hidden notice-board-section" id="notice-board">
       <CardHeader className="pb-3">
         <CardTitle className="text-2xl text-temple-maroon">
           {language === 'en' ? "Notice Board" : "सूचना पट्ट"}

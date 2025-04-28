@@ -1,5 +1,5 @@
 
-import { Dialog } from "@/components/ui/dialog";
+import { DialogContent } from "@/components/ui/dialog";
 import { GalleryImage } from "@/types/gallery";
 
 interface GalleryModalProps {
@@ -9,7 +9,7 @@ interface GalleryModalProps {
 
 const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
   return (
-    <Dialog.Content className="sm:max-w-[80vw] h-[80vh] p-0 bg-black/95 border-none">
+    <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 bg-black/95 border-none">
       <div className="relative w-full h-full flex items-center justify-center">
         {image.media_type === 'video' ? (
           <video
@@ -26,7 +26,7 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
           />
         )}
       </div>
-    </Dialog.Content>
+    </DialogContent>
   );
 };
 
