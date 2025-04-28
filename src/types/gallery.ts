@@ -7,7 +7,7 @@ export interface GalleryImage {
   alt?: string;
   created_at?: string;
   category?: string;
-  media_type?: 'image' | 'video';
+  media_type: 'image' | 'video';
 }
 
 export type GalleryCategory = {

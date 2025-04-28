@@ -5,7 +5,7 @@ import GalleryUpload from "./gallery/GalleryUpload";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { GalleryImage } from "@/types/gallery";
-import { Spinner } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 
 const GallerySection = () => {
@@ -35,7 +35,13 @@ const GallerySection = () => {
           return;
         }
 
-        setImages(data || []);
+        // Convert the generic media_type to the specific union type
+        const typedData = data?.map(item => ({
+          ...item,
+          media_type: (item.media_type === 'video' ? 'video' : 'image') as 'image' | 'video'
+        })) || [];
+        
+        setImages(typedData);
       } catch (error) {
         console.error('Error in gallery fetch:', error);
       } finally {
@@ -63,7 +69,7 @@ const GallerySection = () => {
       {loading ? (
         <div className="flex justify-center items-center h-40">
           <div className="flex flex-col items-center gap-2">
-            <Spinner className="h-8 w-8 animate-spin text-temple-maroon" />
+            <Loader className="h-8 w-8 animate-spin text-temple-maroon" />
             <p className="text-sm text-muted-foreground">
               {language === "en" ? "Loading gallery..." : "गैलरी लोड हो रही है..."}
             </p>
