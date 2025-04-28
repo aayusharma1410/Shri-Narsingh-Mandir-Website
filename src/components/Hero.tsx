@@ -1,10 +1,10 @@
-
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import AartiDialog from './AartiDialog';
+import { Bell } from 'lucide-react';
 
 const Hero = () => {
   const { t, language } = useLanguage();
@@ -21,10 +21,16 @@ const Hero = () => {
   };
 
   const handleDarshanClick = () => {
-    // Scroll to darshan slideshow section on the homepage
     const darshanSection = document.getElementById('darshan-slideshow');
     if (darshanSection) {
       darshanSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNoticeClick = () => {
+    const noticeBoard = document.querySelector('.notice-board-section');
+    if (noticeBoard) {
+      noticeBoard.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -38,10 +44,8 @@ const Hero = () => {
         backgroundPosition: 'center',
       }}
     >
-      {/* Rich overlay with vibrant temple colors */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-temple-maroon/40 to-temple-gold/30"></div>
       
-      {/* Golden gradient divider at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-temple-gold/40 to-transparent"></div>
       
       <div className="container relative z-10 px-6 py-32 mx-auto text-center">
@@ -81,6 +85,13 @@ const Hero = () => {
                 onClick={() => setShowAartiDialog(true)}
               >
                 {t('hero.aarti')}
+              </Button>
+              <Button 
+                className="bg-temple-gold hover:bg-temple-gold/80 text-black font-medium px-8 py-6 text-lg shadow-lg flex items-center gap-2"
+                onClick={handleNoticeClick}
+              >
+                <Bell className="h-5 w-5" />
+                {language === 'en' ? 'Notices' : 'सूचनाएं'}
               </Button>
             </div>
           </div>
