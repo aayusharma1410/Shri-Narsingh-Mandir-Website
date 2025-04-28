@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -60,7 +59,7 @@ const NoticeBoard = () => {
 
   if (isLoading) {
     return (
-      <Card className="h-full animate-pulse">
+      <Card className="h-full animate-pulse notice-board-section">
         <CardContent className="p-6">
           <div className="h-7 w-3/4 bg-gray-200 rounded mb-4"></div>
           <div className="space-y-3">
@@ -73,7 +72,7 @@ const NoticeBoard = () => {
   }
 
   return (
-    <Card className="h-full overflow-hidden">
+    <Card className="h-full overflow-hidden notice-board-section">
       <CardHeader className="pb-3">
         <CardTitle className="text-2xl text-temple-maroon">
           {language === 'en' ? "Notice Board" : "सूचना पट्ट"}

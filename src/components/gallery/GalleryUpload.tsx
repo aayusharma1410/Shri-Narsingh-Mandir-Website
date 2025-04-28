@@ -51,8 +51,21 @@ const GalleryUpload = () => {
       const file = event.target.files?.[0];
       
       if (!file) return;
+
+      // Validate file type
+      const fileType = file.type.split('/')[0];
+      if (fileType !== 'image' && fileType !== 'video') {
+        toast({
+          variant: "destructive",
+          title: language === 'en' ? 'Error' : 'त्रुटि',
+          description: language === 'en' 
+            ? 'Please upload only images or videos'
+            : 'कृपया केवल छवियाँ या वीडियो अपलोड करें',
+        });
+        return;
+      }
       
-      // Upload image to Supabase Storage
+      // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const filePath = `${Math.random()}.${fileExt}`;
       
@@ -75,7 +88,8 @@ const GalleryUpload = () => {
             title: file.name,
             image_url: publicUrl,
             category: 'general',
-            uploaded_by: user?.id
+            uploaded_by: user?.id,
+            media_type: fileType // Add media type to distinguish between images and videos
           }
         ]);
 
@@ -84,34 +98,33 @@ const GalleryUpload = () => {
       toast({
         title: language === 'en' ? 'Success' : 'सफल',
         description: language === 'en' 
-          ? 'Image uploaded successfully'
-          : 'छवि सफलतापूर्वक अपलोड की गई',
+          ? 'File uploaded successfully'
+          : 'फ़ाइल सफलतापूर्वक अपलोड की गई',
       });
 
-      // Refresh the page to show new image
+      // Refresh the page to show new file
       window.location.reload();
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error uploading file:', error);
       toast({
         variant: "destructive",
         title: language === 'en' ? 'Error' : 'त्रुटि',
         description: language === 'en'
-          ? 'Failed to upload image'
-          : 'छवि अपलोड करने में विफल',
+          ? 'Failed to upload file'
+          : 'फ़ाइल अपलोड करने में विफल',
       });
     } finally {
       setUploading(false);
     }
   };
 
-  // Don't render anything if user is not admin
   if (!isAdmin) return null;
 
   return (
     <div className="mb-6">
       <Input
         type="file"
-        accept="image/*"
+        accept="image/*,video/*"
         onChange={handleFileUpload}
         disabled={uploading}
         className="hidden"
@@ -127,8 +140,8 @@ const GalleryUpload = () => {
           <span>
             <Upload className="mr-2 h-4 w-4" />
             {language === 'en' 
-              ? uploading ? 'Uploading...' : 'Upload Image'
-              : uploading ? 'अपलोड हो रहा है...' : 'छवि अपलोड करें'}
+              ? uploading ? 'Uploading...' : 'Upload Image or Video'
+              : uploading ? 'अपलोड हो रहा है...' : 'छवि या वीडियो अपलोड करें'}
           </span>
         </Button>
       </label>
