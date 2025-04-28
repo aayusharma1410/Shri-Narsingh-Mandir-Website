@@ -4,7 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { GalleryImage } from "@/types/gallery";
 import { Dialog } from "@/components/ui/dialog";
 import GalleryModal from "./GalleryModal";
-import { Video } from "lucide-react";
+import { Video, Play } from "lucide-react";
 
 interface GalleryGridProps {
   images: GalleryImage[];
@@ -20,23 +20,24 @@ const GalleryGrid = ({ images }: GalleryGridProps) => {
         {images.map((media) => (
           <div
             key={media.id}
-            className="bg-white rounded-lg shadow hover:scale-105 transition-transform cursor-pointer overflow-hidden relative"
+            className="bg-white rounded-lg shadow hover:scale-105 transition-transform cursor-pointer overflow-hidden relative group"
             onClick={() => setSelectedImage(media)}
           >
             {media.media_type === 'video' ? (
               <div className="relative w-full h-44 sm:h-52 md:h-60 lg:h-64">
                 <video
-                  src={media.image_url}
+                  src={media.image_url || media.src}
                   className="w-full h-full object-cover"
+                  preload="metadata"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                  <Video className="w-12 h-12 text-white" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-all">
+                  <Play className="w-12 h-12 text-white opacity-80 group-hover:opacity-100 transition-opacity" fill="white" />
                 </div>
               </div>
             ) : (
               <img
-                src={media.image_url}
-                alt={media.title || "Gallery image"}
+                src={media.image_url || media.src}
+                alt={media.title || media.alt || "Gallery image"}
                 className="w-full h-44 sm:h-52 md:h-60 lg:h-64 object-cover"
                 loading="lazy"
               />

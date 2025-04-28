@@ -5,28 +5,46 @@ import GalleryUpload from "./gallery/GalleryUpload";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { GalleryImage } from "@/types/gallery";
+import { Spinner } from "lucide-react";
+import { useToast } from "./ui/use-toast";
 
 const GallerySection = () => {
   const { language } = useLanguage();
   const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
-      const { data, error } = await supabase
-        .from('gallery_images')
-        .select('*')
-        .order('created_at', { ascending: false });
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('gallery_images')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching gallery images:', error);
-        return;
+        if (error) {
+          console.error('Error fetching gallery images:', error);
+          toast({
+            variant: "destructive",
+            title: language === 'en' ? 'Error' : 'त्रुटि',
+            description: language === 'en'
+              ? 'Failed to load gallery images'
+              : 'गैलरी छवियां लोड करने में विफल',
+          });
+          return;
+        }
+
+        setImages(data || []);
+      } catch (error) {
+        console.error('Error in gallery fetch:', error);
+      } finally {
+        setLoading(false);
       }
-
-      setImages(data || []);
     };
 
     fetchGalleryImages();
-  }, []);
+  }, [language, toast]);
 
   return (
     <section className="max-w-6xl mx-auto px-4">
@@ -41,7 +59,27 @@ const GallerySection = () => {
         </p>
       </div>
       <GalleryUpload />
-      <GalleryGrid images={images} />
+      
+      {loading ? (
+        <div className="flex justify-center items-center h-40">
+          <div className="flex flex-col items-center gap-2">
+            <Spinner className="h-8 w-8 animate-spin text-temple-maroon" />
+            <p className="text-sm text-muted-foreground">
+              {language === "en" ? "Loading gallery..." : "गैलरी लोड हो रही है..."}
+            </p>
+          </div>
+        </div>
+      ) : images.length === 0 ? (
+        <div className="text-center p-8 border border-dashed rounded-lg">
+          <p className="text-muted-foreground">
+            {language === "en" 
+              ? "No images or videos available yet" 
+              : "अभी तक कोई छवि या वीडियो उपलब्ध नहीं है"}
+          </p>
+        </div>
+      ) : (
+        <GalleryGrid images={images} />
+      )}
     </section>
   );
 };

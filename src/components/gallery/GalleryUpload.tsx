@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Upload } from "lucide-react";
+import { Upload, FileVideo, Image } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const GalleryUpload = () => {
@@ -67,18 +67,21 @@ const GalleryUpload = () => {
       
       // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
-      const filePath = `${Math.random()}.${fileExt}`;
+      const fileName = `${Math.random()}.${fileExt}`;
       
       const { error: uploadError, data } = await supabase.storage
         .from('gallery')
-        .upload(filePath, file);
+        .upload(fileName, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Storage upload error:', uploadError);
+        throw uploadError;
+      }
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('gallery')
-        .getPublicUrl(filePath);
+        .getPublicUrl(fileName);
 
       // Save to gallery_images table
       const { error: dbError } = await supabase
@@ -93,7 +96,10 @@ const GalleryUpload = () => {
           }
         ]);
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        console.error('Database insert error:', dbError);
+        throw dbError;
+      }
 
       toast({
         title: language === 'en' ? 'Success' : 'सफल',
@@ -110,8 +116,8 @@ const GalleryUpload = () => {
         variant: "destructive",
         title: language === 'en' ? 'Error' : 'त्रुटि',
         description: language === 'en'
-          ? 'Failed to upload file'
-          : 'फ़ाइल अपलोड करने में विफल',
+          ? 'Failed to upload file. Please try again.'
+          : 'फ़ाइल अपलोड करने में विफल। कृपया पुन: प्रयास करें।',
       });
     } finally {
       setUploading(false);
@@ -137,11 +143,28 @@ const GalleryUpload = () => {
           disabled={uploading}
           asChild
         >
-          <span>
-            <Upload className="mr-2 h-4 w-4" />
-            {language === 'en' 
-              ? uploading ? 'Uploading...' : 'Upload Image or Video'
-              : uploading ? 'अपलोड हो रहा है...' : 'छवि या वीडियो अपलोड करें'}
+          <span className="flex items-center justify-center">
+            {uploading ? (
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-b-transparent"></div>
+                <span>
+                  {language === 'en' 
+                    ? 'Uploading...' 
+                    : 'अपलोड हो रहा है...'}
+                </span>
+              </div>
+            ) : (
+              <>
+                <Upload className="mr-2 h-4 w-4" />
+                <Image className="mr-2 h-4 w-4" />
+                <FileVideo className="mr-2 h-4 w-4" />
+                <span>
+                  {language === 'en' 
+                    ? 'Upload Image or Video' 
+                    : 'छवि या वीडियो अपलोड करें'}
+                </span>
+              </>
+            )}
           </span>
         </Button>
       </label>
