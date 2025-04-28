@@ -10,7 +10,24 @@ const LiveAartiPage = () => {
   const [nextAartiTime, setNextAartiTime] = useState<string>("");
 
   useEffect(() => {
-    document.title = "Live Aarti | Shri Narsingh Temple";
+    document.title = language === 'en' 
+      ? "Live Aarti | Shri Narsingh Temple Hasampur" 
+      : "लाइव आरती | श्री नृसिंह मंदिर हासमपुर";
+    
+    // Add meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      const meta = document.createElement('meta');
+      meta.name = "description";
+      meta.setAttribute("content", language === 'en' 
+        ? "Watch live aarti from Shri Narsingh Temple Hasampur. Daily morning and evening aarti broadcast. Experience divine worship from anywhere." 
+        : "श्री नृसिंह मंदिर हासमपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
+      document.head.appendChild(meta);
+    } else {
+      metaDescription.setAttribute("content", language === 'en' 
+        ? "Watch live aarti from Shri Narsingh Temple Hasampur. Daily morning and evening aarti broadcast. Experience divine worship from anywhere." 
+        : "श्री नृसिंह मंदिर हासमपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
+    }
     
     // Calculate next aarti time based on current time
     const calculateNextAarti = () => {
@@ -58,6 +75,9 @@ const LiveAartiPage = () => {
       <Navbar />
       <div className="pt-24 pb-12">
         <div className="container mx-auto px-4 text-center mb-6">
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-temple-maroon mb-3">
+            {language === 'en' ? "Live Aarti Darshan" : "लाइव आरती दर्शन"}
+          </h1>
           <p className="text-lg font-medium text-temple-gold">
             {language === 'en' ? "Next Aarti: " : "अगली आरती: "} 
             <span className="font-bold">{nextAartiTime}</span>

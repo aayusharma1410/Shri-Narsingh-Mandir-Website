@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
@@ -37,7 +38,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <span>contact@shrinarsinhgtemple.org</span>
+                <span>contact@shrinarsinghmandirhasampur.org</span>
               </li>
               <li className="flex items-start">
                 <Instagram className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
@@ -45,7 +46,7 @@ const Footer = () => {
                    target="_blank" 
                    rel="noopener noreferrer"
                    className="hover:text-temple-gold transition-colors">
-                  @shrinarsinhgtemple
+                  @shrinarsinghtemple
                 </a>
               </li>
               <li className="flex items-start">
@@ -92,6 +93,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/donation" className="hover:text-temple-gold transition-colors">
+                  {language === "en" ? "Donation" : "दान"}
+                </Link>
+              </li>
+              <li>
                 <Link to="/policies" className="hover:text-temple-gold transition-colors">
                   {language === "en" ? "Temple Policies" : "मंदिर नियम"}
                 </Link>
@@ -114,6 +120,7 @@ const Footer = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Temple Location"
+                aria-label="Map showing location of Shri Narsingh Temple in Hasampur, Rajasthan"
               ></iframe>
             </div>
           </div>

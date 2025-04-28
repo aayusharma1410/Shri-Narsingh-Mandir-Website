@@ -21,13 +21,13 @@ const HomePage = () => {
       const meta = document.createElement('meta');
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
-        ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।");
+        ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more. Experience divine blessings online." 
+        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
-        ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें।");
+        ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more. Experience divine blessings online." 
+        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
     }
   }, [language]);
 
@@ -97,4 +97,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
