@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
@@ -31,6 +32,12 @@ const Hero = () => {
     const noticeBoard = document.querySelector('.notice-board-section');
     if (noticeBoard) {
       noticeBoard.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If notice board section is not found, try to find it by ID as fallback
+      const noticeBoardById = document.getElementById('notice-board');
+      if (noticeBoardById) {
+        noticeBoardById.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
