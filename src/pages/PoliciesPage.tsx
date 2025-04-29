@@ -11,7 +11,7 @@ const PoliciesPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Temple Policies | Shri Narsingh Temple Hasampur" 
-      : "मंदिर नीतियां | श्री नृसिंह मंदिर हासमपुर";
+      : "मंदिर नीतियां | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -20,12 +20,12 @@ const PoliciesPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Important temple rules and policies for visitors to Shri Narsingh Temple in Hasampur. Guidelines for darshan, offerings, donations and conduct within temple premises." 
-        : "हासमपुर में श्री नृसिंह मंदिर के आगंतुकों के लिए महत्वपूर्ण मंदिर नियम और नीतियां। मंदिर परिसर में दर्शन, भेंट, दान और आचरण के लिए दिशानिर्देश।");
+        : "हसामपुर में श्री नृसिंह मंदिर के आगंतुकों के लिए महत्वपूर्ण मंदिर नियम और नीतियां। मंदिर परिसर में दर्शन, भेंट, दान और आचरण के लिए दिशानिर्देश।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Important temple rules and policies for visitors to Shri Narsingh Temple in Hasampur. Guidelines for darshan, offerings, donations and conduct within temple premises." 
-        : "हासमपुर में श्री नृसिंह मंदिर के आगंतुकों के लिए महत्वपूर्ण मंदिर नियम और नीतियां। मंदिर परिसर में दर्शन, भेंट, दान और आचरण के लिए दिशानिर्देश।");
+        : "हसामपुर में श्री नृसिंह मंदिर के आगंतुकों के लिए महत्वपूर्ण मंदिर नियम और नीतियां। मंदिर परिसर में दर्शन, भेंट, दान और आचरण के लिए दिशानिर्देश।");
     }
   }, [language]);
   

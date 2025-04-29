@@ -13,7 +13,7 @@ const DonationPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Donation | Shri Narsingh Temple Hasampur" 
-      : "दान | श्री नृसिंह मंदिर हासमपुर";
+      : "दान | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -22,12 +22,12 @@ const DonationPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Make online donations to Shri Narsingh Temple in Hasampur. Support temple activities, maintenance and charitable work. Secure payment options available." 
-        : "हासमपुर में श्री नृसिंह मंदिर को ऑनलाइन दान करें। मंदिर गतिविधियों, रखरखाव और धर्मार्थ कार्य का समर्थन करें। सुरक्षित भुगतान विकल्प उपलब्ध हैं।");
+        : "हसामपुर में श्री नृसिंह मंदिर को ऑनलाइन दान करें। मंदिर गतिविधियों, रखरखाव और धर्मार्थ कार्य का समर्थन करें। सुरक्षित भुगतान विकल्प उपलब्ध हैं।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Make online donations to Shri Narsingh Temple in Hasampur. Support temple activities, maintenance and charitable work. Secure payment options available." 
-        : "हासमपुर में श्री नृसिंह मंदिर को ऑनलाइन दान करें। मंदिर गतिविधियों, रखरखाव और धर्मार्थ कार्य का समर्थन करें। सुरक्षित भुगतान विकल्प उपलब्ध हैं।");
+        : "हसामपुर में श्री नृसिंह मंदिर को ऑनलाइन दान करें। मंदिर गतिविधियों, रखरखाव और धर्मार्थ कार्य का समर्थन करें। सुरक्षित भुगतान विकल्प उपलब्ध हैं।");
     }
   }, [language]);
   

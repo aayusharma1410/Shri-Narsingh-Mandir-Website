@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Shri Narsingh Temple | Hasampur, Sikar, Rajasthan" 
-      : "श्री नृसिंह मंदिर | हासमपुर, सीकर, राजस्थान";
+      : "श्री नृसिंह मंदिर | हसामपुर, सीकर, राजस्थान";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -22,12 +22,12 @@ const HomePage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more. Experience divine blessings online." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
+        : "हसामपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Official website of Shri Narsingh Temple in Hasampur, Sikar, Rajasthan. View daily darshan, temple timings, live aarti and more. Experience divine blessings online." 
-        : "हासमपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
+        : "हसामपुर, सीकर, राजस्थान में श्री नृसिंह मंदिर की आधिकारिक वेबसाइट। दैनिक दर्शन, मंदिर समय, लाइव आरती और अधिक देखें। ऑनलाइन दिव्य आशीर्वाद का अनुभव करें।");
     }
   }, [language]);
 
@@ -57,7 +57,7 @@ const HomePage = () => {
               <h2 className="text-2xl font-semibold mb-6 text-temple-maroon text-center">
                 {language === "en"
                   ? "How to Reach Hasampur Temple"
-                  : "हासमपुर मंदिर कैसे पहुँचे"}
+                  : "हसामपुर मंदिर कैसे पहुँचे"}
               </h2>
               <div className="w-full h-[450px] md:h-[550px] relative">
                 <iframe

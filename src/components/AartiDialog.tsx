@@ -297,8 +297,8 @@ const AartiDialog = () => {
         </DialogTitle>
         <DialogDescription className="text-center">
           {language === 'en' 
-            ? 'Sacred hymns sung in devotion to Lord Narsingh' 
-            : 'श्री नृसिंह भगवान की भक्ति में गाए जाने वाले पवित्र भजन'}
+            ? 'Aartis of Lord Narsingh' 
+            : 'श्री नृसिंह भगवान की आरतियाँ'}
         </DialogDescription>
       </DialogHeader>
       
@@ -321,7 +321,7 @@ const AartiDialog = () => {
         <TabsContent value="morning" className="mt-4">
           <div className="bg-temple-lightgold/20 p-6 rounded-lg border border-temple-gold/20">
             <h3 className="font-serif text-xl mb-4 text-temple-maroon">
-              {language === 'en' ? 'Morning Aarti' : 'प्रातः आरती'}
+              {language === 'en' ? 'Om Jai Jagdish Hare' : 'ॐ जय जगदीश हरे'}
             </h3>
             <div className="whitespace-pre-line text-lg">
               {language === 'en' ? morningAarti.en : morningAarti.hi}
@@ -332,7 +332,7 @@ const AartiDialog = () => {
         <TabsContent value="evening" className="mt-4">
           <div className="bg-temple-lightgold/20 p-6 rounded-lg border border-temple-gold/20">
             <h3 className="font-serif text-xl mb-4 text-temple-maroon">
-              {language === 'en' ? 'Evening Aarti' : 'संध्या आरती'}
+              {language === 'en' ? 'Aarti Narsingh Baba ki' : 'आरती नृसिंह बाबाकी'}
             </h3>
             <div className="whitespace-pre-line text-lg">
               {language === 'en' ? eveningAarti.en : eveningAarti.hi}
@@ -343,7 +343,7 @@ const AartiDialog = () => {
         <TabsContent value="night" className="mt-4">
           <div className="bg-temple-lightgold/20 p-6 rounded-lg border border-temple-gold/20">
             <h3 className="font-serif text-xl mb-4 text-temple-maroon">
-              {language === 'en' ? 'Night Aarti' : 'रात्रि आरती'}
+              {language === 'en' ? 'Bhog Aarti' : 'भोग  आरती'}
             </h3>
             <div className="whitespace-pre-line text-lg">
               {language === 'en' ? nightAarti.en : nightAarti.hi}

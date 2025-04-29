@@ -11,7 +11,7 @@ const GalleryPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Gallery | Shri Narsingh Temple Hasampur" 
-      : "गैलरी | श्री नृसिंह मंदिर हासमपुर";
+      : "गैलरी | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -20,12 +20,12 @@ const GalleryPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Explore the photo gallery of Shri Narsingh Temple Hasampur. View images of temple, deity, festivals, celebrations and events." 
-        : "श्री नृसिंह मंदिर हासमपुर की फोटो गैलरी देखें। मंदिर, देवता, त्योहार, समारोह और आयोजनों की तस्वीरें देखें।");
+        : "श्री नृसिंह मंदिर हसामपुर की फोटो गैलरी देखें। मंदिर, देवता, त्योहार, समारोह और आयोजनों की तस्वीरें देखें।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Explore the photo gallery of Shri Narsingh Temple Hasampur. View images of temple, deity, festivals, celebrations and events." 
-        : "श्री नृसिंह मंदिर हासमपुर की फोटो गैलरी देखें। मंदिर, देवता, त्योहार, समारोह और आयोजनों की तस्वीरें देखें।");
+        : "श्री नृसिंह मंदिर हसामपुर की फोटो गैलरी देखें। मंदिर, देवता, त्योहार, समारोह और आयोजनों की तस्वीरें देखें।");
     }
   }, [language]);
 

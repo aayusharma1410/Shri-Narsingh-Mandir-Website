@@ -11,7 +11,7 @@ const TimingsPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Temple Timings | Shri Narsingh Temple Hasampur" 
-      : "मंदिर समय | श्री नृसिंह मंदिर हासमपुर";
+      : "मंदिर समय | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -20,12 +20,12 @@ const TimingsPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "View the opening times, darshan hours and aarti schedule for Shri Narsingh Temple in Hasampur. Plan your visit with detailed timings for all seasons." 
-        : "हासमपुर में श्री नृसिंह मंदिर के खुलने का समय, दर्शन समय और आरती कार्यक्रम देखें। सभी मौसमों के लिए विस्तृत समय के साथ अपनी यात्रा की योजना बनाएं।");
+        : "हसामपुर में श्री नृसिंह मंदिर के खुलने का समय, दर्शन समय और आरती कार्यक्रम देखें। सभी मौसमों के लिए विस्तृत समय के साथ अपनी यात्रा की योजना बनाएं।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "View the opening times, darshan hours and aarti schedule for Shri Narsingh Temple in Hasampur. Plan your visit with detailed timings for all seasons." 
-        : "हासमपुर में श्री नृसिंह मंदिर के खुलने का समय, दर्शन समय और आरती कार्यक्रम देखें। सभी मौसमों के लिए विस्तृत समय के साथ अपनी यात्रा की योजना बनाएं।");
+        : "हसामपुर में श्री नृसिंह मंदिर के खुलने का समय, दर्शन समय और आरती कार्यक्रम देखें। सभी मौसमों के लिए विस्तृत समय के साथ अपनी यात्रा की योजना बनाएं।");
     }
   }, [language]);
 

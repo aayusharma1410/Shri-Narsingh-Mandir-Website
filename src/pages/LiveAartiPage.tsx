@@ -12,7 +12,7 @@ const LiveAartiPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Live Aarti | Shri Narsingh Temple Hasampur" 
-      : "लाइव आरती | श्री नृसिंह मंदिर हासमपुर";
+      : "लाइव आरती | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -21,12 +21,12 @@ const LiveAartiPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Watch live aarti from Shri Narsingh Temple Hasampur. Daily morning and evening aarti broadcast. Experience divine worship from anywhere." 
-        : "श्री नृसिंह मंदिर हासमपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
+        : "श्री नृसिंह मंदिर हसामपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Watch live aarti from Shri Narsingh Temple Hasampur. Daily morning and evening aarti broadcast. Experience divine worship from anywhere." 
-        : "श्री नृसिंह मंदिर हासमपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
+        : "श्री नृसिंह मंदिर हसामपुर से लाइव आरती देखें। दैनिक सुबह और शाम की आरती का प्रसारण। कहीं से भी दिव्य पूजा का अनुभव करें।");
     }
     
     // Calculate next aarti time based on current time

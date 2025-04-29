@@ -11,7 +11,7 @@ const AboutPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "About | Shri Narsingh Temple Hasampur" 
-      : "परिचय | श्री नृसिंह मंदिर हासमपुर";
+      : "परिचय | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -20,12 +20,12 @@ const AboutPage = () => {
       meta.name = "description";
       meta.setAttribute("content", language === 'en' 
         ? "Learn about the history, significance and legends of Shri Narsingh Temple in Hasampur, Sikar. A sacred place of worship with ancient heritage." 
-        : "हासमपुर, सीकर में श्री नृसिंह मंदिर के इतिहास, महत्व और किंवदंतियों के बारे में जानें। प्राचीन विरासत के साथ पूजा का एक पवित्र स्थान।");
+        : "हसामपुर, सीकर में श्री नृसिंह मंदिर के इतिहास, महत्व और किंवदंतियों के बारे में जानें। प्राचीन विरासत के साथ पूजा का एक पवित्र स्थान।");
       document.head.appendChild(meta);
     } else {
       metaDescription.setAttribute("content", language === 'en' 
         ? "Learn about the history, significance and legends of Shri Narsingh Temple in Hasampur, Sikar. A sacred place of worship with ancient heritage." 
-        : "हासमपुर, सीकर में श्री नृसिंह मंदिर के इतिहास, महत्व और किंवदंतियों के बारे में जानें। प्राचीन विरासत के साथ पूजा का एक पवित्र स्थान।");
+        : "हसामपुर, सीकर में श्री नृसिंह मंदिर के इतिहास, महत्व और किंवदंतियों के बारे में जानें। प्राचीन विरासत के साथ पूजा का एक पवित्र स्थान।");
     }
   }, [language]);
 
@@ -40,7 +40,7 @@ const AboutPage = () => {
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             {language === 'en' 
               ? "Discover the divine heritage and spiritual significance of Shri Narsingh Temple in Hasampur." 
-              : "हासमपुर में श्री नृसिंह मंदिर की दिव्य विरासत और आध्यात्मिक महत्व के बारे में जानें।"}
+              : "हसामपुर में श्री नृसिंह मंदिर की दिव्य विरासत और आध्यात्मिक महत्व के बारे में जानें।"}
           </p>
         </div>
         <AboutSection />

@@ -22,24 +22,24 @@ const Footer = () => {
                 <span>
                   {language === "en"
                     ? "Hasampur, Sikar District, Rajasthan 332502"
-                    : "हासमपुर, सीकर जिला, राजस्थान 332502"}
+                    : "हसामपुर, सीकर जिला, राजस्थान 332502"}
                 </span>
               </li>
               <li className="flex items-start">
                 <Clock className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>
                   {language === "en"
-                    ? "Open Daily: 5:00 AM - 9:00 PM"
-                    : "प्रतिदिन खुला: सुबह 5:00 - रात 9:00"}
+                    ? "Open Daily: 4:30 AM - 8:30 PM"
+                    : "प्रतिदिन खुला: सुबह 4:30 - रात 8:30"}
                 </span>
               </li>
               <li className="flex items-start">
                 <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <span>+91 98765 43210</span>
+                <span>+91 89556 72580</span>
               </li>
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <span>contact@shrinarsinghmandirhasampur.org</span>
+                <span>shrilakshminarisnghhasampur@gmail.com</span>
               </li>
               <li className="flex items-start">
                 <Instagram className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
@@ -139,7 +139,7 @@ const Footer = () => {
           <p>
             © {new Date().getFullYear()} {language === "en" 
               ? "Shri Narsingh Temple, Hasampur. All Rights Reserved." 
-              : "श्री नृसिंह मंदिर, हासमपुर। सर्वाधिकार सुरक्षित।"}
+              : "श्री नृसिंह मंदिर, हसामपुर। सर्वाधिकार सुरक्षित।"}
           </p>
         </div>
       </div>

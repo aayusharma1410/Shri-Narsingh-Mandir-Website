@@ -136,7 +136,7 @@ const DailySchedule = ({ isSummerTimings }: DailyScheduleProps) => {
           <h3 className="font-serif text-xl font-semibold text-temple-maroon">
             {language === 'en' ? 'Daily Schedule' : 'दैनिक कार्यक्रम'}
             <span className="text-sm ml-2 text-muted-foreground font-normal">
-              {language === 'en' ? 'Hasampur, Sikar, Rajasthan, India' : 'हासमपुर, सीकर, राजस्थान, भारत'}
+              {language === 'en' ? 'Hasampur, Sikar, Rajasthan, India' : 'हसामपुर, सीकर, राजस्थान, भारत'}
             </span>
           </h3>
           <span className="ml-2 text-sm text-temple-gold font-medium px-2 py-1 bg-temple-gold/10 rounded">

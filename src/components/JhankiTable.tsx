@@ -152,7 +152,7 @@ const jhankiData: JhankiItem[] = [
     name: "The Shaligram Form", 
     name_hi: "शालिग्राम रूप",
     story: "In Hasampur, Lord Narsingh appeared in a Shaligram form under a musical stone.", 
-    story_hi: "हासमपुर में, भगवान नृसिंह एक बाजनी शिला के नीचे शालिग्राम रूप में प्रकट हुए।"
+    story_hi: "हसामपुर में, भगवान नृसिंह एक बाजनी शिला के नीचे शालिग्राम रूप में प्रकट हुए।"
   },
   { 
     id: 21, 

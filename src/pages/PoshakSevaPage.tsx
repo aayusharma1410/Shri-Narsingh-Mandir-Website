@@ -12,7 +12,7 @@ const PoshakSevaPage = () => {
   useEffect(() => {
     document.title = language === 'en' 
       ? "Poshak Seva | Shri Narsingh Temple Hasampur" 
-      : "पोशाक सेवा | श्री नृसिंह मंदिर हासमपुर";
+      : "पोशाक सेवा | श्री नृसिंह मंदिर हसामपुर";
     
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
