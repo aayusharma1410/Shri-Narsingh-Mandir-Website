@@ -46,8 +46,7 @@ const NoticeBoard = () => {
           .from("notices")
           .select("*")
           .order("is_important", { ascending: false })
-          .order("created_at", { ascending: false })
-          .limit(5);
+          .order("created_at", { ascending: false });
 
         if (error) {
           console.error("Error fetching notices:", error);
@@ -89,8 +88,8 @@ const NoticeBoard = () => {
       <Card className="w-full border-temple-maroon/20 shadow-md">
         <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-2">
           <div className="flex items-center">
-            <Bell className="mr-2 h-5 w-5 text-temple-maroon" />
-            <CardTitle className="text-2xl font-serif text-temple-maroon font-bold">
+            <Bell className="mr-2 h-6 w-6 text-temple-maroon" />
+            <CardTitle className="text-3xl font-serif text-temple-maroon font-bold">
               {language === "en" ? "Notice Board" : "सूचना पट्ट"}
             </CardTitle>
           </div>
@@ -98,9 +97,9 @@ const NoticeBoard = () => {
         <CardContent className="p-4 space-y-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="space-y-2">
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-8 w-3/4" />
+              <Skeleton className="h-6 w-full" />
+              <Skeleton className="h-6 w-5/6" />
             </div>
           ))}
         </CardContent>
@@ -113,15 +112,15 @@ const NoticeBoard = () => {
       <Card className="w-full border-temple-maroon/20 shadow-md">
         <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-2">
           <div className="flex items-center">
-            <Bell className="mr-2 h-5 w-5 text-temple-maroon" />
-            <CardTitle className="text-2xl font-serif text-temple-maroon font-bold">
+            <Bell className="mr-2 h-6 w-6 text-temple-maroon" />
+            <CardTitle className="text-3xl font-serif text-temple-maroon font-bold">
               {language === "en" ? "Notice Board" : "सूचना पट्ट"}
             </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-6 text-center">
           <Info className="h-12 w-12 mx-auto text-gray-300 mb-2" />
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-lg font-medium">
             {language === "en"
               ? "No notices available at the moment"
               : "इस समय कोई सूचना उपलब्ध नहीं है"}
@@ -133,76 +132,64 @@ const NoticeBoard = () => {
 
   return (
     <Card className="w-full border-temple-maroon/20 shadow-md">
-      <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-2">
+      <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Megaphone className="mr-2 h-6 w-6 text-temple-maroon" />
-            <CardTitle className="text-2xl font-serif text-temple-maroon font-bold">
+            <Megaphone className="mr-3 h-7 w-7 text-temple-maroon" />
+            <CardTitle className="text-3xl font-serif text-temple-maroon font-bold">
               {language === "en" ? "Notice Board" : "सूचना पट्ट"}
             </CardTitle>
           </div>
-          <Badge variant="outline" className="border-temple-gold">
+          <Badge variant="outline" className="border-temple-gold text-base">
             {language === "en" ? "Updates" : "अपडेट"}
           </Badge>
         </div>
-        <CardDescription className="text-temple-maroon/70 text-base">
+        <CardDescription className="text-temple-maroon/70 text-lg mt-1">
           {language === "en"
             ? "Important announcements and temple updates"
             : "महत्वपूर्ण घोषणाएँ और मंदिर अपडेट"}
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="p-0">
-        <Accordion type="multiple" className="w-full divide-y" defaultValue={notices.map(notice => String(notice.id))}>
+      <CardContent className="p-0 max-h-[600px] overflow-y-auto">
+        <div className="w-full divide-y">
           {notices.map((notice) => (
-            <AccordionItem
+            <div
               key={notice.id}
-              value={String(notice.id)}
-              className={`px-4 py-2 ${
+              className={`px-5 py-4 ${
                 notice.is_important
                   ? "bg-red-50/50 hover:bg-red-50/80"
                   : "hover:bg-gray-50"
               } transition-colors duration-200`}
             >
-              <AccordionTrigger className="py-3 hover:no-underline">
-                <div className="flex items-start text-left gap-2">
-                  {notice.is_important && (
-                    <AlertCircle className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
-                  )}
-                  <div>
-                    <h3 className="font-bold text-temple-maroon text-lg">
-                      {language === "en" ? notice.title : notice.title_hi}
-                    </h3>
-                    <p className="text-sm text-muted-foreground flex items-center mt-1">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {format(
-                        new Date(notice.created_at),
-                        language === "en" ? "MMM d, yyyy" : "d MMM, yyyy"
-                      )}
-                    </p>
-                  </div>
+              <div className="flex items-start text-left gap-3 mb-2">
+                {notice.is_important && (
+                  <AlertCircle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
+                )}
+                <div>
+                  <h3 className="font-bold text-temple-maroon text-xl">
+                    {language === "en" ? notice.title : notice.title_hi}
+                  </h3>
+                  <p className="text-base text-muted-foreground flex items-center mt-1">
+                    <Calendar className="h-5 w-5 mr-1" />
+                    {format(
+                      new Date(notice.created_at),
+                      language === "en" ? "MMM d, yyyy" : "d MMM, yyyy"
+                    )}
+                  </p>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent className="pt-2 pb-4 text-base leading-relaxed">
-                <div className="bg-white/50 p-3 rounded-md border border-gray-100">
+              </div>
+              <div className="mt-3 pt-2 text-lg">
+                <div className="bg-white/50 p-4 rounded-md border border-gray-100">
                   <p className="font-semibold">
                     {language === "en" ? notice.content : notice.content_hi}
                   </p>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
+              </div>
+            </div>
           ))}
-        </Accordion>
+        </div>
       </CardContent>
-
-      <CardFooter className="bg-gray-50/50 border-t p-3 flex justify-center">
-        <Button
-          variant="ghost"
-          className="text-temple-maroon hover:text-temple-gold hover:bg-temple-maroon/10 text-sm"
-        >
-          {language === "en" ? "View All Notices" : "सभी सूचनाएँ देखें"}
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

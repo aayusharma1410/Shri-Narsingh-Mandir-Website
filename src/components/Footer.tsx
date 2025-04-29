@@ -68,32 +68,38 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "Home" : "होम"}
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/about" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "About" : "परिचय"}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/gallery" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "Gallery" : "गैलरी"}
                 </Link>
               </li>
               <li>
-                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "Live Aarti" : "लाइव आरती"}
                 </Link>
               </li>
               <li>
-                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "Poshak Seva" : "पोशाक सेवा"}
                 </Link>
               </li>
               <li>
-                <Link to="/policies" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                <Link to="/policies" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                   {language === "en" ? "Temple Policies" : "मंदिर नियम"}
                 </Link>
               </li>
