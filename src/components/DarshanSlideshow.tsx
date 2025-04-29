@@ -71,7 +71,7 @@ const DarshanSlideshow = () => {
       const { data, error } = await supabase
         .from('gallery_images')
         .select('*')
-        .eq('category', 'darshan')
+        .eq('is_darshan', true)
         .order('created_at', { ascending: false })
         .limit(10);
       
@@ -167,7 +167,7 @@ const DarshanSlideshow = () => {
           ? `Today's Darshan - ${formattedDate}`
           : `आज का दर्शन - ${formattedDate}`;
         
-        // Save directly to gallery_images table with category='darshan'
+        // Save to gallery_images table with is_darshan=true
         const { error: galleryError } = await supabase
           .from('gallery_images')
           .insert([
@@ -176,7 +176,8 @@ const DarshanSlideshow = () => {
               image_url: publicUrl,
               category: 'darshan',
               uploaded_by: user.id,
-              media_type: fileType as 'image' | 'video'
+              media_type: fileType as 'image' | 'video',
+              is_darshan: true
             }
           ]);
         

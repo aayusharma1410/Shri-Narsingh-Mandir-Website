@@ -9,6 +9,7 @@ export interface GalleryImage {
   category?: string;
   uploaded_by?: string;
   media_type: 'image' | 'video';
+  is_darshan?: boolean;
 }
 
 export type GalleryCategory = {
@@ -34,4 +35,5 @@ export interface GalleryImageRow {
   created_at: string | null;
   uploaded_by: string | null;
   media_type: string | null;
+  is_darshan: boolean | null;
 }

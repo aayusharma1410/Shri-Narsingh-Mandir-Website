@@ -16,6 +16,7 @@ export type Database = {
           description: string | null
           id: string
           image_url: string
+          is_darshan: boolean | null
           media_type: string | null
           title: string | null
           updated_at: string | null
@@ -27,6 +28,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url: string
+          is_darshan?: boolean | null
           media_type?: string | null
           title?: string | null
           updated_at?: string | null
@@ -38,6 +40,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string
+          is_darshan?: boolean | null
           media_type?: string | null
           title?: string | null
           updated_at?: string | null
