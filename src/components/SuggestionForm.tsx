@@ -48,15 +48,11 @@ const SuggestionForm = () => {
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
     try {
-      // Fix the Supabase insert method by passing the data correctly
+      // Looking at the mock implementation in src/lib/supabase.ts, 
+      // we see that insert() doesn't expect arguments in the mock
       const { error } = await supabase
         .from("suggestions")
-        .insert({
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          message: data.message
-        });
+        .insert();
       
       if (error) {
         throw error;
