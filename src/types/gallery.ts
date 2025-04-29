@@ -24,3 +24,14 @@ export interface DarshanImage {
   uploaded_by?: string;
   media_type: 'image' | 'video';
 }
+
+// Define GalleryImageRow to match the Supabase schema type
+export interface GalleryImageRow {
+  id: string;
+  title: string | null;
+  image_url: string;
+  category: string | null;
+  created_at: string | null;
+  uploaded_by: string | null;
+  media_type: string | null;
+}

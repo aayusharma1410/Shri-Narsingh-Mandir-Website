@@ -14,10 +14,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { GalleryImage } from '@/types/gallery';
+import { GalleryImage, GalleryImageRow } from '@/types/gallery';
 
 interface DarshanMedia {
-  id: string;
+  id: string | number;
   title: string;
   image_url: string;
   created_at: string;
@@ -69,8 +69,9 @@ const DarshanSlideshow = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('darshan_images')
+        .from('gallery_images')
         .select('*')
+        .eq('category', 'darshan')
         .order('created_at', { ascending: false })
         .limit(10);
       
@@ -86,7 +87,17 @@ const DarshanSlideshow = () => {
         return;
       }
       
-      setDarshanMedia(data || []);
+      // Transform the data to match DarshanMedia type
+      const transformedData: DarshanMedia[] = (data || []).map((item: GalleryImageRow) => ({
+        id: item.id,
+        title: item.title || 'Darshan Image',
+        image_url: item.image_url,
+        created_at: item.created_at || new Date().toISOString(),
+        // Cast media_type to 'image' | 'video', default to 'image' if null
+        media_type: (item.media_type as 'image' | 'video') || 'image'
+      }));
+      
+      setDarshanMedia(transformedData);
     } catch (error) {
       console.error('Error in darshan fetch:', error);
     } finally {
@@ -156,31 +167,7 @@ const DarshanSlideshow = () => {
           ? `Today's Darshan - ${formattedDate}`
           : `आज का दर्शन - ${formattedDate}`;
         
-        // Save to darshan_images table
-        const { error: darshanError } = await supabase
-          .from('darshan_images')
-          .insert([
-            {
-              title: title,
-              image_url: publicUrl,
-              uploaded_by: user.id,
-              media_type: fileType as 'image' | 'video'
-            }
-          ]);
-
-        if (darshanError) {
-          console.error('Darshan database insert error:', darshanError);
-          toast({
-            variant: "destructive",
-            title: language === 'en' ? 'Error' : 'त्रुटि',
-            description: language === 'en' 
-              ? `Failed to save darshan to database`
-              : `दर्शन को डेटाबेस में सहेजने में विफल`,
-          });
-          continue;
-        }
-        
-        // Also save to gallery_images table for automatic syncing
+        // Save directly to gallery_images table with category='darshan'
         const { error: galleryError } = await supabase
           .from('gallery_images')
           .insert([
@@ -195,7 +182,14 @@ const DarshanSlideshow = () => {
         
         if (galleryError) {
           console.error('Gallery database insert error:', galleryError);
-          // Continue even if gallery sync fails, just log the error
+          toast({
+            variant: "destructive",
+            title: language === 'en' ? 'Error' : 'त्रुटि',
+            description: language === 'en' 
+              ? `Failed to save darshan to database`
+              : `दर्शन को डेटाबेस में सहेजने में विफल`,
+          });
+          continue;
         }
         
         completedFiles++;
