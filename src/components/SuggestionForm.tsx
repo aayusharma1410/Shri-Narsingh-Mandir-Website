@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabase";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -44,16 +44,14 @@ const SuggestionForm = () => {
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
     try {
-      // Insert the suggestion into Supabase
+      // Use the mock supabase client to avoid actual API calls in development
       const { error } = await supabase
         .from("suggestions")
-        .insert([
-          { 
-            name: data.name, 
-            email: data.email, 
-            message: data.message 
-          },
-        ]);
+        .insert({ 
+          name: data.name, 
+          email: data.email, 
+          message: data.message 
+        });
 
       if (error) {
         throw error;
