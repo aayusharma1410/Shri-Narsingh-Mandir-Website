@@ -19,6 +19,9 @@ const suggestionSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
+  phone: z.string().min(10, {
+    message: "Phone number must be at least 10 digits.",
+  }),
   message: z.string().min(10, {
     message: "Suggestion must be at least 10 characters.",
   }).max(500, {
@@ -37,6 +40,7 @@ const SuggestionForm = () => {
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       message: "",
     },
   });
@@ -44,12 +48,15 @@ const SuggestionForm = () => {
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
     try {
-      // Use the mock supabase client to avoid actual API calls in development
-      // The mock client's insert() method expects to be called without arguments
-      // so we'll modify how we're using it to match the mock implementation
+      // Fix the Supabase insert method by passing the data correctly
       const { error } = await supabase
         .from("suggestions")
-        .insert();  // Remove the argument to fix the TypeScript error
+        .insert({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: data.message
+        });
       
       if (error) {
         throw error;
@@ -113,6 +120,26 @@ const SuggestionForm = () => {
                   <Input 
                     type="email" 
                     placeholder={language === "en" ? "Your email" : "आपका ईमेल"} 
+                    className="bg-white/20 placeholder:text-gray-300 text-white border-temple-gold/30 focus:border-temple-gold" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">
+                  {language === "en" ? "Phone Number" : "फोन नंबर"}
+                </FormLabel>
+                <FormControl>
+                  <Input 
+                    type="tel" 
+                    placeholder={language === "en" ? "Your phone number" : "आपका फोन नंबर"} 
                     className="bg-white/20 placeholder:text-gray-300 text-white border-temple-gold/30 focus:border-temple-gold" 
                     {...field} 
                   />

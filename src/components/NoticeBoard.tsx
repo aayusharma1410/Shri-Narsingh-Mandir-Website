@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AlertCircle, Bell, Calendar, Megaphone } from "lucide-react";
+import { Bell, Calendar, Megaphone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
@@ -143,7 +143,7 @@ const NoticeBoard = () => {
 
       <CardContent className="p-0 max-h-[600px] overflow-y-auto">
         <div className="w-full divide-y">
-          {notices.map((notice) => (
+          {notices.map((notice, index) => (
             <div
               key={notice.id}
               className={`px-5 py-4 ${
@@ -153,9 +153,6 @@ const NoticeBoard = () => {
               } transition-colors duration-200`}
             >
               <div className="flex items-start text-left gap-3 mb-2">
-                {notice.is_important && (
-                  <AlertCircle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
-                )}
                 <div>
                   <h3 className="font-bold text-temple-maroon text-xl">
                     {language === "en" ? notice.title : notice.title_hi}
