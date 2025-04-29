@@ -45,7 +45,7 @@ const Footer = () => {
                 <a href="https://www.instagram.com/p/DItYel0Tew8T3UZeMnAQAfTKSIFjneiuj5CpqM0/?igsh=cGNxcnMwNGs1NjZq" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="hover:text-temple-gold transition-colors">
+                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   @shrinarsinghtemple
                 </a>
               </li>
@@ -54,7 +54,7 @@ const Footer = () => {
                 <a href="https://www.facebook.com/events/695352646486362/" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="hover:text-temple-gold transition-colors">
+                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   Shri Narsingh Temple
                 </a>
               </li>
@@ -68,32 +68,32 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-temple-gold transition-colors">
+                <Link to="/" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "Home" : "होम"}
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-temple-gold transition-colors">
+                <Link to="/about" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "About" : "परिचय"}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="hover:text-temple-gold transition-colors">
+                <Link to="/gallery" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "Gallery" : "गैलरी"}
                 </Link>
               </li>
               <li>
-                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors">
+                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "Live Aarti" : "लाइव आरती"}
                 </Link>
               </li>
               <li>
-                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors">
+                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "Poshak Seva" : "पोशाक सेवा"}
                 </Link>
               </li>
               <li>
-                <Link to="/policies" className="hover:text-temple-gold transition-colors">
+                <Link to="/policies" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-2 hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
                   {language === "en" ? "Temple Policies" : "मंदिर नियम"}
                 </Link>
               </li>

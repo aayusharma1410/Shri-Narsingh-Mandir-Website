@@ -47,8 +47,8 @@ const HomePage = () => {
         </div>
         
         <DarshanSlideshow />
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-full max-w-2xl mx-auto">
+        <div className="flex flex-col items-center gap-8">
+          <div className="w-full max-w-3xl mx-auto">
             <NoticeBoard />
           </div>
 
