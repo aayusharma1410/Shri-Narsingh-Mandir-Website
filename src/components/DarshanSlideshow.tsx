@@ -14,14 +14,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { GalleryImage, GalleryImageRow } from '@/types/gallery';
+import { DarshanImage } from '@/types/gallery';
+import { format } from 'date-fns';
 
 interface DarshanMedia {
   id: string | number;
   title: string;
+  title_hi?: string;
   image_url: string;
   created_at: string;
   media_type: 'image' | 'video';
+  display_date?: string;
 }
 
 const DarshanSlideshow = () => {
@@ -68,10 +71,10 @@ const DarshanSlideshow = () => {
   const fetchDarshanMedia = async () => {
     try {
       setLoading(true);
+      // Use the new darshan_media table
       const { data, error } = await supabase
-        .from('gallery_images')
+        .from('darshan_media')
         .select('*')
-        .eq('is_darshan', true)
         .order('created_at', { ascending: false })
         .limit(10);
       
@@ -88,13 +91,14 @@ const DarshanSlideshow = () => {
       }
       
       // Transform the data to match DarshanMedia type
-      const transformedData: DarshanMedia[] = (data || []).map((item: GalleryImageRow) => ({
+      const transformedData: DarshanMedia[] = (data || []).map((item: any) => ({
         id: item.id,
         title: item.title || 'Darshan Image',
+        title_hi: item.title_hi,
         image_url: item.image_url,
         created_at: item.created_at || new Date().toISOString(),
-        // Cast media_type to 'image' | 'video', default to 'image' if null
-        media_type: (item.media_type as 'image' | 'video') || 'image'
+        media_type: (item.media_type as 'image' | 'video') || 'image',
+        display_date: item.display_date
       }));
       
       setDarshanMedia(transformedData);
@@ -157,32 +161,32 @@ const DarshanSlideshow = () => {
         
         // Format current date for title
         const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString(language === 'en' ? 'en-US' : 'hi-IN', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        });
+        const formattedDate = format(currentDate, language === 'en' ? 'MMMM d, yyyy' : 'd MMMM, yyyy');
         
         const title = language === 'en' 
           ? `Today's Darshan - ${formattedDate}`
           : `आज का दर्शन - ${formattedDate}`;
         
-        // Save to gallery_images table with is_darshan=true
-        const { error: galleryError } = await supabase
-          .from('gallery_images')
+        const title_hi = language === 'en'
+          ? `आज का दर्शन - ${formattedDate}`
+          : null;
+        
+        // Save to darshan_media table
+        const { error: darshanError } = await supabase
+          .from('darshan_media')
           .insert([
             {
               title: title,
+              title_hi: title_hi,
               image_url: publicUrl,
-              category: 'darshan',
+              media_type: fileType,
               uploaded_by: user.id,
-              media_type: fileType as 'image' | 'video',
-              is_darshan: true
+              display_date: currentDate.toISOString().split('T')[0]
             }
           ]);
         
-        if (galleryError) {
-          console.error('Gallery database insert error:', galleryError);
+        if (darshanError) {
+          console.error('Darshan database insert error:', darshanError);
           toast({
             variant: "destructive",
             title: language === 'en' ? 'Error' : 'त्रुटि',
@@ -191,6 +195,25 @@ const DarshanSlideshow = () => {
               : `दर्शन को डेटाबेस में सहेजने में विफल`,
           });
           continue;
+        }
+        
+        // Also save to gallery_images for backwards compatibility and to have it in the main gallery
+        const { error: galleryError } = await supabase
+          .from('gallery_images')
+          .insert([
+            {
+              title: title,
+              image_url: publicUrl,
+              category: 'darshan',
+              uploaded_by: user.id,
+              media_type: fileType,
+              is_darshan: true
+            }
+          ]);
+        
+        if (galleryError) {
+          console.error('Gallery database insert error:', galleryError);
+          // Non-blocking error, just log it
         }
         
         completedFiles++;
@@ -301,7 +324,7 @@ const DarshanSlideshow = () => {
   
   return (
     <div id="darshan-slideshow" className="w-full max-w-2xl mx-auto mb-4">
-      <h2 className="text-2xl font-serif text-center mb-4">
+      <h2 className="text-2xl font-serif text-center mb-4 text-temple-maroon font-semibold">
         {language === 'en' ? "Today's Darshan" : "आज का दर्शन"}
       </h2>
       
@@ -319,7 +342,7 @@ const DarshanSlideshow = () => {
           <label htmlFor="darshan-upload">
             <Button
               variant="outline"
-              className="w-full border-dashed border-2 py-6"
+              className="w-full border-dashed border-2 py-6 hover:bg-temple-gold/10"
               disabled={uploading}
               asChild
             >

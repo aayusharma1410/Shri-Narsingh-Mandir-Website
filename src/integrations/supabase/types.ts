@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      darshan_media: {
+        Row: {
+          created_at: string | null
+          display_date: string | null
+          id: string
+          image_url: string
+          media_type: string
+          title: string
+          title_hi: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_date?: string | null
+          id?: string
+          image_url: string
+          media_type?: string
+          title: string
+          title_hi?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_date?: string | null
+          id?: string
+          image_url?: string
+          media_type?: string
+          title?: string
+          title_hi?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
       gallery_images: {
         Row: {
           category: string | null
