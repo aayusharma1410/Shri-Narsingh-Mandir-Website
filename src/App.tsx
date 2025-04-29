@@ -15,7 +15,6 @@ import NotFound from "./pages/NotFound";
 import PoshakSevaPage from "./pages/PoshakSevaPage";
 import GalleryPage from "./pages/GalleryPage";
 import AuthPage from "./pages/AuthPage";
-import DonationPage from "./pages/DonationPage";
 import LoginPopup from "@/components/LoginPopup";
 
 const queryClient = new QueryClient();
@@ -37,7 +36,6 @@ const App = () => (
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/policies" element={<PoliciesPage />} />
               <Route path="/poshak-seva" element={<PoshakSevaPage />} />
-              <Route path="/donation" element={<DonationPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

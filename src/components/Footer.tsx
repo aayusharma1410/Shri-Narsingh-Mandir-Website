@@ -93,11 +93,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/donation" className="hover:text-temple-gold transition-colors">
-                  {language === "en" ? "Donation" : "दान"}
-                </Link>
-              </li>
-              <li>
                 <Link to="/policies" className="hover:text-temple-gold transition-colors">
                   {language === "en" ? "Temple Policies" : "मंदिर नियम"}
                 </Link>
