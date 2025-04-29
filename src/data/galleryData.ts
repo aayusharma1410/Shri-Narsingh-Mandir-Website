@@ -1,3 +1,4 @@
+
 import { GalleryImage, GalleryCategory } from '@/types/gallery';
 
 export const galleryImages: GalleryImage[] = [
@@ -7,7 +8,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री नृसिंह देव दर्शन",
     alt: "Shri Narsingh Dev Darshan", 
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 2, 
@@ -15,7 +17,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री नृसिंह मंदिर श्रृंगार",
     alt: "Shri Narsingh Temple Shringar", 
     category: "shringar",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 3, 
@@ -23,7 +26,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Instagram Temple Special",
     alt: "Instagram Temple Special", 
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 4,
@@ -31,7 +35,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Morning Darshan",
     alt: "Morning Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 5,
@@ -39,7 +44,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Afternoon Darshan",
     alt: "Afternoon Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 6,
@@ -47,7 +53,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Evening Special Darshan",
     alt: "Evening Special Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 7, 
@@ -55,7 +62,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Special Darshan",
     alt: "Special Darshan", 
     category: "shringar",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 8, 
@@ -63,7 +71,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Shri Narsingh Dev",
     alt: "Shri Narsingh Dev", 
     category: "shringar",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 9, 
@@ -71,7 +80,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Temple Interior",
     alt: "Temple Interior", 
     category: "mandir",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 10, 
@@ -79,7 +89,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Sacred Murti",
     alt: "Sacred Murti", 
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 11, 
@@ -87,7 +98,8 @@ export const galleryImages: GalleryImage[] = [
     title: "Temple Overview",
     alt: "Temple Overview", 
     category: "mandir",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   { 
     id: 12, 
@@ -95,7 +107,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री नृसिंह मंदिर दर्शन",
     alt: "Shri Narsingh Temple Darshan", 
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 101,
@@ -103,7 +116,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री नृसिंह भगवान का दिव्य मुखौटा",
     alt: "Shri Narsingh Bhagwan Mask",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 102,
@@ -111,7 +125,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री मंदिर श्रृंगार",
     alt: "Shri Mandir Shringar",
     category: "shringar",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 103,
@@ -119,7 +134,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री नृसिंह मंदिर स्पेशल",
     alt: "Shri Narsingh Temple Special",
     category: "events",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 104,
@@ -127,7 +143,8 @@ export const galleryImages: GalleryImage[] = [
     title: "श्री मंदिर अंदरूनी दृश्य",
     alt: "Mandir Internal View",
     category: "mandir",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 105,
@@ -135,7 +152,8 @@ export const galleryImages: GalleryImage[] = [
     title: "संपर्क व दर्शन",
     alt: "Contact and Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 106,
@@ -143,7 +161,8 @@ export const galleryImages: GalleryImage[] = [
     title: "मूर्ति श्रृंगार",
     alt: "Murti Shringar",
     category: "shringar",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 107,
@@ -151,7 +170,8 @@ export const galleryImages: GalleryImage[] = [
     title: "धार्मिक आयोजन",
     alt: "Dharmik Ayojan",
     category: "events",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 108,
@@ -159,7 +179,8 @@ export const galleryImages: GalleryImage[] = [
     title: "मंदिर की झलक",
     alt: "Temple Glimpse",
     category: "mandir",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 109,
@@ -167,7 +188,8 @@ export const galleryImages: GalleryImage[] = [
     title: "मंदिर उत्सव",
     alt: "Mandir Utsav",
     category: "events",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 110,
@@ -175,7 +197,8 @@ export const galleryImages: GalleryImage[] = [
     title: "अद्भुत दर्शन",
     alt: "Adbhut Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 111,
@@ -183,7 +206,8 @@ export const galleryImages: GalleryImage[] = [
     title: "निर्मल दर्शन",
     alt: "Nirmal Darshan",
     category: "darshan",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   },
   {
     id: 112,
@@ -191,7 +215,8 @@ export const galleryImages: GalleryImage[] = [
     title: "मंदिर प्रांगण का दृश्य",
     alt: "Mandir Courtyard View",
     category: "mandir",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    media_type: "image"
   }
 ];
 
