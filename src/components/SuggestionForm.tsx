@@ -47,7 +47,7 @@ const SuggestionForm = () => {
       // Use the mock supabase client to avoid actual API calls in development
       const { error } = await supabase
         .from("suggestions")
-        .insert({ 
+        .insert({
           name: data.name, 
           email: data.email, 
           message: data.message 
