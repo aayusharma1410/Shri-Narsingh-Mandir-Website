@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
+import SuggestionForm from "./SuggestionForm";
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -106,8 +107,13 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Map - now takes full width */}
-          <div className="md:col-span-6">
+          {/* Suggestion Form - Now takes 3 columns */}
+          <div className="md:col-span-3">
+            <SuggestionForm />
+          </div>
+          
+          {/* Map - now takes 3 columns */}
+          <div className="md:col-span-3">
             <h3 className="text-xl font-serif mb-4">
               {language === "en" ? "Location" : "स्थान"}
             </h3>

@@ -6,21 +6,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { AlertCircle, Bell, Calendar, Info, Megaphone } from "lucide-react";
+import { AlertCircle, Bell, Calendar, Megaphone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 
 interface Notice {
@@ -119,7 +110,6 @@ const NoticeBoard = () => {
           </div>
         </CardHeader>
         <CardContent className="p-6 text-center">
-          <Info className="h-12 w-12 mx-auto text-gray-300 mb-2" />
           <p className="text-gray-500 text-lg font-medium">
             {language === "en"
               ? "No notices available at the moment"
