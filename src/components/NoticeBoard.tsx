@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bell, Calendar, Megaphone } from "lucide-react";
+import { AlertCircle, Bell, Calendar, Megaphone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
@@ -148,11 +148,14 @@ const NoticeBoard = () => {
               key={notice.id}
               className={`px-5 py-4 ${
                 notice.is_important
-                  ? "bg-red-50/50 hover:bg-red-50/90"
-                  : "hover:bg-gray-100/70"
-              } transition-all duration-300 ease-in-out cursor-pointer`}
+                  ? "bg-red-50/50 hover:bg-red-50/80"
+                  : "hover:bg-gray-50"
+              } transition-colors duration-200`}
             >
               <div className="flex items-start text-left gap-3 mb-2">
+                {notice.is_important && (
+                  <AlertCircle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
+                )}
                 <div>
                   <h3 className="font-bold text-temple-maroon text-xl">
                     {language === "en" ? notice.title : notice.title_hi}
@@ -167,7 +170,7 @@ const NoticeBoard = () => {
                 </div>
               </div>
               <div className="mt-3 pt-2 text-lg">
-                <div className="bg-white/50 p-4 rounded-md border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                <div className="bg-white/50 p-4 rounded-md border border-gray-100">
                   <p className="font-semibold">
                     {language === "en" ? notice.content : notice.content_hi}
                   </p>
