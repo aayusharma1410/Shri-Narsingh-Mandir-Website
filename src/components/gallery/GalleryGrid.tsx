@@ -1,9 +1,10 @@
 
 import { useState } from "react";
 import { GalleryImage } from "@/types/gallery";
-import GalleryModal from "./GalleryModal";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import GalleryActions from "./GalleryActions";
+import { Dialog } from "@/components/ui/dialog";
+import GalleryModal from "./GalleryModal";
 
 interface GalleryGridProps {
   images: GalleryImage[];
@@ -74,11 +75,14 @@ const GalleryGrid = ({ images: initialImages, onImageDeleted }: GalleryGridProps
         ))}
       </div>
 
-      <GalleryModal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-        image={selectedImage} 
-      />
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        {selectedImage && (
+          <GalleryModal 
+            image={selectedImage} 
+            allImages={images}
+          />
+        )}
+      </Dialog>
     </>
   );
 };

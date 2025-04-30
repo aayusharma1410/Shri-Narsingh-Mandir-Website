@@ -1,7 +1,7 @@
 
 import { DialogContent } from "@/components/ui/dialog";
 import { GalleryImage } from "@/types/gallery";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -31,7 +31,7 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
       <div className="relative w-full h-full flex items-center justify-center">
         {currentImage.media_type === 'video' ? (
           <video
-            src={currentImage.image_url || currentImage.src}
+            src={currentImage.image_url}
             className="max-w-full max-h-full"
             controls
             autoPlay
@@ -39,8 +39,8 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
           />
         ) : (
           <img
-            src={currentImage.image_url || currentImage.src}
-            alt={currentImage.title || currentImage.alt || "Gallery image"}
+            src={currentImage.image_url}
+            alt={currentImage.title || "Gallery image"}
             className="max-w-full max-h-full object-contain"
           />
         )}
