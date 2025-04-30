@@ -54,10 +54,12 @@ const SuggestionForm = () => {
         .insert({
           name: data.name,
           email: data.email,
+          phone: data.phone,
           message: data.message,
         });
       
       if (error) {
+        console.error("Supabase error:", error);
         throw error;
       }
 
