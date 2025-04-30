@@ -107,12 +107,12 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Suggestion Form - Now takes 3 columns */}
+          {/* Suggestion Form */}
           <div className="md:col-span-3">
             <SuggestionForm />
           </div>
           
-          {/* Map - now takes 3 columns */}
+          {/* Map */}
           <div className="md:col-span-3">
             <h3 className="text-xl font-serif mb-4">
               {language === "en" ? "Location" : "स्थान"}

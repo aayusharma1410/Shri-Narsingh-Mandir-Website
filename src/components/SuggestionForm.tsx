@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Send } from "lucide-react";
 import { toast } from "sonner";
 
+// Define schema for form validation
 const suggestionSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -51,14 +52,14 @@ const SuggestionForm = () => {
     try {
       console.log("Submitting suggestion:", data);
       
-      // Make the Supabase insert with error handling
+      // Attempt to insert the data into Supabase
       const { error } = await supabase
         .from("suggestions")
         .insert([{
           name: data.name,
           email: data.email,
-          phone: data.phone,
-          message: data.message,
+          // phone field is not in the current schema, so we'll include it in the message
+          message: `Phone: ${data.phone}\n\n${data.message}`,
         }]);
       
       if (error) {
@@ -66,7 +67,9 @@ const SuggestionForm = () => {
         throw new Error(error.message);
       }
 
-      // Show success message using sonner toast
+      console.log("Suggestion submitted successfully");
+      
+      // Show success message
       toast.success(
         language === "en"
           ? "Suggestion submitted successfully!"
@@ -81,7 +84,7 @@ const SuggestionForm = () => {
     } catch (error) {
       console.error("Error submitting suggestion:", error);
       
-      // Show error message using sonner toast
+      // Show error message
       toast.error(
         language === "en"
           ? "Failed to submit suggestion. Please try again."
