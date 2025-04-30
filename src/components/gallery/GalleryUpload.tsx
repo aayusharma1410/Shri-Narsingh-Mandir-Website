@@ -8,7 +8,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Upload, FileVideo, Image, Loader } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
-const GalleryUpload = () => {
+interface GalleryUploadProps {
+  onUploadSuccess?: () => void;
+}
+
+const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -111,15 +115,13 @@ const GalleryUpload = () => {
         // Save to gallery_images table
         const { error: dbError } = await supabase
           .from('gallery_images')
-          .insert([
-            {
-              title: file.name,
-              image_url: publicUrl,
-              category: 'general',
-              uploaded_by: user?.id,
-              media_type: fileType // Add media type to distinguish between images and videos
-            }
-          ]);
+          .insert({
+            title: file.name,
+            image_url: publicUrl,
+            category: 'general',
+            uploaded_by: user?.id,
+            media_type: fileType // Add media type to distinguish between images and videos
+          });
 
         if (dbError) {
           console.error('Database insert error:', dbError);
@@ -145,8 +147,10 @@ const GalleryUpload = () => {
             : `${totalFiles} में से ${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`,
         });
         
-        // Refresh the gallery after successful upload
-        window.location.reload();
+        // Call onUploadSuccess callback if provided
+        if (onUploadSuccess) {
+          onUploadSuccess();
+        }
       }
     } catch (error) {
       console.error('Error uploading files:', error);

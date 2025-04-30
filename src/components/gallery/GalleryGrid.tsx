@@ -1,63 +1,85 @@
 
 import { useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { GalleryImage } from "@/types/gallery";
-import { Dialog } from "@/components/ui/dialog";
 import GalleryModal from "./GalleryModal";
-import { Video, Play } from "lucide-react";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
+import GalleryActions from "./GalleryActions";
 
 interface GalleryGridProps {
   images: GalleryImage[];
+  onImageDeleted?: () => void;
 }
 
-const GalleryGrid = ({ images }: GalleryGridProps) => {
-  const { language } = useLanguage();
+const GalleryGrid = ({ images: initialImages, onImageDeleted }: GalleryGridProps) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAdmin } = useAdminStatus();
+  const [images, setImages] = useState<GalleryImage[]>(initialImages);
+
+  const handleImageClick = (image: GalleryImage) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  
+  const handleImageDeleted = (deletedId: string) => {
+    setImages(prevImages => prevImages.filter(image => image.id !== deletedId));
+    if (onImageDeleted) {
+      onImageDeleted();
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {images.map((media) => (
-          <div
-            key={media.id}
-            className="bg-white rounded-lg shadow hover:scale-105 transition-transform cursor-pointer overflow-hidden relative group"
-            onClick={() => setSelectedImage(media)}
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {images.map((image) => (
+          <div 
+            key={image.id} 
+            className="relative group aspect-square overflow-hidden rounded-lg border border-gray-300 cursor-pointer"
           >
-            {media.media_type === 'video' ? (
-              <div className="relative w-full h-44 sm:h-52 md:h-60 lg:h-64">
-                <video
-                  src={media.image_url || media.src}
-                  className="w-full h-full object-cover"
-                  preload="metadata"
+            <div 
+              onClick={() => handleImageClick(image)}
+              className="w-full h-full flex items-center justify-center overflow-hidden bg-gray-100"
+            >
+              {image.media_type === 'video' ? (
+                <video 
+                  src={image.image_url} 
+                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-all">
-                  <Play className="w-12 h-12 text-white opacity-80 group-hover:opacity-100 transition-opacity" fill="white" />
+              ) : (
+                <img 
+                  src={image.image_url} 
+                  alt={image.title || 'Gallery image'} 
+                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                />
+              )}
+              {image.media_type === 'video' && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-white text-lg font-medium">Play Video</span>
                 </div>
-              </div>
-            ) : (
-              <img
-                src={media.image_url || media.src}
-                alt={media.title || media.alt || "Gallery image"}
-                className="w-full h-44 sm:h-52 md:h-60 lg:h-64 object-cover"
-                loading="lazy"
-              />
-            )}
+              )}
+            </div>
+            
+            <GalleryActions 
+              imageId={image.id}
+              imageUrl={image.image_url}
+              isDarshan={image.is_darshan}
+              isAdmin={isAdmin}
+              onDelete={() => handleImageDeleted(image.id)}
+            />
           </div>
         ))}
       </div>
 
-      <Dialog 
-        open={!!selectedImage} 
-        onOpenChange={(open) => !open && setSelectedImage(null)}
-      >
-        {selectedImage && (
-          <GalleryModal 
-            image={selectedImage} 
-            allImages={images} 
-          />
-        )}
-      </Dialog>
-    </div>
+      <GalleryModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        image={selectedImage} 
+      />
+    </>
   );
 };
 

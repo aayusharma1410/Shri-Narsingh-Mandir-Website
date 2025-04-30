@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
+        console.log("Auth state changed:", event);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         setLoading(false);
@@ -31,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      console.log("Got session:", currentSession ? "exists" : "none");
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       setLoading(false);
@@ -40,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    console.log("Signing in with:", email);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -48,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, username: string, city?: string, state?: string, country?: string) => {
+    console.log("Signing up with:", email);
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -64,8 +69,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    console.log("Signing out");
     const { error } = await supabase.auth.signOut();
+    console.log("Signout result:", error ? `Error: ${error.message}` : "Success");
     if (error) throw error;
+    
+    // Force clear the user and session state
+    setUser(null);
+    setSession(null);
   };
 
   return (

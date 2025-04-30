@@ -20,7 +20,11 @@ const DarshanSlideshow = () => {
         <DarshanUploader onUploadSuccess={fetchDarshanMedia} />
       )}
       
-      <DarshanMedia darshanMedia={darshanMedia} loading={loading} />
+      <DarshanMedia 
+        darshanMedia={darshanMedia} 
+        loading={loading} 
+        onImageDeleted={fetchDarshanMedia}
+      />
     </div>
   );
 };

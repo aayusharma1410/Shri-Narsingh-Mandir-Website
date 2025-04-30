@@ -2,6 +2,9 @@
 import { Loader } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DarshanImage } from '@/types/gallery';
+import { useAdminStatus } from "@/hooks/useAdminStatus";
+import GalleryActions from "../gallery/GalleryActions";
+import { useState } from "react";
 import { 
   Carousel,
   CarouselContent,
@@ -13,10 +16,20 @@ import {
 interface DarshanMediaProps {
   darshanMedia: DarshanImage[];
   loading: boolean;
+  onImageDeleted?: () => void;
 }
 
-const DarshanMedia = ({ darshanMedia, loading }: DarshanMediaProps) => {
+const DarshanMedia = ({ darshanMedia: initialDarshanMedia, loading, onImageDeleted }: DarshanMediaProps) => {
   const { language } = useLanguage();
+  const { isAdmin } = useAdminStatus();
+  const [darshanMedia, setDarshanMedia] = useState<DarshanImage[]>(initialDarshanMedia);
+  
+  const handleImageDeleted = (deletedId: string) => {
+    setDarshanMedia(prevMedia => prevMedia.filter(media => media.id !== deletedId));
+    if (onImageDeleted) {
+      onImageDeleted();
+    }
+  };
   
   if (loading) {
     return (
@@ -56,6 +69,14 @@ const DarshanMedia = ({ darshanMedia, loading }: DarshanMediaProps) => {
             className="w-full h-full object-contain rounded-lg"
           />
         )}
+        
+        <GalleryActions 
+          imageId={media.id}
+          imageUrl={media.image_url}
+          isDarshan={true}
+          isAdmin={isAdmin}
+          onDelete={() => handleImageDeleted(media.id)}
+        />
       </div>
     );
   }
@@ -83,6 +104,14 @@ const DarshanMedia = ({ darshanMedia, loading }: DarshanMediaProps) => {
                   className="w-full h-full object-contain rounded-lg"
                 />
               )}
+              
+              <GalleryActions 
+                imageId={media.id}
+                imageUrl={media.image_url}
+                isDarshan={true}
+                isAdmin={isAdmin}
+                onDelete={() => handleImageDeleted(media.id)}
+              />
             </div>
           </CarouselItem>
         ))}

@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts/AuthContext";
 import { User } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface UserMenuProps {
   user: User;
@@ -19,6 +21,18 @@ interface UserMenuProps {
 
 export const UserMenu = ({ user, language, isScrolled }: UserMenuProps) => {
   const { signOut } = useAuth();
+  const navigate = useNavigate();
+  
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast.success(language === 'en' ? 'Successfully logged out' : 'सफलतापूर्वक लॉग आउट हो गया');
+      navigate('/');
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error(language === 'en' ? 'Failed to logout' : 'लॉगआउट विफल');
+    }
+  };
   
   return (
     <DropdownMenu>
@@ -47,7 +61,7 @@ export const UserMenu = ({ user, language, isScrolled }: UserMenuProps) => {
           {user.email}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className="text-red-500 hover:text-red-600 cursor-pointer">
+        <DropdownMenuItem onClick={handleSignOut} className="text-red-500 hover:text-red-600 cursor-pointer">
           <LogOut className="h-4 w-4 mr-2" />
           {language === 'en' ? 'Logout' : 'लॉग आउट'}
         </DropdownMenuItem>

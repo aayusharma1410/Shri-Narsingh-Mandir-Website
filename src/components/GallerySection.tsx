@@ -14,41 +14,41 @@ const GallerySection = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchGalleryImages = async () => {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('gallery_images')
-          .select('*')
-          .order('created_at', { ascending: false });
+  const fetchGalleryImages = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('gallery_images')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-        if (error) {
-          console.error('Error fetching gallery images:', error);
-          toast({
-            variant: "destructive",
-            title: language === 'en' ? 'Error' : 'त्रुटि',
-            description: language === 'en'
-              ? 'Failed to load gallery images'
-              : 'गैलरी छवियां लोड करने में विफल',
-          });
-          return;
-        }
-
-        // Convert the generic media_type to the specific union type
-        const typedData = data?.map(item => ({
-          ...item,
-          media_type: (item.media_type === 'video' ? 'video' : 'image') as 'image' | 'video'
-        })) || [];
-        
-        setImages(typedData);
-      } catch (error) {
-        console.error('Error in gallery fetch:', error);
-      } finally {
-        setLoading(false);
+      if (error) {
+        console.error('Error fetching gallery images:', error);
+        toast({
+          variant: "destructive",
+          title: language === 'en' ? 'Error' : 'त्रुटि',
+          description: language === 'en'
+            ? 'Failed to load gallery images'
+            : 'गैलरी छवियां लोड करने में विफल',
+        });
+        return;
       }
-    };
 
+      // Convert the generic media_type to the specific union type
+      const typedData = data?.map(item => ({
+        ...item,
+        media_type: (item.media_type === 'video' ? 'video' : 'image') as 'image' | 'video'
+      })) || [];
+      
+      setImages(typedData);
+    } catch (error) {
+      console.error('Error in gallery fetch:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchGalleryImages();
   }, [language, toast]);
 
@@ -64,7 +64,7 @@ const GallerySection = () => {
             : "यहाँ मंदिर से जुड़ी सुंदर झलकियाँ देखें।"}
         </p>
       </div>
-      <GalleryUpload />
+      <GalleryUpload onUploadSuccess={fetchGalleryImages} />
       
       {loading ? (
         <div className="flex justify-center items-center h-40">
@@ -84,7 +84,7 @@ const GallerySection = () => {
           </p>
         </div>
       ) : (
-        <GalleryGrid images={images} />
+        <GalleryGrid images={images} onImageDeleted={fetchGalleryImages} />
       )}
     </section>
   );

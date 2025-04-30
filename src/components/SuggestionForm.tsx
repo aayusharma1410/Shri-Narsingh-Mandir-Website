@@ -51,19 +51,22 @@ const SuggestionForm = () => {
       // Explicitly log what we're submitting for debugging
       console.log("Submitting suggestion:", data);
       
-      const { error } = await supabase
+      // Insert data into the suggestions table
+      const { data: result, error } = await supabase
         .from("suggestions")
-        .insert([{  // Note: passing an array as required by Supabase
+        .insert({
           name: data.name,
           email: data.email,
           phone: data.phone,
           message: data.message,
-        }]);
+        });
       
       if (error) {
         console.error("Supabase error:", error);
         throw error;
       }
+
+      console.log("Submission result:", result);
 
       toast.success(
         language === "en"
