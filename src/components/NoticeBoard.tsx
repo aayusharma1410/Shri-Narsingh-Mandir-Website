@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -76,7 +75,7 @@ const NoticeBoard = () => {
 
   if (loading) {
     return (
-      <Card className="w-full border-temple-maroon/20 shadow-md">
+      <Card id="notice-board" className="w-full border-temple-maroon/20 shadow-md notice-board-section">
         <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-2">
           <div className="flex items-center">
             <Bell className="mr-2 h-6 w-6 text-temple-maroon" />
@@ -100,7 +99,7 @@ const NoticeBoard = () => {
 
   if (notices.length === 0) {
     return (
-      <Card className="w-full border-temple-maroon/20 shadow-md">
+      <Card id="notice-board" className="w-full border-temple-maroon/20 shadow-md notice-board-section">
         <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-2">
           <div className="flex items-center">
             <Bell className="mr-2 h-6 w-6 text-temple-maroon" />
@@ -113,7 +112,7 @@ const NoticeBoard = () => {
           <p className="text-gray-500 text-lg font-medium">
             {language === "en"
               ? "No notices available at the moment"
-              : "इस समय कोई सूचना उपलब्ध नहीं है"}
+              : "इस सम�� कोई सूचना उपलब्ध नहीं है"}
           </p>
         </CardContent>
       </Card>
@@ -121,7 +120,7 @@ const NoticeBoard = () => {
   }
 
   return (
-    <Card className="w-full border-temple-maroon/20 shadow-md">
+    <Card id="notice-board" className="w-full border-temple-maroon/20 shadow-md notice-board-section">
       <CardHeader className="bg-temple-gold/10 border-b border-temple-gold/20 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">

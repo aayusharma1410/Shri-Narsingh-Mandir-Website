@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader2, Send } from "lucide-react";
-import { toast } from "sonner";
+import { useToast } from "@/components/ui/use-toast";
 
 const suggestionSchema = z.object({
   name: z.string().min(2, {
@@ -34,6 +34,7 @@ type SuggestionFormValues = z.infer<typeof suggestionSchema>;
 const SuggestionForm = () => {
   const { language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<SuggestionFormValues>({
     resolver: zodResolver(suggestionSchema),
@@ -52,37 +53,42 @@ const SuggestionForm = () => {
       console.log("Submitting suggestion:", data);
       
       // Insert data into the suggestions table
-      const { data: result, error } = await supabase
+      const { error } = await supabase
         .from("suggestions")
-        .insert({
+        .insert([{
           name: data.name,
           email: data.email,
           phone: data.phone,
           message: data.message,
-        });
+        }]);
       
       if (error) {
         console.error("Supabase error:", error);
         throw error;
       }
 
-      console.log("Submission result:", result);
-
-      toast.success(
-        language === "en"
+      toast({
+        title: language === "en"
+          ? "Suggestion Submitted"
+          : "सुझाव जमा किया गया",
+        description: language === "en"
           ? "Your suggestion has been submitted successfully!"
-          : "आपका सुझाव सफलतापूर्वक जमा कर दिया गया है!"
-      );
+          : "आपका सुझाव सफलतापूर्वक जमा कर दिया गया है!",
+      });
 
       // Reset form fields
       form.reset();
     } catch (error) {
       console.error("Error submitting suggestion:", error);
-      toast.error(
-        language === "en"
+      toast({
+        variant: "destructive",
+        title: language === "en"
+          ? "Submission Failed"
+          : "सबमिशन विफल",
+        description: language === "en"
           ? "Failed to submit suggestion. Please try again."
-          : "सुझाव जमा करने में विफल। कृपया पुनः प्रयास करें।"
-      );
+          : "सुझाव जमा करने में विफल। कृपया पुनः प्रयास करें।",
+      });
     } finally {
       setIsSubmitting(false);
     }

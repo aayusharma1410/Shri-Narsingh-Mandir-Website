@@ -28,15 +28,25 @@ const Hero = () => {
   };
 
   const handleNoticeClick = () => {
+    // First try to find by class name
     const noticeBoard = document.querySelector('.notice-board-section');
     if (noticeBoard) {
       noticeBoard.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      // If notice board section is not found, try to find it by ID as fallback
-      const noticeBoardById = document.getElementById('notice-board');
-      if (noticeBoardById) {
-        noticeBoardById.scrollIntoView({ behavior: 'smooth' });
-      }
+      return;
+    }
+    
+    // If not found by class, try finding the NoticeBoard component directly
+    const noticeBoardComponent = document.querySelector("[id^='notice-board']");
+    if (noticeBoardComponent) {
+      noticeBoardComponent.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    
+    // As a last resort, try to find any container with NoticeBoard text
+    const anyNoticeElement = document.querySelector("div:contains('Notice Board')");
+    if (anyNoticeElement) {
+      anyNoticeElement.scrollIntoView({ behavior: 'smooth' });
+      return;
     }
   };
 

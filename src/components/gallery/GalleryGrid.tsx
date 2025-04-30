@@ -62,6 +62,12 @@ const GalleryGrid = ({ images: initialImages, onImageDeleted }: GalleryGridProps
                   <span className="text-white text-lg font-medium">Play Video</span>
                 </div>
               )}
+              
+              {image.title && (
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className="text-sm font-medium truncate">{image.title}</p>
+                </div>
+              )}
             </div>
             
             <GalleryActions 

@@ -5,9 +5,20 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Loader, Upload, Image as ImageIcon, Video } from "lucide-react";
+import { Loader, Upload, Image as ImageIcon, Video, FileText } from "lucide-react";
 import { format } from 'date-fns';
 import { useAuth } from "@/contexts/AuthContext";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger, 
+  DialogFooter,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface DarshanUploaderProps {
   onUploadSuccess: () => void;
@@ -19,15 +30,30 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
   const { user } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [title, setTitle] = useState("");
   
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files || event.target.files.length === 0 || !user?.id) return;
+  const handleFileSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+    
+    // Store selected files for later processing
+    setSelectedFiles(Array.from(event.target.files));
+    setShowDialog(true);
+  };
+  
+  const handleFileUpload = async () => {
+    if (selectedFiles.length === 0 || !user?.id) {
+      setShowDialog(false);
+      return;
+    }
     
     try {
       setUploading(true);
       setUploadProgress(0);
+      setShowDialog(false);
       
-      const files = Array.from(event.target.files);
+      const files = selectedFiles;
       const totalFiles = files.length;
       let completedFiles = 0;
       
@@ -74,21 +100,24 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
         const currentDate = new Date();
         const formattedDate = format(currentDate, language === 'en' ? 'MMMM d, yyyy' : 'd MMMM, yyyy');
         
-        const title = language === 'en' 
+        // Use custom title if provided, otherwise use default
+        const displayTitle = title || (language === 'en' 
           ? `Today's Darshan - ${formattedDate}`
-          : `आज का दर्शन - ${formattedDate}`;
+          : `आज का दर्शन - ${formattedDate}`);
         
         const title_hi = language === 'en'
           ? `आज का दर्शन - ${formattedDate}`
           : null;
+        
+        console.log('Uploading darshan media with title:', displayTitle);
         
         // Save to darshan_media table
         const { error: darshanError } = await supabase
           .from('darshan_media')
           .insert([
             {
-              title: title,
-              title_hi: title_hi,
+              title: displayTitle,
+              title_hi: title_hi || displayTitle,
               image_url: publicUrl,
               media_type: fileType,
               uploaded_by: user.id,
@@ -113,7 +142,7 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
           .from('gallery_images')
           .insert([
             {
-              title: title,
+              title: displayTitle,
               image_url: publicUrl,
               category: 'darshan',
               uploaded_by: user.id,
@@ -139,6 +168,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
             : `${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`,
         });
         
+        // Clear selected files
+        setSelectedFiles([]);
+        setTitle("");
+        
         // Call the callback to refresh the darshan media
         onUploadSuccess();
       }
@@ -162,7 +195,7 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
       <Input
         type="file"
         accept="image/*,video/*"
-        onChange={handleFileUpload}
+        onChange={handleFileSelection}
         multiple
         disabled={uploading}
         className="hidden"
@@ -202,6 +235,44 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
           </span>
         </Button>
       </label>
+      
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {language === 'en' ? 'Add title (optional)' : 'शीर्षक जोड़ें (वैकल्पिक)'}
+            </DialogTitle>
+            <DialogDescription>
+              {language === 'en' 
+                ? `You've selected ${selectedFiles.length} file(s). Add a title or leave blank.` 
+                : `आपने ${selectedFiles.length} फ़ाइल(ें) चुनी हैं। एक शीर्षक जोड़ें या खाली छोड़ दें।`}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">
+                {language === 'en' ? 'Title' : 'शीर्षक'}
+              </Label>
+              <Input
+                id="title"
+                placeholder={language === 'en' ? "Enter title (optional)" : "शीर्षक दर्ज करें (वैकल्पिक)"}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDialog(false)}>
+              {language === 'en' ? 'Cancel' : 'रद्द करें'}
+            </Button>
+            <Button onClick={handleFileUpload}>
+              {language === 'en' ? 'Upload' : 'अपलोड करें'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

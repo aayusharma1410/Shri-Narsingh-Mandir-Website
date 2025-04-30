@@ -1,79 +1,63 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Upload, FileVideo, Image, Loader } from "lucide-react";
+import { Loader, Upload, Image as ImageIcon, Video } from "lucide-react";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { useAuth } from "@/contexts/AuthContext";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger, 
+  DialogFooter, 
+  DialogDescription 
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 interface GalleryUploadProps {
-  onUploadSuccess?: () => void;
+  onUploadSuccess: () => void;
 }
 
 const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
+  const { language } = useLanguage();
+  const { toast } = useToast();
+  const { isAdmin } = useAdminStatus();
+  const { user } = useAuth();
   const [uploading, setUploading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const { toast } = useToast();
-  const { language } = useLanguage();
-  const { user } = useAuth();
-
-  useEffect(() => {
-    const checkAdminStatus = async () => {
-      if (!user) {
-        setIsAdmin(false);
-        return;
-      }
-      
-      try {
-        const { data, error } = await supabase
-          .from('user_profiles')
-          .select('is_admin')
-          .eq('id', user.id)
-          .single();
-          
-        if (error) {
-          console.error('Error checking admin status:', error);
-          setIsAdmin(false);
-          return;
-        }
-        
-        setIsAdmin(data?.is_admin || false);
-      } catch (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
-      }
-    };
-    
-    checkAdminStatus();
-  }, [user]);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [title, setTitle] = useState("");
+  
+  if (!isAdmin) return null;
+  
+  const handleFileSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || event.target.files.length === 0) return;
     
-    const files = Array.from(event.target.files);
-    setSelectedFiles(files);
-    
-    // Automatically start upload if files are selected
-    if (files.length > 0) {
-      handleUpload(files);
-    }
+    setSelectedFiles(Array.from(event.target.files));
+    setShowDialog(true);
   };
 
-  const handleUpload = async (files: File[]) => {
-    if (files.length === 0) return;
+  const handleFileUpload = async () => {
+    if (selectedFiles.length === 0 || !user?.id) {
+      setShowDialog(false);
+      return;
+    }
     
     try {
       setUploading(true);
       setUploadProgress(0);
+      setShowDialog(false);
       
-      const totalFiles = files.length;
+      const totalFiles = selectedFiles.length;
       let completedFiles = 0;
       
-      for (const file of files) {
+      for (const file of selectedFiles) {
         // Validate file type
         const fileType = file.type.split('/')[0];
         if (fileType !== 'image' && fileType !== 'video') {
@@ -89,9 +73,9 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
         
         // Upload to Supabase Storage
         const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
+        const fileName = `gallery_${Math.random()}.${fileExt}`;
         
-        const { error: uploadError, data } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('gallery')
           .upload(fileName, file);
 
@@ -111,26 +95,27 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
         const { data: { publicUrl } } = supabase.storage
           .from('gallery')
           .getPublicUrl(fileName);
-
+        
         // Save to gallery_images table
-        const { error: dbError } = await supabase
+        const { error: galleryError } = await supabase
           .from('gallery_images')
-          .insert({
-            title: file.name,
-            image_url: publicUrl,
-            category: 'general',
-            uploaded_by: user?.id,
-            media_type: fileType // Add media type to distinguish between images and videos
-          });
-
-        if (dbError) {
-          console.error('Database insert error:', dbError);
+          .insert([
+            {
+              title: title || null,
+              image_url: publicUrl,
+              uploaded_by: user.id,
+              media_type: fileType === 'video' ? 'video' : 'image',
+            }
+          ]);
+        
+        if (galleryError) {
+          console.error('Gallery database insert error:', galleryError);
           toast({
             variant: "destructive",
             title: language === 'en' ? 'Error' : 'त्रुटि',
             description: language === 'en' 
-              ? `Failed to save ${file.name} to database`
-              : `${file.name} को डेटाबेस में सहेजने में विफल`,
+              ? `Failed to save to gallery`
+              : `गैलरी में सहेजने में विफल`,
           });
           continue;
         }
@@ -143,14 +128,16 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
         toast({
           title: language === 'en' ? 'Success' : 'सफल',
           description: language === 'en' 
-            ? `${completedFiles} of ${totalFiles} files uploaded successfully`
-            : `${totalFiles} में से ${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`,
+            ? `${completedFiles} files uploaded successfully`
+            : `${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`,
         });
         
-        // Call onUploadSuccess callback if provided
-        if (onUploadSuccess) {
-          onUploadSuccess();
-        }
+        // Clear title and selected files
+        setTitle("");
+        setSelectedFiles([]);
+        
+        // Call the callback to refresh the gallery
+        onUploadSuccess();
       }
     } catch (error) {
       console.error('Error uploading files:', error);
@@ -163,19 +150,16 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
       });
     } finally {
       setUploading(false);
-      setSelectedFiles([]);
       setUploadProgress(0);
     }
   };
-
-  if (!isAdmin) return null;
-
+  
   return (
-    <div className="mb-6">
+    <div className="mb-8">
       <Input
         type="file"
         accept="image/*,video/*"
-        onChange={handleFileSelect}
+        onChange={handleFileSelection}
         multiple
         disabled={uploading}
         className="hidden"
@@ -184,7 +168,7 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
       <label htmlFor="gallery-upload">
         <Button
           variant="outline"
-          className="w-full border-dashed border-2 py-6"
+          className="w-full border-dashed border-2 py-6 mb-8 hover:bg-temple-gold/10"
           disabled={uploading}
           asChild
         >
@@ -203,18 +187,56 @@ const GalleryUpload = ({ onUploadSuccess }: GalleryUploadProps) => {
             ) : (
               <>
                 <Upload className="mr-2 h-4 w-4" />
-                <Image className="mr-2 h-4 w-4" />
-                <FileVideo className="mr-2 h-4 w-4" />
+                <ImageIcon className="mr-2 h-4 w-4" />
+                <Video className="mr-2 h-4 w-4" />
                 <span>
                   {language === 'en' 
-                    ? 'Upload Images or Videos (Multiple files)' 
-                    : 'छवियां या वीडियो अपलोड करें (कई फ़ाइलें)'}
+                    ? "Upload Images or Videos to Gallery" 
+                    : "गैलरी में छवियां या वीडियो अपलोड करें"}
                 </span>
               </>
             )}
           </span>
         </Button>
       </label>
+      
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {language === 'en' ? 'Add title (optional)' : 'शीर्षक जोड़ें (वैकल्पिक)'}
+            </DialogTitle>
+            <DialogDescription>
+              {language === 'en' 
+                ? `You've selected ${selectedFiles.length} file(s). Add a title or leave blank.` 
+                : `आपने ${selectedFiles.length} फ़ाइल(ें) चुनी हैं। एक शीर्षक जोड़ें या खाली छोड़ दें।`}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="gallery-title">
+                {language === 'en' ? 'Title' : 'शीर्षक'}
+              </Label>
+              <Input
+                id="gallery-title"
+                placeholder={language === 'en' ? "Enter title (optional)" : "शीर्षक दर्ज करें (वैकल्पिक)"}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDialog(false)}>
+              {language === 'en' ? 'Cancel' : 'रद्द करें'}
+            </Button>
+            <Button onClick={handleFileUpload}>
+              {language === 'en' ? 'Upload' : 'अपलोड करें'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
