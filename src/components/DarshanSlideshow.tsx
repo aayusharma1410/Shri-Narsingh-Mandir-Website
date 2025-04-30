@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useDarshanMedia } from '@/hooks/useDarshanMedia';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
@@ -9,6 +10,11 @@ const DarshanSlideshow = () => {
   const { language } = useLanguage();
   const { darshanMedia, loading, fetchDarshanMedia } = useDarshanMedia();
   const { isAdmin } = useAdminStatus();
+  
+  useEffect(() => {
+    // Load darshan media on component mount
+    fetchDarshanMedia();
+  }, []);
   
   return (
     <div id="darshan-slideshow" className="w-full max-w-2xl mx-auto mb-4">

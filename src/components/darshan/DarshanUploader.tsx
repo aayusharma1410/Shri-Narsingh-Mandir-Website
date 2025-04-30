@@ -109,21 +109,23 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
           ? `आज का दर्शन - ${formattedDate}`
           : null;
         
-        console.log('Uploading darshan media with title:', displayTitle);
+        // Add debug log
+        console.log('Uploading darshan media with title:', displayTitle, 'URL:', publicUrl);
+        
+        // Create an insertion object for both tables
+        const darshanObj = {
+          title: displayTitle,
+          title_hi: title_hi || displayTitle,
+          image_url: publicUrl,
+          media_type: fileType,
+          uploaded_by: user.id,
+          display_date: currentDate.toISOString().split('T')[0]
+        };
         
         // Save to darshan_media table
         const { error: darshanError } = await supabase
           .from('darshan_media')
-          .insert([
-            {
-              title: displayTitle,
-              title_hi: title_hi || displayTitle,
-              image_url: publicUrl,
-              media_type: fileType,
-              uploaded_by: user.id,
-              display_date: currentDate.toISOString().split('T')[0]
-            }
-          ]);
+          .insert([darshanObj]);
         
         if (darshanError) {
           console.error('Darshan database insert error:', darshanError);
@@ -137,19 +139,21 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
           continue;
         }
         
-        // Also save to gallery_images for backwards compatibility and to have it in the main gallery
+        // Also save to gallery_images for the main gallery
+        const galleryObj = {
+          title: displayTitle,
+          image_url: publicUrl,
+          category: 'darshan',
+          uploaded_by: user.id,
+          media_type: fileType === 'video' ? 'video' : 'image',
+          is_darshan: true
+        };
+        
+        console.log('Saving to gallery_images:', galleryObj);
+        
         const { error: galleryError } = await supabase
           .from('gallery_images')
-          .insert([
-            {
-              title: displayTitle,
-              image_url: publicUrl,
-              category: 'darshan',
-              uploaded_by: user.id,
-              media_type: fileType,
-              is_darshan: true
-            }
-          ]);
+          .insert([galleryObj]);
         
         if (galleryError) {
           console.error('Gallery database insert error:', galleryError);

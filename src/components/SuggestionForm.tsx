@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader2, Send } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const suggestionSchema = z.object({
   name: z.string().min(2, {
@@ -34,7 +35,7 @@ type SuggestionFormValues = z.infer<typeof suggestionSchema>;
 const SuggestionForm = () => {
   const { language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+  const { toast: toastUI } = useToast();
 
   const form = useForm<SuggestionFormValues>({
     resolver: zodResolver(suggestionSchema),
@@ -67,28 +68,28 @@ const SuggestionForm = () => {
         throw error;
       }
 
-      toast({
-        title: language === "en"
-          ? "Suggestion Submitted"
-          : "सुझाव जमा किया गया",
-        description: language === "en"
-          ? "Your suggestion has been submitted successfully!"
-          : "आपका सुझाव सफलतापूर्वक जमा कर दिया गया है!",
-      });
+      // Use sonner toast for better visibility
+      toast.success(
+        language === "en"
+          ? "Suggestion submitted successfully!"
+          : "सुझाव सफलतापूर्वक जमा किया गया!",
+        {
+          duration: 5000,
+        }
+      );
 
       // Reset form fields
       form.reset();
     } catch (error) {
       console.error("Error submitting suggestion:", error);
-      toast({
-        variant: "destructive",
-        title: language === "en"
-          ? "Submission Failed"
-          : "सबमिशन विफल",
-        description: language === "en"
+      toast.error(
+        language === "en"
           ? "Failed to submit suggestion. Please try again."
           : "सुझाव जमा करने में विफल। कृपया पुनः प्रयास करें।",
-      });
+        {
+          duration: 5000,
+        }
+      );
     } finally {
       setIsSubmitting(false);
     }

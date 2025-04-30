@@ -14,6 +14,8 @@ export const useDarshanMedia = () => {
   const fetchDarshanMedia = async () => {
     try {
       setLoading(true);
+      console.log('Fetching darshan media...');
+      
       // Use the darshan_media table
       const { data, error } = await supabase
         .from('darshan_media')
@@ -33,6 +35,8 @@ export const useDarshanMedia = () => {
         return;
       }
       
+      console.log('Darshan media fetched:', data);
+      
       // Transform the data to match DarshanImage type
       const transformedData: DarshanImage[] = (data || []).map((item: any) => ({
         id: item.id,
@@ -44,6 +48,7 @@ export const useDarshanMedia = () => {
         display_date: item.display_date
       }));
       
+      console.log('Transformed darshan data:', transformedData);
       setDarshanMedia(transformedData);
     } catch (error) {
       console.error('Error in darshan fetch:', error);
@@ -64,7 +69,8 @@ export const useDarshanMedia = () => {
           schema: 'public',
           table: 'darshan_media'
         },
-        () => {
+        (payload) => {
+          console.log('Real-time update received:', payload);
           fetchDarshanMedia();
         }
       )
