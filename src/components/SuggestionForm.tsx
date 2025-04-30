@@ -1,102 +1,13 @@
 
-import { useState } from "react";
-import { z } from "zod";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { supabase } from "@/integrations/supabase/client";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Loader2, Send } from "lucide-react";
-import { toast } from "sonner";
-
-// Define schema for form validation
-const suggestionSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  phone: z.string().min(10, {
-    message: "Phone number must be at least 10 digits.",
-  }),
-  message: z.string().min(10, {
-    message: "Suggestion must be at least 10 characters.",
-  }).max(500, {
-    message: "Suggestion cannot exceed 500 characters.",
-  }),
-});
-
-type SuggestionFormValues = z.infer<typeof suggestionSchema>;
+import { Form } from "@/components/ui/form";
+import { useSuggestionForm } from "@/hooks/useSuggestionForm";
+import FormFieldWrapper from "@/components/forms/FormFieldWrapper";
+import SubmitButton from "@/components/forms/SubmitButton";
 
 const SuggestionForm = () => {
   const { language } = useLanguage();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<SuggestionFormValues>({
-    resolver: zodResolver(suggestionSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = async (data: SuggestionFormValues) => {
-    setIsSubmitting(true);
-    
-    try {
-      console.log("Submitting suggestion:", data);
-      
-      // Attempt to insert the data into Supabase with the new phone column
-      const { error } = await supabase
-        .from("suggestions")
-        .insert([{
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          message: data.message,
-        }]);
-      
-      if (error) {
-        console.error("Supabase error:", error);
-        throw new Error(error.message);
-      }
-
-      console.log("Suggestion submitted successfully");
-      
-      // Show success message
-      toast.success(
-        language === "en"
-          ? "Suggestion submitted successfully!"
-          : "सुझाव सफलतापूर्वक जमा किया गया!",
-        {
-          duration: 5000,
-        }
-      );
-
-      // Reset the form after successful submission
-      form.reset();
-    } catch (error) {
-      console.error("Error submitting suggestion:", error);
-      
-      // Show error message
-      toast.error(
-        language === "en"
-          ? "Failed to submit suggestion. Please try again."
-          : "सुझाव जमा करने में विफल। कृपया पुनः प्रयास करें।",
-        {
-          duration: 5000,
-        }
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { form, isSubmitting, onSubmit } = useSuggestionForm();
 
   return (
     <div className="bg-white/10 backdrop-blur-sm p-5 rounded-lg shadow">
@@ -105,96 +16,42 @@ const SuggestionForm = () => {
       </h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
+          <FormFieldWrapper
+            form={form}
             name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">
-                  {language === "en" ? "Name" : "नाम"}
-                </FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder={language === "en" ? "Your name" : "आपका नाम"} 
-                    className="bg-white/20 placeholder:text-gray-300 text-white border-temple-gold/30 focus:border-temple-gold" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={{ en: "Name", hi: "नाम" }}
+            placeholder={{ en: "Your name", hi: "आपका नाम" }}
           />
-          <FormField
-            control={form.control}
+          
+          <FormFieldWrapper
+            form={form}
             name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">
-                  {language === "en" ? "Email" : "ईमेल"}
-                </FormLabel>
-                <FormControl>
-                  <Input 
-                    type="email" 
-                    placeholder={language === "en" ? "Your email" : "आपका ईमेल"} 
-                    className="bg-white/20 placeholder:text-gray-300 text-white border-temple-gold/30 focus:border-temple-gold" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={{ en: "Email", hi: "ईमेल" }}
+            placeholder={{ en: "Your email", hi: "आपका ईमेल" }}
+            type="email"
           />
-          <FormField
-            control={form.control}
+          
+          <FormFieldWrapper
+            form={form}
             name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">
-                  {language === "en" ? "Phone Number" : "फोन नंबर"}
-                </FormLabel>
-                <FormControl>
-                  <Input 
-                    type="tel" 
-                    placeholder={language === "en" ? "Your phone number" : "आपका फोन नंबर"} 
-                    className="bg-white/20 placeholder:text-gray-300 text-white border-temple-gold/30 focus:border-temple-gold" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={{ en: "Phone Number", hi: "फोन नंबर" }}
+            placeholder={{ en: "Your phone number", hi: "आपका फोन नंबर" }}
+            type="tel"
           />
-          <FormField
-            control={form.control}
+          
+          <FormFieldWrapper
+            form={form}
             name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">
-                  {language === "en" ? "Suggestion" : "सुझाव"}
-                </FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder={language === "en" ? "Your suggestion or feedback..." : "आपका सुझाव या प्रतिक्रिया..."} 
-                    className="bg-white/20 placeholder:text-gray-300 text-white min-h-[100px] border-temple-gold/30 focus:border-temple-gold" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={{ en: "Suggestion", hi: "सुझाव" }}
+            placeholder={{ 
+              en: "Your suggestion or feedback...", 
+              hi: "आपका सुझाव या प्रतिक्रिया..." 
+            }}
+            type="textarea"
+            className="min-h-[100px]"
           />
-          <Button 
-            type="submit" 
-            disabled={isSubmitting} 
-            className="bg-temple-gold hover:bg-temple-gold/80 text-temple-maroon font-medium w-full"
-          >
-            {isSubmitting ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="mr-2 h-4 w-4" />
-            )}
-            {language === "en" ? "Submit Suggestion" : "सुझाव जमा करें"}
-          </Button>
+          
+          <SubmitButton isSubmitting={isSubmitting} />
         </form>
       </Form>
     </div>
