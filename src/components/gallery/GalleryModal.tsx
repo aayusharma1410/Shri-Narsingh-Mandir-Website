@@ -27,12 +27,12 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
   };
 
   return (
-    <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 bg-black/95 border-none overflow-hidden">
-      <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
+    <DialogContent className="sm:max-w-[90vw] max-h-[90vh] p-0 bg-black/95 border-none overflow-hidden">
+      <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-6">
         {currentImage.media_type === 'video' ? (
           <video
             src={currentImage.image_url}
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-[80vh] object-contain"
             controls
             autoPlay
             loop
@@ -41,8 +41,7 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
           <img
             src={currentImage.image_url}
             alt={currentImage.title || "Gallery image"}
-            className="max-w-full max-h-full object-contain"
-            style={{ margin: 'auto' }}
+            className="max-w-full max-h-[80vh] object-contain mx-auto"
           />
         )}
         
@@ -53,6 +52,7 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
               size="icon" 
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white hover:bg-black/70 border-none z-10"
               onClick={goToPrevious}
+              aria-label="Previous image"
             >
               <ChevronLeft className="h-6 w-6" />
             </Button>
@@ -62,6 +62,7 @@ const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
               size="icon" 
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white hover:bg-black/70 border-none z-10"
               onClick={goToNext}
+              aria-label="Next image"
             >
               <ChevronRight className="h-6 w-6" />
             </Button>

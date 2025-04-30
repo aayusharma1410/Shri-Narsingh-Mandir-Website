@@ -52,14 +52,14 @@ const SuggestionForm = () => {
     try {
       console.log("Submitting suggestion:", data);
       
-      // Attempt to insert the data into Supabase
+      // Attempt to insert the data into Supabase with the new phone column
       const { error } = await supabase
         .from("suggestions")
         .insert([{
           name: data.name,
           email: data.email,
-          // phone field is not in the current schema, so we'll include it in the message
-          message: `Phone: ${data.phone}\n\n${data.message}`,
+          phone: data.phone,
+          message: data.message,
         }]);
       
       if (error) {
