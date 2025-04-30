@@ -1,0 +1,57 @@
+
+import { LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/AuthContext";
+import { User } from "@supabase/supabase-js";
+
+interface UserMenuProps {
+  user: User;
+  language: string;
+  isScrolled: boolean;
+}
+
+export const UserMenu = ({ user, language, isScrolled }: UserMenuProps) => {
+  const { signOut } = useAuth();
+  
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="outline" 
+          size="sm"
+          className={`
+            flex items-center gap-1 rounded-full border-2
+            transition-all duration-400 ease-in-out
+            hover:tracking-[4px]
+            ${isScrolled 
+              ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
+              : "border-white/20 bg-white/10 text-white hover:bg-white/20"
+            }
+          `}
+        >
+          {user.user_metadata.username || 'Profile'}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <DropdownMenuItem className="text-gray-500">
+          {language === 'en' ? 'Signed in as' : 'इस रूप में साइन इन'}
+        </DropdownMenuItem>
+        <DropdownMenuItem className="font-medium">
+          {user.email}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut()} className="text-red-500 hover:text-red-600 cursor-pointer">
+          <LogOut className="h-4 w-4 mr-2" />
+          {language === 'en' ? 'Logout' : 'लॉग आउट'}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};

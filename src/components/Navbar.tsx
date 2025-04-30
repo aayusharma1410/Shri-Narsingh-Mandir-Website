@@ -3,40 +3,20 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Menu, Globe, ArrowLeft, LogOut } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { UserMenu } from "@/components/navigation/UserMenu";
+import { LanguageSwitcher } from "@/components/navigation/LanguageSwitcher";
+import { MobileNavMenu } from "@/components/navigation/MobileNavMenu";
+import { NavLink } from "@/components/navigation/NavLink";
 
 const Navbar = () => {
-  const { language, setLanguage } = useLanguage();
-  const { user, signOut } = useAuth();
+  const { language } = useLanguage();
+  const { user } = useAuth();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   const isLoginPage = location.pathname === '/auth';
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'hi' : 'en');
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,10 +30,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
@@ -100,132 +76,31 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
-              <Link
+              <NavLink
                 key={link.path}
                 to={link.path}
-                className={`
-                  relative px-3 py-2 
-                  ${getTextColorClass(isScrolled)} no-underline
-                  transition-all duration-400 ease-in-out
-                  hover:tracking-[4px]
-                  ${location.pathname === link.path ? "font-medium" : "font-normal"}
-                `}
+                isActive={location.pathname === link.path}
+                textColorClass={getTextColorClass(isScrolled)}
               >
                 {link.name}
-              </Link>
+              </NavLink>
             ))}
 
             {user && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className={`
-                      flex items-center gap-1 rounded-full border-2
-                      transition-all duration-400 ease-in-out
-                      hover:tracking-[4px]
-                      ${isScrolled 
-                        ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
-                        : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-                      }
-                    `}
-                  >
-                    {user.user_metadata.username || 'Profile'}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="text-gray-500">
-                    {language === 'en' ? 'Signed in as' : 'इस रूप में साइन इन'}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="font-medium">
-                    {user.email}
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => signOut()} className="text-red-500 hover:text-red-600 cursor-pointer">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    {language === 'en' ? 'Logout' : 'लॉग आउट'}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserMenu 
+                user={user} 
+                language={language} 
+                isScrolled={isScrolled} 
+              />
             )}
 
-            <Button 
-              onClick={toggleLanguage} 
-              variant="outline" 
-              size="sm"
-              className={`
-                flex items-center gap-1 rounded-full border-2
-                transition-all duration-400 ease-in-out
-                hover:tracking-[4px]
-                ${isScrolled 
-                  ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
-                  : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-                }
-              `}
-            >
-              <Globe className="h-4 w-4" />
-              <span>{language === 'en' ? 'हिंदी' : 'English'}</span>
-            </Button>
+            <LanguageSwitcher isScrolled={isScrolled} />
           </div>
 
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={`md:hidden ${
-                  isScrolled ? "text-gray-700" : "text-white"
-                }`}
-                onClick={() => setIsOpen(true)}
-              >
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[80%]">
-              <SheetHeader>
-                <SheetTitle>श्री नृसिंह मंदिर</SheetTitle>
-              </SheetHeader>
-              <div className="mt-6 flex flex-col space-y-4">
-                {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="px-4 py-2 text-base hover:bg-gray-100 rounded-md"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-
-                {user && (
-                  <Button 
-                    onClick={() => {
-                      signOut();
-                      setIsOpen(false);
-                    }}
-                    variant="outline"
-                    className="w-full justify-start gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>{language === 'en' ? 'Logout' : 'लॉग आउट'}</span>
-                  </Button>
-                )}
-
-                <Button 
-                  onClick={() => {
-                    toggleLanguage();
-                    setIsOpen(false);
-                  }}
-                  variant="outline"
-                  className="w-full justify-start gap-2 bg-temple-gold/10 text-temple-maroon hover:bg-temple-gold/20"
-                >
-                  <Globe className="h-4 w-4" />
-                  <span>{language === 'en' ? 'हिंदी में देखें' : 'View in English'}</span>
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <MobileNavMenu 
+            isScrolled={isScrolled} 
+            navLinks={navLinks} 
+          />
         </div>
       </div>
     </header>
