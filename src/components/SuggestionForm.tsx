@@ -47,11 +47,11 @@ const SuggestionForm = () => {
 
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
+    
     try {
-      // Explicitly log what we're submitting for debugging
       console.log("Submitting suggestion:", data);
       
-      // Insert data into the suggestions table
+      // Make the Supabase insert with error handling
       const { error } = await supabase
         .from("suggestions")
         .insert([{
@@ -63,10 +63,10 @@ const SuggestionForm = () => {
       
       if (error) {
         console.error("Supabase error:", error);
-        throw error;
+        throw new Error(error.message);
       }
 
-      // Use sonner toast for better visibility
+      // Show success message using sonner toast
       toast.success(
         language === "en"
           ? "Suggestion submitted successfully!"
@@ -76,10 +76,12 @@ const SuggestionForm = () => {
         }
       );
 
-      // Reset form fields
+      // Reset the form after successful submission
       form.reset();
     } catch (error) {
       console.error("Error submitting suggestion:", error);
+      
+      // Show error message using sonner toast
       toast.error(
         language === "en"
           ? "Failed to submit suggestion. Please try again."
