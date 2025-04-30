@@ -48,15 +48,17 @@ const SuggestionForm = () => {
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
     try {
-      // Use the real Supabase client to insert data correctly
+      // Explicitly log what we're submitting for debugging
+      console.log("Submitting suggestion:", data);
+      
       const { error } = await supabase
         .from("suggestions")
-        .insert({
+        .insert([{  // Note: passing an array as required by Supabase
           name: data.name,
           email: data.email,
           phone: data.phone,
           message: data.message,
-        });
+        }]);
       
       if (error) {
         console.error("Supabase error:", error);

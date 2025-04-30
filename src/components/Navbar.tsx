@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Menu, Globe, ArrowLeft, LogOut } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -103,22 +116,38 @@ const Navbar = () => {
             ))}
 
             {user && (
-              <Button 
-                onClick={() => signOut()} 
-                variant="outline" 
-                size="sm"
-                className={`
-                  flex items-center gap-1 rounded-full border-2
-                  transition-all duration-400 ease-in-out
-                  hover:tracking-[4px]
-                  ${isScrolled 
-                    ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
-                    : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-                  }
-                `}
-              >
-                {user.user_metadata.username || 'Profile'}
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className={`
+                      flex items-center gap-1 rounded-full border-2
+                      transition-all duration-400 ease-in-out
+                      hover:tracking-[4px]
+                      ${isScrolled 
+                        ? "border-temple-gold bg-white text-temple-maroon hover:bg-temple-gold/10" 
+                        : "border-white/20 bg-white/10 text-white hover:bg-white/20"
+                      }
+                    `}
+                  >
+                    {user.user_metadata.username || 'Profile'}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem className="text-gray-500">
+                    {language === 'en' ? 'Signed in as' : 'इस रूप में साइन इन'}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="font-medium">
+                    {user.email}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => signOut()} className="text-red-500 hover:text-red-600 cursor-pointer">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    {language === 'en' ? 'Logout' : 'लॉग आउट'}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
 
             <Button 
