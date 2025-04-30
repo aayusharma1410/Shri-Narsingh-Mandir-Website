@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -48,11 +48,14 @@ const SuggestionForm = () => {
   const onSubmit = async (data: SuggestionFormValues) => {
     setIsSubmitting(true);
     try {
-      // Looking at the mock implementation in src/lib/supabase.ts, 
-      // we see that insert() doesn't expect arguments in the mock
+      // Use the real Supabase client to insert data correctly
       const { error } = await supabase
         .from("suggestions")
-        .insert();
+        .insert({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        });
       
       if (error) {
         throw error;
