@@ -4,7 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { DarshanImage } from '@/types/gallery';
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import GalleryActions from "../gallery/GalleryActions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Carousel,
   CarouselContent,
@@ -24,12 +24,19 @@ const DarshanMedia = ({ darshanMedia: initialDarshanMedia, loading, onImageDelet
   const { isAdmin } = useAdminStatus();
   const [darshanMedia, setDarshanMedia] = useState<DarshanImage[]>(initialDarshanMedia);
   
+  // Update local state when props change
+  useEffect(() => {
+    setDarshanMedia(initialDarshanMedia);
+  }, [initialDarshanMedia]);
+  
   const handleImageDeleted = (deletedId: string) => {
     setDarshanMedia(prevMedia => prevMedia.filter(media => media.id !== deletedId));
     if (onImageDeleted) {
       onImageDeleted();
     }
   };
+  
+  console.log("DarshanMedia render with media count:", darshanMedia.length);
   
   if (loading) {
     return (
@@ -70,6 +77,12 @@ const DarshanMedia = ({ darshanMedia: initialDarshanMedia, loading, onImageDelet
           />
         )}
         
+        {media.title && (
+          <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2">
+            <p className="text-sm font-medium truncate">{media.title}</p>
+          </div>
+        )}
+        
         <GalleryActions 
           imageId={media.id}
           imageUrl={media.image_url}
@@ -103,6 +116,12 @@ const DarshanMedia = ({ darshanMedia: initialDarshanMedia, loading, onImageDelet
                   alt={media.title}
                   className="w-full h-full object-contain rounded-lg"
                 />
+              )}
+              
+              {media.title && (
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2">
+                  <p className="text-sm font-medium truncate">{media.title}</p>
+                </div>
               )}
               
               <GalleryActions 

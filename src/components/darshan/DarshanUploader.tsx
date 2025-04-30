@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Loader, Upload, Image as ImageIcon, Video, FileText } from "lucide-react";
+import { Loader, Upload, Image as ImageIcon, Video } from "lucide-react";
 import { format } from 'date-fns';
 import { useAuth } from "@/contexts/AuthContext";
 import { 
@@ -18,7 +18,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 interface DarshanUploaderProps {
   onUploadSuccess: () => void;
@@ -26,7 +26,6 @@ interface DarshanUploaderProps {
 
 const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
   const { language } = useLanguage();
-  const { toast } = useToast();
   const { user } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -43,7 +42,7 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
   };
   
   const handleFileUpload = async () => {
-    if (selectedFiles.length === 0 || !user?.id) {
+    if (selectedFiles.length === 0) {
       setShowDialog(false);
       return;
     }
@@ -61,13 +60,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
         // Validate file type
         const fileType = file.type.split('/')[0];
         if (fileType !== 'image' && fileType !== 'video') {
-          toast({
-            variant: "destructive",
-            title: language === 'en' ? 'Error' : 'त्रुटि',
-            description: language === 'en' 
-              ? `${file.name} is not an image or video file`
-              : `${file.name} कोई छवि या वीडियो फ़ाइल नहीं है`,
-          });
+          toast.error(language === 'en' 
+            ? `${file.name} is not an image or video file`
+            : `${file.name} कोई छवि या वीडियो फ़ाइल नहीं है`
+          );
           continue;
         }
         
@@ -81,13 +77,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
 
         if (uploadError) {
           console.error('Storage upload error:', uploadError);
-          toast({
-            variant: "destructive",
-            title: language === 'en' ? 'Error' : 'त्रुटि',
-            description: language === 'en' 
-              ? `Failed to upload ${file.name}`
-              : `${file.name} अपलोड करने में विफल`,
-          });
+          toast.error(language === 'en' 
+            ? `Failed to upload ${file.name}`
+            : `${file.name} अपलोड करने में विफल`
+          );
           continue;
         }
 
@@ -112,13 +105,13 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
         // Add debug log
         console.log('Uploading darshan media with title:', displayTitle, 'URL:', publicUrl);
         
-        // Create an insertion object for both tables
+        // Create an insertion object for darshan_media table
         const darshanObj = {
           title: displayTitle,
           title_hi: title_hi || displayTitle,
           image_url: publicUrl,
           media_type: fileType,
-          uploaded_by: user.id,
+          uploaded_by: user?.id || null,
           display_date: currentDate.toISOString().split('T')[0]
         };
         
@@ -129,13 +122,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
         
         if (darshanError) {
           console.error('Darshan database insert error:', darshanError);
-          toast({
-            variant: "destructive",
-            title: language === 'en' ? 'Error' : 'त्रुटि',
-            description: language === 'en' 
-              ? `Failed to save darshan to database`
-              : `दर्शन को डेटाबेस में सहेजने में विफल`,
-          });
+          toast.error(language === 'en' 
+            ? `Failed to save darshan to database`
+            : `दर्शन को डेटाबेस में सहेजने में विफल`
+          );
           continue;
         }
         
@@ -144,7 +134,7 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
           title: displayTitle,
           image_url: publicUrl,
           category: 'darshan',
-          uploaded_by: user.id,
+          uploaded_by: user?.id || null,
           media_type: fileType === 'video' ? 'video' : 'image',
           is_darshan: true
         };
@@ -165,12 +155,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
       }
       
       if (completedFiles > 0) {
-        toast({
-          title: language === 'en' ? 'Success' : 'सफल',
-          description: language === 'en' 
-            ? `${completedFiles} files uploaded successfully`
-            : `${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`,
-        });
+        toast.success(language === 'en' 
+          ? `${completedFiles} files uploaded successfully`
+          : `${completedFiles} फ़ाइलें सफलतापूर्वक अपलोड की गईं`
+        );
         
         // Clear selected files
         setSelectedFiles([]);
@@ -181,13 +169,10 @@ const DarshanUploader = ({ onUploadSuccess }: DarshanUploaderProps) => {
       }
     } catch (error) {
       console.error('Error uploading files:', error);
-      toast({
-        variant: "destructive",
-        title: language === 'en' ? 'Error' : 'त्रुटि',
-        description: language === 'en'
-          ? 'Failed to upload files. Please try again.'
-          : 'फ़ाइलें अपलोड करने में विफल। कृपया पुन: प्रयास करें।',
-      });
+      toast.error(language === 'en'
+        ? 'Failed to upload files. Please try again.'
+        : 'फ़ाइलें अपलोड करने में विफल। कृपया पुन: प्रयास करें।'
+      );
     } finally {
       setUploading(false);
       setUploadProgress(0);

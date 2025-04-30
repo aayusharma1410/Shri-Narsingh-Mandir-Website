@@ -14,6 +14,13 @@ const DarshanSlideshow = () => {
   useEffect(() => {
     // Load darshan media on component mount
     fetchDarshanMedia();
+    
+    // Set up an interval to refresh darshan media every minute
+    const refreshInterval = setInterval(() => {
+      fetchDarshanMedia();
+    }, 60000); // 60000 ms = 1 minute
+    
+    return () => clearInterval(refreshInterval);
   }, []);
   
   return (

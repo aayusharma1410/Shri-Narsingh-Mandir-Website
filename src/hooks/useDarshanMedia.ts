@@ -57,6 +57,7 @@ export const useDarshanMedia = () => {
     }
   };
 
+  // Initial fetch and subscription setup
   useEffect(() => {
     fetchDarshanMedia();
 
@@ -70,7 +71,7 @@ export const useDarshanMedia = () => {
           table: 'darshan_media'
         },
         (payload) => {
-          console.log('Real-time update received:', payload);
+          console.log('Real-time update received for darshan_media:', payload);
           fetchDarshanMedia();
         }
       )
