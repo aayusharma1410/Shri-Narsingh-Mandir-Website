@@ -115,7 +115,7 @@ const translations = {
       submitButton: 'Book Poshak Seva',
       submitting: 'Submitting...',
       successTitle: 'Booking Successful',
-      successMessage: 'Thank you for booking the Poshak Seva. The Shri Lakshmi Narsingh Mandir Committee, Hasampur will contact you soon regarding further details and confirmation.',
+      successMessage: 'Thank you for booking the Poshak Seva. The Shri Narsingh Mandir Committee, Hasampur will contact you soon regarding further details and confirmation.',
       blessing: 'May Bhagwan Narsingh bless you and your family with divine grace.'
     },
     jhanki: {
@@ -233,8 +233,8 @@ const translations = {
       submitButton: 'पोशाक सेवा बुक करें',
       submitting: 'प्रस्तुत किया जा रहा है...',
       successTitle: 'बुकिंग सफल',
-      successMessage: 'पोशाक सेवा बुक करने के लिए धन्यवाद। श्री लक्ष्मी नरसिंह मंदिर समिति, हसमपुर आपसे जल्द ही आगे की जानकारी और पुष्टि के संबंध में संपर्क करेगी।',
-      blessing: 'भगवान नरसिंह आपको और आपके परिवार को दिव्य कृपा से आशीर्वाद दें।'
+      successMessage: 'पोशाक सेवा बुक करने के लिए धन्यवाद। श्री नृसिंह मंदिर समिति, हसामपुर आपसे जल्द ही आगे की जानकारी और पुष्टि के संबंध में संपर्क करेगी।',
+      blessing: 'भगवान नृसिंह आपको और आपके परिवार को दिव्य कृपा से आशीर्वाद दें।'
     },
     jhanki: {
       title: 'झांकी कथाएं',
