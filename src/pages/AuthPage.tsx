@@ -7,6 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import Navbar from '@/components/Navbar';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -17,7 +22,9 @@ const AuthPage = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
-  const { signIn, signUp } = useAuth();
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [otp, setOtp] = useState('');
+  const { signIn, signUp, signInWithOtp, verifyOtp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -26,16 +33,30 @@ const AuthPage = () => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        await signIn(email, password);
+      if (showOtpInput) {
+        // Verify OTP
+        await verifyOtp(email, otp);
+        navigate('/');
+        toast({
+          title: 'Welcome back!',
+          description: 'You have been logged in successfully.',
+        });
+      } else if (isLogin) {
+        // Request OTP for login
+        await signInWithOtp(email);
+        setShowOtpInput(true);
+        toast({
+          title: 'OTP Sent!',
+          description: 'Please check your email for the verification code.',
+        });
       } else {
-        await signUp(email, password, username);
+        // Sign up
+        await signUp(email, password, username, city, state, country);
+        toast({
+          title: 'Account created successfully!',
+          description: 'Please check your email to verify your account.',
+        });
       }
-      navigate('/');
-      toast({
-        title: isLogin ? 'Welcome back!' : 'Account created successfully!',
-        description: isLogin ? 'You have been logged in.' : 'Please check your email to verify your account.',
-      });
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -47,6 +68,11 @@ const AuthPage = () => {
     }
   };
 
+  const resetForm = () => {
+    setShowOtpInput(false);
+    setOtp('');
+  };
+
   return (
     <>
       <Navbar />
@@ -54,33 +80,62 @@ const AuthPage = () => {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-2xl text-center text-temple-maroon">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {showOtpInput ? 'Enter Verification Code' : (isLogin ? 'Welcome Back' : 'Create Account')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              {!isLogin && (
+              {!showOtpInput && (
                 <div className="space-y-2">
                   <Input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
               )}
-              {!isLogin && (
+
+              {showOtpInput && (
+                <div className="space-y-2">
+                  <div className="flex justify-center py-4">
+                    <InputOTP
+                      maxLength={6}
+                      value={otp}
+                      onChange={setOtp}
+                      render={({ slots }) => (
+                        <InputOTPGroup>
+                          {slots.map((slot, index) => (
+                            <InputOTPSlot key={index} {...slot} index={index} />
+                          ))}
+                        </InputOTPGroup>
+                      )}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {!showOtpInput && !isLogin && (
                 <>
+                  <div className="space-y-2">
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
                   <div className="space-y-2">
                     <Input
                       type="text"
@@ -107,32 +162,55 @@ const AuthPage = () => {
                   </div>
                 </>
               )}
-              <div className="space-y-2">
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
+
+              {!showOtpInput && isLogin && (
+                <div className="space-y-2">
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    className="w-full text-temple-maroon border-temple-maroon hover:bg-temple-gold/10"
+                    onClick={() => {
+                      navigate('/auth', { state: { usePassword: true } });
+                    }}
+                  >
+                    Sign in with password instead
+                  </Button>
+                </div>
+              )}
+
               <Button 
                 type="submit" 
                 className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
-                disabled={loading}
+                disabled={loading || (showOtpInput && otp.length < 6)}
               >
-                {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
+                {loading ? 'Loading...' : (
+                  showOtpInput ? 'Verify' : (isLogin ? 'Send Login Code' : 'Sign Up')
+                )}
               </Button>
+              
+              {showOtpInput && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={resetForm}
+                  className="w-full text-temple-maroon hover:text-temple-gold"
+                >
+                  Back to login
+                </Button>
+              )}
             </form>
-            <div className="mt-4 text-center">
-              <Button
-                variant="link"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-temple-maroon hover:text-temple-gold"
-              >
-                {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
-              </Button>
-            </div>
+            
+            {!showOtpInput && (
+              <div className="mt-4 text-center">
+                <Button
+                  variant="link"
+                  onClick={() => setIsLogin(!isLogin)}
+                  className="text-temple-maroon hover:text-temple-gold"
+                >
+                  {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
