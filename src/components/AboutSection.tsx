@@ -236,12 +236,12 @@ const AboutSection = () => {
                     : 'श्रद्धालुओं की आस्था है कि यहाँ माँगने से भगवान अवश्य कृपा करते हैं।'}
                 </p>
                 <h4 className="text-lg font-medium text-temple-maroon">
-  {language === 'en' ? 'Presence of Lord Hanuman' : 'हनुमान जी की उपस्थिति'}
+  {language === 'en' ? 'Presence of Lord Hanuman' : 'हनुमान जी विराजमान हैं'}
 </h4>
 <p className="text-justify">
   {language === 'en'
     ? 'In front of Shri Narsingh Bhagwan, Lord Hanuman is gracefully seated, symbolizing unwavering devotion and strength.'
-    : 'श्री नरसिंह भगवान के समक्ष हनुमान जी विराजमान हैं, जो उनकी अखंड भक्ति और शक्ति का प्रतीक हैं।'}
+    : 'श्री नृसिंह भगवान के समक्ष हनुमान जी विराजमान हैं, जो उनकी अखंड भक्ति और शक्ति का प्रतीक हैं।'}
 </p>
 
 
