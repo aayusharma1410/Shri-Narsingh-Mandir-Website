@@ -17,14 +17,13 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [otp, setOtp] = useState('');
-  const { signIn, signUp, signInWithOtp, verifyOtp } = useAuth();
+  const { signInWithOtp, verifyOtp, signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -38,8 +37,10 @@ const AuthPage = () => {
         await verifyOtp(email, otp);
         navigate('/');
         toast({
-          title: 'Welcome back!',
-          description: 'You have been logged in successfully.',
+          title: isLogin ? 'Welcome back!' : 'Account created successfully!',
+          description: isLogin 
+            ? 'You have been logged in successfully.' 
+            : 'Your account has been created and you are now logged in.',
         });
       } else if (isLogin) {
         // Request OTP for login
@@ -50,11 +51,12 @@ const AuthPage = () => {
           description: 'Please check your email for the verification code.',
         });
       } else {
-        // Sign up
-        await signUp(email, password, username, city, state, country);
+        // Request OTP for signup
+        await signInWithOtp(email);
+        setShowOtpInput(true);
         toast({
-          title: 'Account created successfully!',
-          description: 'Please check your email to verify your account.',
+          title: 'OTP Sent!',
+          description: 'Please check your email for the verification code to complete your registration.',
         });
       }
     } catch (error: any) {
@@ -120,15 +122,6 @@ const AuthPage = () => {
                 <>
                   <div className="space-y-2">
                     <Input
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Input
                       type="text"
                       placeholder="Username"
                       value={username}
@@ -163,28 +156,13 @@ const AuthPage = () => {
                 </>
               )}
 
-              {!showOtpInput && isLogin && (
-                <div className="space-y-2">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    className="w-full text-temple-maroon border-temple-maroon hover:bg-temple-gold/10"
-                    onClick={() => {
-                      navigate('/auth', { state: { usePassword: true } });
-                    }}
-                  >
-                    Sign in with password instead
-                  </Button>
-                </div>
-              )}
-
               <Button 
                 type="submit" 
                 className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
                 disabled={loading || (showOtpInput && otp.length < 6)}
               >
                 {loading ? 'Loading...' : (
-                  showOtpInput ? 'Verify' : (isLogin ? 'Send Login Code' : 'Sign Up')
+                  showOtpInput ? 'Verify' : (isLogin ? 'Send Login Code' : 'Send Signup Code')
                 )}
               </Button>
               
@@ -195,7 +173,7 @@ const AuthPage = () => {
                   onClick={resetForm}
                   className="w-full text-temple-maroon hover:text-temple-gold"
                 >
-                  Back to login
+                  Back to {isLogin ? 'login' : 'signup'}
                 </Button>
               )}
             </form>

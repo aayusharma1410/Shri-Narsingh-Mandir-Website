@@ -58,7 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        shouldCreateUser: false,
+        // Allow creating new users with OTP
+        shouldCreateUser: true,
       },
     });
     if (error) throw error;
@@ -76,10 +77,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = async (email: string, password: string, username: string, city?: string, state?: string, country?: string) => {
     console.log("Signing up with:", email);
-    const { error } = await supabase.auth.signUp({
+    // Instead of password signup, we'll use OTP
+    const { error } = await supabase.auth.signInWithOtp({
       email,
-      password,
       options: {
+        shouldCreateUser: true,
         data: {
           username,
           city,
