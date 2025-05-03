@@ -2,7 +2,7 @@
 import { DialogContent } from "@/components/ui/dialog";
 import { GalleryImage } from "@/types/gallery";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -14,6 +14,12 @@ interface GalleryModalProps {
 const GalleryModal = ({ image, allImages }: GalleryModalProps) => {
   const { language } = useLanguage();
   const [currentImage, setCurrentImage] = useState<GalleryImage>(image);
+  
+  // Update the current image whenever the selected image prop changes
+  useEffect(() => {
+    setCurrentImage(image);
+  }, [image]);
+  
   const currentIndex = allImages.findIndex(img => img.id === currentImage.id);
 
   const goToNext = () => {

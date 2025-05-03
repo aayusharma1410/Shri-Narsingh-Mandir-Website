@@ -34,17 +34,32 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-start">
-  <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-  <span>
-    +91 91193 89603
-    <br />
-    +91 89556 72580
-  </span>
-</li>
+                <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+                <div>
+                  <a 
+                    href="tel:+919119389603" 
+                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                  >
+                    +91 91193 89603
+                  </a>
+                  <br />
+                  <a 
+                    href="tel:+918955672580" 
+                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                  >
+                    +91 89556 72580
+                  </a>
+                </div>
+              </li>
 
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <span>shrilakshminarisnghhasampur@gmail.com</span>
+                <a 
+                  href="mailto:shrilakshminarisnghhasampur@gmail.com" 
+                  className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                >
+                  shrilakshminarisnghhasampur@gmail.com
+                </a>
               </li>
               <li className="flex items-start">
                 <Instagram className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
