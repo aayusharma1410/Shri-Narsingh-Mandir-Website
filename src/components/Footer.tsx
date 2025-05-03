@@ -34,16 +34,21 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-start">
-                <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <span>+91 89556 72580</span>
-              </li>
+  <Phone className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
+  <span>
+    +91 91193 89603
+    <br />
+    +91 89556 72580
+  </span>
+</li>
+
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <span>shrilakshminarisnghhasampur@gmail.com</span>
               </li>
               <li className="flex items-start">
                 <Instagram className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <a href="https://www.instagram.com/p/DItYel0Tew8T3UZeMnAQAfTKSIFjneiuj5CpqM0/?igsh=cGNxcnMwNGs1NjZq" 
+                <a href="https://www.instagram.com/shrinarsinghmandirofficial/" 
                    target="_blank" 
                    rel="noopener noreferrer"
                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
@@ -52,7 +57,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <Facebook className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
-                <a href="https://www.facebook.com/events/695352646486362/" 
+                <a href="https://www.facebook.com/profile.php?id=61575204090417" 
                    target="_blank" 
                    rel="noopener noreferrer"
                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
