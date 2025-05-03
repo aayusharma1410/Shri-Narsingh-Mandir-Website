@@ -38,14 +38,16 @@ const Footer = () => {
                 <div>
                   <a 
                     href="tel:+919119389603" 
-                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
+                    aria-label="Call temple phone number"
                   >
                     +91 91193 89603
                   </a>
                   <br />
                   <a 
                     href="tel:+918955672580" 
-                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
+                    aria-label="Call alternative temple phone number"
                   >
                     +91 89556 72580
                   </a>
@@ -56,7 +58,8 @@ const Footer = () => {
                 <Mail className="w-5 h-5 mr-2 mt-0.5 text-temple-gold" />
                 <a 
                   href="mailto:shrilakshminarisnghhasampur@gmail.com" 
-                  className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2"
+                  className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
+                  aria-label="Send email to temple"
                 >
                   shrilakshminarisnghhasampur@gmail.com
                 </a>
@@ -66,7 +69,7 @@ const Footer = () => {
                 <a href="https://www.instagram.com/shrinarsinghmandirofficial/" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer">
                   @shrinarsinghtemple
                 </a>
               </li>
@@ -75,7 +78,7 @@ const Footer = () => {
                 <a href="https://www.facebook.com/profile.php?id=61575204090417" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer">
                   Shri Narsingh Temple
                 </a>
               </li>
