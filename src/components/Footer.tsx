@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
@@ -40,6 +39,10 @@ const Footer = () => {
                     href="tel:+919119389603" 
                     className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
                     aria-label="Call temple phone number"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = "tel:+919119389603";
+                    }}
                   >
                     +91 91193 89603
                   </a>
@@ -48,6 +51,10 @@ const Footer = () => {
                     href="tel:+918955672580" 
                     className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
                     aria-label="Call alternative temple phone number"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = "tel:+918955672580";
+                    }}
                   >
                     +91 89556 72580
                   </a>
@@ -60,6 +67,10 @@ const Footer = () => {
                   href="mailto:shrilakshminarisnghhasampur@gmail.com" 
                   className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
                   aria-label="Send email to temple"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = "mailto:shrilakshminarisnghhasampur@gmail.com";
+                  }}
                 >
                   shrilakshminarisnghhasampur@gmail.com
                 </a>
