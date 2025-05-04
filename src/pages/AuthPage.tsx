@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +9,9 @@ import { useToast } from '@/components/ui/use-toast';
 import Navbar from '@/components/Navbar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon, User, Mail, Lock } from 'lucide-react';
+import { InfoIcon, User, Mail, Lock, Phone, MapPin } from 'lucide-react';
+import LocationDropdown from '@/components/ui/location-dropdown';
+import { countryData, getStatesForCountry, getCitiesForState, LocationOption } from '@/data/locationData';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -17,13 +19,41 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [stateOptions, setStateOptions] = useState<LocationOption[]>([]);
+  const [cityOptions, setCityOptions] = useState<LocationOption[]>([]);
+  
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { language } = useLanguage();
+
+  // Update state options when country changes
+  useEffect(() => {
+    if (country) {
+      const states = getStatesForCountry(country);
+      setStateOptions(states);
+      setState(''); // Reset state when country changes
+      setCity(''); // Reset city when country changes
+    } else {
+      setStateOptions([]);
+      setCityOptions([]);
+    }
+  }, [country]);
+
+  // Update city options when state changes
+  useEffect(() => {
+    if (country && state) {
+      const cities = getCitiesForState(country, state);
+      setCityOptions(cities);
+      setCity(''); // Reset city when state changes
+    } else {
+      setCityOptions([]);
+    }
+  }, [country, state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +63,7 @@ const AuthPage = () => {
       if (isLogin) {
         await signIn(email, password);
       } else {
-        await signUp(email, password, username);
+        await signUp(email, password, username, phoneNumber, city, state, country);
       }
       navigate('/');
       toast({
@@ -51,6 +81,12 @@ const AuthPage = () => {
     }
   };
 
+  // Transform country data for dropdown
+  const countryOptions = countryData.map(country => ({
+    value: country.value,
+    label: country.label
+  }));
+
   return (
     <>
       <Navbar />
@@ -62,6 +98,7 @@ const AuthPage = () => {
           
           <Card className="w-full backdrop-blur-sm border-temple-gold/30 shadow-lg shadow-temple-gold/10 overflow-hidden relative z-10">
             <div className="absolute top-0 right-0 w-32 h-32 bg-temple-gold/5 rounded-bl-full -z-10" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-temple-maroon/5 rounded-tr-full -z-10" />
             
             <CardHeader className="relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-temple-maroon via-temple-gold to-temple-cream" />
@@ -115,28 +152,61 @@ const AuthPage = () => {
                 )}
                 
                 {!isLogin && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 animate-fade-in">
-                    <Input
-                      type="text"
-                      placeholder={language === 'en' ? "City" : "शहर"}
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                    />
-                    <Input
-                      type="text"
-                      placeholder={language === 'en' ? "State" : "राज्य"}
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                    />
-                    <Input
-                      type="text"
-                      placeholder={language === 'en' ? "Country" : "देश"}
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                    />
+                  <div className="space-y-3 animate-fade-in">
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+                      <Input
+                        type="tel"
+                        placeholder={language === 'en' ? "Phone Number" : "फ़ोन नंबर"}
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {!isLogin && (
+                  <div className="grid grid-cols-1 gap-3 animate-fade-in">
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70 z-10" />
+                      <div className="pl-10">
+                        <LocationDropdown
+                          options={countryOptions}
+                          value={country}
+                          onChange={setCountry}
+                          placeholder={{
+                            en: "Select Country",
+                            hi: "देश चुनें"
+                          }}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <LocationDropdown
+                        options={stateOptions}
+                        value={state}
+                        onChange={setState}
+                        placeholder={{
+                          en: "Select State",
+                          hi: "राज्य चुनें"
+                        }}
+                        className="w-full"
+                      />
+                      
+                      <LocationDropdown
+                        options={cityOptions}
+                        value={city}
+                        onChange={setCity}
+                        placeholder={{
+                          en: "Select City",
+                          hi: "शहर चुनें"
+                        }}
+                        className="w-full"
+                      />
+                    </div>
                   </div>
                 )}
                 

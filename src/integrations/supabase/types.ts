@@ -202,6 +202,7 @@ export type Database = {
           id: string
           is_admin: boolean | null
           language_preference: string | null
+          phone_number: string | null
           state: string | null
           updated_at: string | null
           username: string
@@ -215,6 +216,7 @@ export type Database = {
           id: string
           is_admin?: boolean | null
           language_preference?: string | null
+          phone_number?: string | null
           state?: string | null
           updated_at?: string | null
           username: string
@@ -228,6 +230,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           language_preference?: string | null
+          phone_number?: string | null
           state?: string | null
           updated_at?: string | null
           username?: string
