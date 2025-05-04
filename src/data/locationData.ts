@@ -33,7 +33,7 @@ export const countryData: CountryData[] = [
       {
         value: "maharashtra",
         label: "Maharashtra",
-        states: [
+        cities: [
           { value: "mumbai", label: "Mumbai" },
           { value: "pune", label: "Pune" },
           { value: "nagpur", label: "Nagpur" }
