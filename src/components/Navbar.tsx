@@ -33,9 +33,9 @@ const Navbar = () => {
 
   const getTextColorClass = (isScrolled: boolean) => {
     if (isLoginPage) {
-      return 'text-yellow-400';
+      return 'text-temple-maroon';
     }
-    return isScrolled ? 'text-yellow-400' : 'text-white';
+    return isScrolled ? 'text-temple-maroon' : 'text-temple-gold';
   };
 
   const navLinks = [
