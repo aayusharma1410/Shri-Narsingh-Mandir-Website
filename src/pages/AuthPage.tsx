@@ -18,6 +18,8 @@ const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const [username, setUsername] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [country, setCountry] = useState('');
@@ -55,9 +57,29 @@ const AuthPage = () => {
     }
   }, [country, state]);
 
+  // Check if passwords match
+  useEffect(() => {
+    if (!isLogin && confirmPassword) {
+      setPasswordMatch(password === confirmPassword);
+    } else {
+      setPasswordMatch(true);
+    }
+  }, [password, confirmPassword, isLogin]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Check if passwords match for signup
+    if (!isLogin && password !== confirmPassword) {
+      toast({
+        variant: 'destructive',
+        title: language === 'en' ? 'Passwords do not match' : 'पासवर्ड मेल नहीं खाते',
+        description: language === 'en' ? 'Please ensure both passwords match.' : 'कृपया सुनिश्चित करें कि दोनों पासवर्ड एक समान हैं।',
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       if (isLogin) {
@@ -224,10 +246,33 @@ const AuthPage = () => {
                   </div>
                 </div>
                 
+                {!isLogin && (
+                  <div className="space-y-3 animate-fade-in">
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+                      <Input
+                        type="password"
+                        placeholder={language === 'en' ? "Confirm Password" : "पासवर्ड की पुष्टि करें"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+                          !passwordMatch && confirmPassword ? "border-red-500 focus:border-red-500" : ""
+                        }`}
+                      />
+                    </div>
+                    {!passwordMatch && confirmPassword && (
+                      <p className="text-red-500 text-xs">
+                        {language === 'en' ? "Passwords do not match" : "पासवर्ड मेल नहीं खाते"}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-temple-maroon to-temple-gold hover:opacity-90 transition-all text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                  disabled={loading}
+                  disabled={loading || (!isLogin && !passwordMatch)}
                 >
                   {loading ? (language === 'en' ? 'Loading...' : 'लोड हो रहा है...') : (isLogin ? (language === 'en' ? 'Sign In' : 'साइन इन करें') : (language === 'en' ? 'Sign Up' : 'साइन अप करें'))}
                 </Button>
