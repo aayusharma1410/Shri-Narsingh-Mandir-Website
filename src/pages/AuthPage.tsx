@@ -9,7 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import Navbar from '@/components/Navbar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon } from 'lucide-react';
+import { InfoIcon, User, Mail, Lock } from 'lucide-react';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -54,102 +54,136 @@ const AuthPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-temple-gold/10 flex items-center justify-center p-4 pt-20">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center text-temple-maroon">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!isLogin && (
-              <Alert className="mb-4 bg-temple-cream/40 border-temple-gold">
-                <InfoIcon className="h-4 w-4 text-temple-maroon" />
-                <AlertDescription className="text-sm">
-                  {language === 'en' 
-                    ? "After signing up, you will receive a verification link on your email from Supabase. Click on that link to verify your email, and then come back to log in. You will be successfully logged in."
-                    : "साइन अप करने के बाद, आपको Supabase की तरफ से एक ईमेल पर वेरिफिकेशन लिंक मिलेगा। उस लिंक पर क्लिक करके अपनी ईमेल को वेरिफाई करें, और फिर वापस आकर लॉगिन करें। इसके बाद आप सफलतापूर्वक लॉगिन हो जाएंगे।"
-                  }
-                </AlertDescription>
-              </Alert>
-            )}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-temple-cream/30 to-temple-gold/10 flex items-center justify-center p-4 pt-20">
+        <div className="w-full max-w-md relative">
+          {/* Decorative elements */}
+          <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full bg-temple-gold/20 animate-pulse hidden md:block" />
+          <div className="absolute -bottom-8 -right-8 w-24 h-24 rounded-full bg-temple-maroon/10 animate-pulse hidden md:block" />
+          
+          <Card className="w-full backdrop-blur-sm border-temple-gold/30 shadow-lg shadow-temple-gold/10 overflow-hidden relative z-10">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-temple-gold/5 rounded-bl-full -z-10" />
+            
+            <CardHeader className="relative">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-temple-maroon via-temple-gold to-temple-cream" />
+              <CardTitle className="text-3xl font-serif text-center text-temple-maroon py-2">
+                {isLogin ? (language === 'en' ? 'Welcome Back' : 'वापस स्वागत है') : (language === 'en' ? 'Create Account' : 'खाता बनाएं')}
+              </CardTitle>
+            </CardHeader>
+            
+            <CardContent>
               {!isLogin && (
-                <div className="space-y-2">
-                  <Input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                </div>
+                <Alert className="mb-6 bg-temple-cream/40 border-temple-gold/50 animate-fade-in">
+                  <InfoIcon className="h-4 w-4 text-temple-maroon" />
+                  <AlertDescription className="text-sm">
+                    {language === 'en' 
+                      ? "After signing up, you will receive a verification link on your email from Supabase. Click on that link to verify your email, and then come back to log in. You will be successfully logged in."
+                      : "साइन अप करने के बाद, आपको Supabase की तरफ से एक ईमेल पर वेरिफिकेशन लिंक मिलेगा। उस लिंक पर क्लिक करके अपनी ईमेल को वेरिफाई करें, और फिर वापस आकर लॉगिन करें। इसके बाद आप सफलतापूर्वक लॉगिन हो जाएंगे।"
+                    }
+                  </AlertDescription>
+                </Alert>
               )}
-              {!isLogin && (
-                <>
-                  <div className="space-y-2">
+              
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-3">
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+                    <Input
+                      type="email"
+                      placeholder={language === 'en' ? "Email" : "ईमेल"}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+                    />
+                  </div>
+                </div>
+                
+                {!isLogin && (
+                  <div className="space-y-3 animate-fade-in">
+                    <div className="relative">
+                      <User className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+                      <Input
+                        type="text"
+                        placeholder={language === 'en' ? "Username" : "उपयोगकर्ता नाम"}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {!isLogin && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 animate-fade-in">
                     <Input
                       type="text"
-                      placeholder="City"
+                      placeholder={language === 'en' ? "City" : "शहर"}
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
+                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
                     />
-                  </div>
-                  <div className="space-y-2">
                     <Input
                       type="text"
-                      placeholder="State"
+                      placeholder={language === 'en' ? "State" : "राज्य"}
                       value={state}
                       onChange={(e) => setState(e.target.value)}
+                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
                     />
-                  </div>
-                  <div className="space-y-2">
                     <Input
                       type="text"
-                      placeholder="Country"
+                      placeholder={language === 'en' ? "Country" : "देश"}
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
+                      className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
                     />
                   </div>
-                </>
-              )}
-              <div className="space-y-2">
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                )}
+                
+                <div className="space-y-3">
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+                    <Input
+                      type="password"
+                      placeholder={language === 'en' ? "Password" : "पासवर्ड"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+                    />
+                  </div>
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-temple-maroon to-temple-gold hover:opacity-90 transition-all text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  disabled={loading}
+                >
+                  {loading ? (language === 'en' ? 'Loading...' : 'लोड हो रहा है...') : (isLogin ? (language === 'en' ? 'Sign In' : 'साइन इन करें') : (language === 'en' ? 'Sign Up' : 'साइन अप करें'))}
+                </Button>
+              </form>
+              
+              <div className="mt-6 text-center relative">
+                <div className="absolute left-0 right-0 top-1/2 h-px bg-temple-gold/20"></div>
+                <span className="relative bg-white px-4 text-sm text-temple-maroon/70">
+                  {language === 'en' ? 'or' : 'या'}
+                </span>
               </div>
-              <Button 
-                type="submit" 
-                className="w-full bg-temple-maroon hover:bg-temple-maroon/90"
-                disabled={loading}
-              >
-                {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
-              </Button>
-            </form>
-            <div className="mt-4 text-center">
-              <Button
-                variant="link"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-temple-maroon hover:text-temple-gold"
-              >
-                {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+              
+              <div className="mt-6 text-center">
+                <Button
+                  variant="link"
+                  onClick={() => setIsLogin(!isLogin)}
+                  className="text-temple-maroon hover:text-temple-gold transition-colors font-medium"
+                >
+                  {isLogin ? 
+                    (language === 'en' ? "Don't have an account? Sign Up" : "खाता नहीं है? साइन अप करें") : 
+                    (language === 'en' ? 'Already have an account? Sign In' : 'पहले से ही खाता है? साइन इन करें')}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </>
   );
