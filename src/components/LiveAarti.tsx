@@ -43,7 +43,7 @@ const LiveAarti = () => {
   }, []);
 
   const togglePlay = () => {
-    window.open('https://www.facebook.com/events/695352646486362/', '_blank');
+    window.open('https://www.facebook.com/profile.php?id=61571381196072', '_blank');
     setIsPlaying(true);
   };
 
