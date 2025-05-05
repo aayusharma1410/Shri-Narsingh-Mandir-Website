@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       country: country || '',
     };
     
-    const { error } = await supabase.auth.signUp({
+    const { error, data } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -77,33 +77,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     // After successful sign-up, also create a record in user_profiles if needed
     try {
-      const { data: userSession } = await supabase.auth.getSession();
-      const userId = userSession.session?.user.id;
+      // Check if we have a user ID from the signup response
+      const userId = data?.user?.id;
       
       if (userId) {
-        // Check if we need to create a profile record
+        console.log("Creating user profile for:", userId);
+        
+        // Check if a profile already exists
         const { data: existingProfile } = await supabase
           .from('user_profiles')
-          .select('*')
+          .select('id')
           .eq('id', userId)
-          .single();
+          .maybeSingle();
         
+        // If no profile exists, create one
         if (!existingProfile) {
-          await supabase.from('user_profiles').insert([
-            {
-              id: userId,
-              username,
-              full_name: fullName,
-              phone_number: phoneNumber,
-              city,
-              state,
-              country,
-            }
-          ]);
+          console.log("No existing profile found, creating new profile");
+          const { error: profileError } = await supabase
+            .from('user_profiles')
+            .insert([
+              {
+                id: userId,
+                username,
+                full_name: fullName,
+                phone_number: phoneNumber || '',
+                city: city || '',
+                state: state || '',
+                country: country || '',
+              }
+            ]);
+          
+          if (profileError) {
+            console.error("Error creating user profile:", profileError);
+          } else {
+            console.log("User profile created successfully");
+          }
+        } else {
+          console.log("Profile already exists, skipping creation");
         }
+      } else {
+        console.warn("No user ID available, cannot create profile");
       }
     } catch (profileError) {
-      console.error("Error creating user profile:", profileError);
+      console.error("Error in profile creation process:", profileError);
       // We don't throw here as the auth signup was successful
     }
   };
