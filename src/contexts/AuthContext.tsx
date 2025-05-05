@@ -83,37 +83,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (userId) {
         console.log("Creating user profile for:", userId);
         
-        // Check if a profile already exists
-        const { data: existingProfile } = await supabase
-          .from('user_profiles')
-          .select('id')
-          .eq('id', userId)
-          .maybeSingle();
+        // Generate a unique username if needed by appending a random string
+        const uniqueUsername = `${username}_${Math.random().toString(36).substring(2, 8)}`;
         
-        // If no profile exists, create one
-        if (!existingProfile) {
-          console.log("No existing profile found, creating new profile");
-          const { error: profileError } = await supabase
-            .from('user_profiles')
-            .insert([
-              {
-                id: userId,
-                username,
-                full_name: fullName,
-                phone_number: phoneNumber || '',
-                city: city || '',
-                state: state || '',
-                country: country || '',
-              }
-            ]);
-          
-          if (profileError) {
-            console.error("Error creating user profile:", profileError);
-          } else {
-            console.log("User profile created successfully");
-          }
+        // Try to create the profile directly - if it fails due to uniqueness, we'll get an error
+        const { error: profileError } = await supabase
+          .from('user_profiles')
+          .insert([
+            {
+              id: userId,
+              username: uniqueUsername, // Use the unique username
+              full_name: fullName,
+              phone_number: phoneNumber || '',
+              city: city || '',
+              state: state || '',
+              country: country || '',
+            }
+          ]);
+        
+        if (profileError) {
+          console.error("Error creating user profile:", profileError);
         } else {
-          console.log("Profile already exists, skipping creation");
+          console.log("User profile created successfully");
         }
       } else {
         console.warn("No user ID available, cannot create profile");
