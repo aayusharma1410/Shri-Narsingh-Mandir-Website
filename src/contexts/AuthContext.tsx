@@ -55,69 +55,72 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log("Signing up with:", email);
     console.log("Additional info:", { username, fullName, phoneNumber, city, state, country });
     
+    // Ensure all fields are defined before sending to Supabase
+    const userData = {
+      username,
+      full_name: fullName,
+      phone_number: phoneNumber || '',
+      city: city || '',
+      state: state || '',
+      country: country || '',
+    };
+    
+    const { error, data } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: userData,
+      },
+    });
+    
+    if (error) throw error;
+    
+    // After successful sign-up, also create a record in user_profiles if needed
     try {
-      // Ensure all fields are defined before sending to Supabase
-      const userData = {
-        username,
-        full_name: fullName,
-        phone_number: phoneNumber || '',
-        city: city || '',
-        state: state || '',
-        country: country || '',
-      };
-      
-      // First, perform the auth signup
-      const { error, data } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: userData,
-        },
-      });
-      
-      if (error) throw error;
-      
-      // After successful sign-up, create a record in user_profiles
       // Check if we have a user ID from the signup response
       const userId = data?.user?.id;
       
       if (userId) {
         console.log("Creating user profile for:", userId);
         
-        // Generate a completely unique timestamp-based username to avoid conflicts
-        const timestamp = new Date().getTime();
-        const randomStr = Math.random().toString(36).substring(2, 8);
-        const uniqueUsername = `${username}_${timestamp}_${randomStr}`;
-        
-        console.log("Generated unique username:", uniqueUsername);
-        
-        // Try to create the profile with the unique username
-        const { error: profileError } = await supabase
+        // Check if a profile already exists
+        const { data: existingProfile } = await supabase
           .from('user_profiles')
-          .insert([
-            {
-              id: userId,
-              username: uniqueUsername,
-              full_name: fullName,
-              phone_number: phoneNumber || '',
-              city: city || '',
-              state: state || '',
-              country: country || '',
-            }
-          ]);
+          .select('id')
+          .eq('id', userId)
+          .maybeSingle();
         
-        if (profileError) {
-          console.error("Error creating user profile:", profileError);
-          // We don't throw here as the auth signup was successful
+        // If no profile exists, create one
+        if (!existingProfile) {
+          console.log("No existing profile found, creating new profile");
+          const { error: profileError } = await supabase
+            .from('user_profiles')
+            .insert([
+              {
+                id: userId,
+                username,
+                full_name: fullName,
+                phone_number: phoneNumber || '',
+                city: city || '',
+                state: state || '',
+                country: country || '',
+              }
+            ]);
+          
+          if (profileError) {
+            console.error("Error creating user profile:", profileError);
+          } else {
+            console.log("User profile created successfully");
+          }
         } else {
-          console.log("User profile created successfully");
+          console.log("Profile already exists, skipping creation");
         }
       } else {
         console.warn("No user ID available, cannot create profile");
       }
-    } catch (error) {
-      console.error("Error in signup process:", error);
-      throw error;
+    } catch (profileError) {
+      console.error("Error in profile creation process:", profileError);
+      // We don't throw here as the auth signup was successful
     }
   };
 
