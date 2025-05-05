@@ -53,21 +53,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signUp = async (email: string, password: string, username: string, fullName: string, phoneNumber?: string, city?: string, state?: string, country?: string) => {
     console.log("Signing up with:", email);
+    console.log("Additional info:", { username, fullName, phoneNumber, city, state, country });
+    
+    // Ensure all fields are defined before sending to Supabase
+    const userData = {
+      username,
+      full_name: fullName,
+      phone_number: phoneNumber || '',
+      city: city || '',
+      state: state || '',
+      country: country || '',
+    };
+    
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: {
-          username,
-          full_name: fullName,
-          phone_number: phoneNumber,
-          city,
-          state,
-          country,
-        },
+        data: userData,
       },
     });
+    
     if (error) throw error;
+    
+    // After successful sign-up, also create a record in user_profiles if needed
+    try {
+      const { data: userSession } = await supabase.auth.getSession();
+      const userId = userSession.session?.user.id;
+      
+      if (userId) {
+        // Check if we need to create a profile record
+        const { data: existingProfile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', userId)
+          .single();
+        
+        if (!existingProfile) {
+          await supabase.from('user_profiles').insert([
+            {
+              id: userId,
+              username,
+              full_name: fullName,
+              phone_number: phoneNumber,
+              city,
+              state,
+              country,
+            }
+          ]);
+        }
+      }
+    } catch (profileError) {
+      console.error("Error creating user profile:", profileError);
+      // We don't throw here as the auth signup was successful
+    }
   };
 
   const signOut = async () => {

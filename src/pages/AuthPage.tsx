@@ -58,7 +58,21 @@ const AuthPage = () => {
       if (isLogin) {
         await signIn(email, password);
       } else {
-        await signUp(email, password, username, fullName, phoneNumber, city, state, country);
+        // Make sure all values are passed correctly to the signUp function
+        console.log("Signing up with these details:", {
+          email, username, fullName, phoneNumber, city, state, country
+        });
+        
+        await signUp(
+          email,
+          password,
+          username,
+          fullName,
+          phoneNumber,
+          city,
+          state,
+          country
+        );
       }
       navigate('/');
       toast({
