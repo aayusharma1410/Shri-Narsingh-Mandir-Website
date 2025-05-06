@@ -108,10 +108,11 @@ const PoshakSevaSection = () => {
     }
   };
 
-  // Replace the list items with a paragraph for Hindi text
-  const poshakDescription = language === 'hi' ? 
-    "देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है। यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है। भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं। भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है। इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है।"
-    : t('poshakSeva.reasons').split(',').map(item => item.trim());
+  // Define the paragraph text for Hindi to be used instead of list
+  const poshakDescriptionHindi = "देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है। यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है। भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं। भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है। इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है।";
+  
+  // Get reasons list for English or use the Hindi paragraph
+  const poshakReasons = language === 'en' ? t('poshakSeva.reasons').split(',').map(item => item.trim()) : null;
 
   return (
     <div className="container mx-auto px-4 space-y-12 relative z-10">
@@ -138,11 +139,11 @@ const PoshakSevaSection = () => {
           <CardContent>
             {language === 'hi' ? (
               <p className="text-left text-gray-700 leading-relaxed px-2 py-1 rounded hover:bg-amber-50/50 transition-colors duration-300">
-                {poshakDescription}
+                {poshakDescriptionHindi}
               </p>
             ) : (
               <ul className="list-none text-left space-y-4">
-                {poshakDescription.map((reason, index) => (
+                {poshakReasons?.map((reason, index) => (
                   <li key={index} className="flex items-start group">
                     <span className="inline-block w-7 h-7 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm group-hover:from-temple-gold/30 group-hover:to-amber-100/70 transition-colors duration-300">
                       {index + 1}
