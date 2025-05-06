@@ -1,14 +1,16 @@
 
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const LoginPopup = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { language } = useLanguage();
 
   useEffect(() => {
     // Only show popup for non-logged in users after 15 seconds
@@ -31,18 +33,20 @@ const LoginPopup = () => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl text-temple-maroon">
-            Stay Updated!
+            {language === 'en' ? 'Stay Updated!' : 'अपडेट रहें!'}
           </DialogTitle>
         </DialogHeader>
-        <div className="mt-4 text-center space-y-4">
-          <p className="text-gray-600">
-            Sign in to receive updates about temple activities and special events.
-          </p>
+        <DialogDescription className="text-center text-gray-600">
+          {language === 'en'
+            ? 'Sign in to receive updates about temple activities and special events.'
+            : 'मंदिर की गतिविधियों और विशेष कार्यक्रमों के बारे में अपडेट प्राप्त करने के लिए साइन इन करें।'}
+        </DialogDescription>
+        <div className="mt-4 text-center">
           <Button 
             onClick={handleLogin}
             className="bg-temple-maroon hover:bg-temple-maroon/90 text-white"
           >
-            Sign In Now
+            {language === 'en' ? 'Sign In Now' : 'अभी साइन इन करें'}
           </Button>
         </div>
       </DialogContent>
