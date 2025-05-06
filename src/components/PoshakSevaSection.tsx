@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -107,53 +108,63 @@ const PoshakSevaSection = () => {
     }
   };
 
-  const reasons = language === 'en' 
-    ? t('poshakSeva.reasons').split(',').map(item => item.trim())
+  // Replace the list items with a paragraph for Hindi text
+  const poshakDescription = language === 'hi' ? 
+    "देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है। यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है। भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं। भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है। इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है।"
     : t('poshakSeva.reasons').split(',').map(item => item.trim());
 
   return (
     <div className="container mx-auto px-4 space-y-12 relative z-10">
       <div className="max-w-3xl mx-auto text-center">
         <div className="flex justify-center mb-6">
-          <div className="p-4 bg-gradient-to-br from-temple-gold/30 to-amber-100/50 rounded-full shadow-inner">
-            <Shirt size={32} className="text-temple-gold drop-shadow-sm" />
+          <div className="p-4 bg-gradient-to-br from-temple-gold/30 to-amber-100/50 rounded-full shadow-inner animate-pulse">
+            <Shirt size={32} className="text-temple-gold drop-shadow-sm animate-float" />
           </div>
         </div>
-        <h1 className="text-3xl font-bold mb-8 text-temple-maroon">{t('poshakSeva.title')}</h1>
+        <h1 className="text-3xl font-bold mb-8 text-temple-maroon bg-gradient-to-r from-temple-gold/20 via-temple-gold/10 to-temple-gold/20 py-2 rounded-lg shadow-inner">{t('poshakSeva.title')}</h1>
         <p className="text-lg mb-8 leading-relaxed text-gray-700">
           {t('poshakSeva.description')}
         </p>
-        <Card className="bg-gradient-to-r from-amber-50/80 to-white border border-amber-100/50 shadow-xl mb-12 transform hover:shadow-2xl transition-all duration-300">
+        <Card className="bg-gradient-to-r from-amber-50/80 to-white border border-amber-100/50 shadow-xl mb-12 transform hover:shadow-2xl transition-all duration-300 overflow-hidden group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-temple-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <CardHeader>
             <div className="flex items-center justify-center mb-4">
-              <div className="p-3 bg-temple-gold/10 rounded-full mr-2">
+              <div className="p-3 bg-temple-gold/10 rounded-full mr-2 group-hover:bg-temple-gold/20 transition-all duration-300">
                 <HandHeart className="text-temple-maroon" size={24} />
               </div>
               <h2 className="text-xl font-semibold text-temple-maroon">{t('poshakSeva.whyImportant')}</h2>
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="list-none text-left space-y-4">
-              {reasons.map((reason, index) => (
-                <li key={index} className="flex items-start group">
-                  <span className="inline-block w-7 h-7 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm group-hover:from-temple-gold/30 group-hover:to-amber-100/70 transition-colors duration-300">
-                    {index + 1}
-                  </span>
-                  <span className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300">{reason}</span>
-                </li>
-              ))}
-            </ul>
+            {language === 'hi' ? (
+              <p className="text-left text-gray-700 leading-relaxed px-2 py-1 rounded hover:bg-amber-50/50 transition-colors duration-300">
+                {poshakDescription}
+              </p>
+            ) : (
+              <ul className="list-none text-left space-y-4">
+                {poshakDescription.map((reason, index) => (
+                  <li key={index} className="flex items-start group">
+                    <span className="inline-block w-7 h-7 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm group-hover:from-temple-gold/30 group-hover:to-amber-100/70 transition-colors duration-300">
+                      {index + 1}
+                    </span>
+                    <span className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300">{reason}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </CardContent>
         </Card>
       </div>
 
-      <div className="max-w-xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-amber-100/80 animate-fade-in hover:shadow-2xl transition-shadow duration-300">
+      <div className="max-w-xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-amber-100/80 animate-fade-in hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-temple-gold/30 via-temple-gold to-temple-gold/30"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-temple-gold/30 via-temple-gold to-temple-gold/30"></div>
         <div className="flex items-center justify-center mb-8">
-          <div className="p-3 bg-gradient-to-br from-temple-maroon/20 to-temple-maroon/5 rounded-full">
+          <div className="p-3 bg-gradient-to-br from-temple-maroon/20 to-temple-maroon/5 rounded-full animate-pulse">
             <Calendar size={28} className="text-temple-maroon" />
           </div>
         </div>
-        <h2 className="text-2xl font-semibold mb-8 text-center text-temple-maroon">{t('poshakSeva.bookTitle')}</h2>
+        <h2 className="text-2xl font-semibold mb-8 text-center text-temple-maroon bg-clip-text text-transparent bg-gradient-to-r from-temple-maroon via-temple-gold to-temple-maroon">{t('poshakSeva.bookTitle')}</h2>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

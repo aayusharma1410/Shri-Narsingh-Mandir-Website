@@ -52,18 +52,24 @@ const LiveAarti = () => {
   return (
     <section 
       id="live-aarti" 
-      className="section-container relative bg-gradient-to-b from-temple-cream to-white"
+      className="section-container relative bg-gradient-to-b from-temple-cream to-white overflow-hidden"
       ref={sectionRef}
     >
+      {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-24 h-24 bg-temple-gold/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-32 h-32 bg-temple-gold/10 rounded-full translate-x-1/3 translate-y-1/3"></div>
+      <div className="absolute top-1/4 right-1/4 w-48 h-48 bg-temple-gold/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-temple-maroon/5 rounded-full blur-3xl"></div>
+      <div className="absolute -left-10 top-1/2 w-24 h-72 rotate-45 bg-temple-gold/10 blur-2xl"></div>
       
-      <div className="max-w-4xl mx-auto text-center mb-12">
+      <div className="max-w-4xl mx-auto text-center mb-12 relative z-10">
+        <div className="inline-block p-px bg-gradient-to-r from-transparent via-temple-gold/50 to-transparent w-40 mb-3"></div>
         <p className="text-temple-gold font-medium mb-3 opacity-0 animate-on-scroll">आरती दर्शन</p>
-        <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll">
+        <h2 className="section-heading text-temple-maroon opacity-0 animate-on-scroll bg-clip-text text-transparent bg-gradient-to-r from-temple-maroon via-temple-gold to-temple-maroon">
           {language === 'en' ? 'Live Aarti' : 'लाइव आरती'}
         </h2>
-        <p className="text-lg opacity-0 animate-on-scroll">
+        <div className="inline-block p-px bg-gradient-to-r from-transparent via-temple-gold/50 to-transparent w-40 mb-3"></div>
+        <p className="text-lg opacity-0 animate-on-scroll bg-gradient-to-r from-white/0 via-temple-gold/5 to-white/0 p-3 rounded-lg">
           {language === 'en' 
             ? 'Watch the live broadcast of the aarti performed every morning and evening and experience the spiritual atmosphere from home.'
             : 'हर दिन सुबह और शाम को होने वाली आरती का सीधा प्रसारण देखें और घर बैठे आध्यात्मिक अनुभव प्राप्त करें।'}
@@ -71,7 +77,8 @@ const LiveAarti = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-12">
-        <div className="lg:col-span-2 opacity-0 animate-on-scroll">
+        <div className="lg:col-span-2 opacity-0 animate-on-scroll relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-temple-gold/10 to-temple-maroon/5 rounded-xl -m-1 blur-md"></div>
           <AartiVideoPlayer
             isPlaying={isPlaying}
             isMuted={isMuted}
