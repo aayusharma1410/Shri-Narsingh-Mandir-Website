@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.log("No existing profile found, creating new profile");
             
             // Explicitly include all fields in the profile record
-            const profileData = {
+            const userProfileData = {
               id: userId,
               username: uniqueUsername,
               full_name: fullName,
@@ -116,17 +116,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               country: country || null
             };
             
-            console.log("Inserting profile data:", profileData);
+            console.log("Inserting profile data:", userProfileData);
             
-            const { error: profileError, data: profileData } = await supabase
+            const { error: profileError, data: createdProfile } = await supabase
               .from('user_profiles')
-              .insert([profileData])
+              .insert([userProfileData])
               .select();
             
             if (profileError) {
               console.error("Error creating user profile:", profileError);
             } else {
-              console.log("User profile created successfully:", profileData);
+              console.log("User profile created successfully:", createdProfile);
             }
           } else {
             console.log("Profile already exists, skipping creation");
