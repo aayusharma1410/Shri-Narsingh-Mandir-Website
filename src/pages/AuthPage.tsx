@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
@@ -14,12 +14,15 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  // If user is already logged in, redirect to home
-  if (user) {
-    navigate('/');
-    return null;
-  }
+  // Use useEffect for navigation instead of redirecting during render
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
+  // Remove early return that was causing issue
+  
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
   };
