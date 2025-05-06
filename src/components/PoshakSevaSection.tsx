@@ -107,9 +107,7 @@ const PoshakSevaSection = () => {
     }
   };
 
-  const reasons = language === 'en' 
-    ? t('poshakSeva.reasons').split(',').map(item => item.trim())
-    : t('poshakSeva.reasons').split(',').map(item => item.trim());
+  const reasons = t('poshakSeva.reasons');
 
   return (
     <div className="container mx-auto px-4 space-y-12 relative z-10">
@@ -133,16 +131,11 @@ const PoshakSevaSection = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="list-none text-left space-y-4">
-              {reasons.map((reason, index) => (
-                <li key={index} className="flex items-start group">
-                  <span className="inline-block w-7 h-7 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm group-hover:from-temple-gold/30 group-hover:to-amber-100/70 transition-colors duration-300">
-                    {index + 1}
-                  </span>
-                  <span className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300">{reason}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="text-left space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                {reasons}
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
