@@ -1,11 +1,12 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Lock, User, UserCheck, Phone, MapPin } from 'lucide-react';
+import { useAuthFormValidation } from '@/hooks/useAuthFormValidation';
 
 interface SignupFormProps {
   onSwitchMode: () => void;
@@ -13,59 +14,56 @@ interface SignupFormProps {
 
 const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
-  
   const { signUp } = useAuth();
   const { toast } = useToast();
   const { language } = useLanguage();
 
-  // Check if passwords match
-  useEffect(() => {
-    if (confirmPassword) {
-      setPasswordMatch(password === confirmPassword);
-    } else {
-      setPasswordMatch(true);
-    }
-  }, [password, confirmPassword]);
+  // Refs for form fields
+  const emailRef = useRef<HTMLInputElement>(null);
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  
+  const {
+    values,
+    errors,
+    register,
+    validateForm,
+    focusFirstError
+  } = useAuthFormValidation({
+    email: '',
+    fullName: '',
+    username: '',
+    phoneNumber: '',
+    country: '',
+    state: '',
+    city: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      toast({
-        variant: 'destructive',
-        title: language === 'en' ? 'Passwords do not match' : 'पासवर्ड मेल नहीं खाते',
-        description: language === 'en' ? 'Please ensure both passwords match.' : 'कृपया सुनिश्चित करें कि दोनों पासवर्ड एक समान हैं।',
-      });
-      setLoading(false);
+    
+    if (!validateForm()) {
+      focusFirstError();
       return;
     }
+    
+    setLoading(true);
 
     try {
-      console.log("Signing up with these details:", {
-        email, username, fullName, phoneNumber, city, state, country
-      });
-      
       await signUp(
-        email,
-        password,
-        username,
-        fullName,
-        phoneNumber,
-        city,
-        state,
-        country
+        values.email,
+        values.password,
+        values.username,
+        values.fullName,
+        values.phoneNumber,
+        values.city,
+        values.state,
+        values.country
       );
       
       toast({
@@ -83,19 +81,34 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
     }
   };
 
+  // Register fields with validation rules
+  const emailProps = register('email', { required: true, email: true }, emailRef);
+  const fullNameProps = register('fullName', { required: true }, fullNameRef);
+  const usernameProps = register('username', { required: true }, usernameRef);
+  const phoneProps = register('phoneNumber', {}, phoneRef);
+  const countryProps = register('country', {});
+  const stateProps = register('state', {});
+  const cityProps = register('city', {});
+  const passwordProps = register('password', { required: true, minLength: 6 }, passwordRef);
+  const confirmPasswordProps = register('confirmPassword', { required: true, match: 'password' }, confirmPasswordRef);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-3">
         <div className="relative">
           <Mail className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={emailRef}
             type="email"
             placeholder={language === 'en' ? "Email" : "ईमेल"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.email ? 'border-red-500' : ''
+            }`}
+            {...emailProps}
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+          )}
         </div>
       </div>
       
@@ -103,13 +116,17 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
         <div className="relative">
           <UserCheck className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={fullNameRef}
             type="text"
             placeholder={language === 'en' ? "Full Name" : "पूरा नाम"}
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.fullName ? 'border-red-500' : ''
+            }`}
+            {...fullNameProps}
           />
+          {errors.fullName && (
+            <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+          )}
         </div>
       </div>
 
@@ -117,13 +134,17 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
         <div className="relative">
           <User className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={usernameRef}
             type="text"
             placeholder={language === 'en' ? "Username" : "उपयोगकर्ता नाम"}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.username ? 'border-red-500' : ''
+            }`}
+            {...usernameProps}
           />
+          {errors.username && (
+            <p className="text-red-500 text-xs mt-1">{errors.username}</p>
+          )}
         </div>
       </div>
 
@@ -131,12 +152,17 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
         <div className="relative">
           <Phone className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={phoneRef}
             type="tel"
             placeholder={language === 'en' ? "Phone Number" : "फ़ोन नंबर"}
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.phoneNumber ? 'border-red-500' : ''
+            }`}
+            {...phoneProps}
           />
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>
+          )}
         </div>
       </div>
       
@@ -146,28 +172,44 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
           <Input
             type="text"
             placeholder={language === 'en' ? "Country" : "देश"}
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.country ? 'border-red-500' : ''
+            }`}
+            {...countryProps}
           />
+          {errors.country && (
+            <p className="text-red-500 text-xs mt-1">{errors.country}</p>
+          )}
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <Input
-            type="text"
-            placeholder={language === 'en' ? "State" : "राज्य"}
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-          />
+          <div>
+            <Input
+              type="text"
+              placeholder={language === 'en' ? "State" : "राज्य"}
+              className={`border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+                errors.state ? 'border-red-500' : ''
+              }`}
+              {...stateProps}
+            />
+            {errors.state && (
+              <p className="text-red-500 text-xs mt-1">{errors.state}</p>
+            )}
+          </div>
           
-          <Input
-            type="text"
-            placeholder={language === 'en' ? "City" : "शहर"}
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-          />
+          <div>
+            <Input
+              type="text"
+              placeholder={language === 'en' ? "City" : "शहर"}
+              className={`border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+                errors.city ? 'border-red-500' : ''
+              }`}
+              {...cityProps}
+            />
+            {errors.city && (
+              <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+            )}
+          </div>
         </div>
       </div>
       
@@ -175,13 +217,17 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
         <div className="relative">
           <Lock className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={passwordRef}
             type="password"
             placeholder={language === 'en' ? "Password" : "पासवर्ड"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.password ? 'border-red-500' : ''
+            }`}
+            {...passwordProps}
           />
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+          )}
         </div>
       </div>
       
@@ -189,27 +235,24 @@ const SignupForm = ({ onSwitchMode }: SignupFormProps) => {
         <div className="relative">
           <Lock className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={confirmPasswordRef}
             type="password"
             placeholder={language === 'en' ? "Confirm Password" : "पासवर्ड की पुष्टि करें"}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
             className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
-              !passwordMatch && confirmPassword ? "border-red-500 focus:border-red-500" : ""
+              errors.confirmPassword ? 'border-red-500' : ''
             }`}
+            {...confirmPasswordProps}
           />
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+          )}
         </div>
-        {!passwordMatch && confirmPassword && (
-          <p className="text-red-500 text-xs">
-            {language === 'en' ? "Passwords do not match" : "पासवर्ड मेल नहीं खाते"}
-          </p>
-        )}
       </div>
       
       <Button 
         type="submit" 
         className="w-full bg-gradient-to-r from-temple-maroon to-temple-gold hover:opacity-90 transition-all text-white font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-        disabled={loading || !passwordMatch}
+        disabled={loading}
       >
         {loading 
           ? (language === 'en' ? 'Loading...' : 'लोड हो रहा है...') 

@@ -1,11 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Lock } from 'lucide-react';
+import { useAuthFormValidation } from '@/hooks/useAuthFormValidation';
 
 interface LoginFormProps {
   onSwitchMode: () => void;
@@ -13,19 +14,36 @@ interface LoginFormProps {
 
 const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
   const { signIn } = useAuth();
   const { toast } = useToast();
   const { language } = useLanguage();
+  
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  
+  const {
+    values,
+    errors,
+    register,
+    validateForm,
+    focusFirstError
+  } = useAuthFormValidation({
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      focusFirstError();
+      return;
+    }
+    
     setLoading(true);
 
     try {
-      await signIn(email, password);
+      await signIn(values.email, values.password);
       toast({
         title: language === 'en' ? 'Welcome back!' : 'वापस स्वागत है!',
         description: language === 'en' ? 'You have been logged in.' : 'आप लॉग इन हो गए हैं।',
@@ -41,19 +59,26 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
     }
   };
 
+  const emailProps = register('email', { required: true, email: true }, emailRef);
+  const passwordProps = register('password', { required: true }, passwordRef);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-3">
         <div className="relative">
           <Mail className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={emailRef}
             type="email"
             placeholder={language === 'en' ? "Email" : "ईमेल"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.email ? 'border-red-500' : ''
+            }`}
+            {...emailProps}
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+          )}
         </div>
       </div>
       
@@ -61,13 +86,17 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
         <div className="relative">
           <Lock className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
           <Input
+            ref={passwordRef}
             type="password"
             placeholder={language === 'en' ? "Password" : "पासवर्ड"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.password ? 'border-red-500' : ''
+            }`}
+            {...passwordProps}
           />
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+          )}
         </div>
       </div>
       
