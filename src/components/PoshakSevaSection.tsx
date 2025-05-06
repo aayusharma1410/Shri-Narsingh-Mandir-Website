@@ -25,6 +25,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Shirt, Star, Calendar } from 'lucide-react';
 
 const formSchema = z.object({
   fullName: z.string().min(3, 'Name must be at least 3 characters'),
@@ -111,24 +113,46 @@ const PoshakSevaSection = () => {
     : t('poshakSeva.reasons').split(',').map(item => item.trim());
 
   return (
-    <div className="container mx-auto px-4 space-y-8">
+    <div className="container mx-auto px-4 space-y-10 relative z-10">
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-6">{t('poshakSeva.title')}</h1>
-        <p className="text-lg mb-4">
+        <div className="flex justify-center mb-6">
+          <div className="p-3 bg-temple-gold/10 rounded-full">
+            <Shirt size={30} className="text-temple-gold" />
+          </div>
+        </div>
+        <h1 className="text-3xl font-bold mb-8 text-temple-maroon">{t('poshakSeva.title')}</h1>
+        <p className="text-lg mb-8 leading-relaxed text-gray-700">
           {t('poshakSeva.description')}
         </p>
-        <div className="prose max-w-none mb-8">
-          <h2 className="text-xl font-semibold mb-4">{t('poshakSeva.whyImportant')}</h2>
-          <ul className="list-disc text-left pl-6 space-y-2">
-            {reasons.map((reason, index) => (
-              <li key={index}>{reason}</li>
-            ))}
-          </ul>
-        </div>
+        <Card className="bg-gradient-to-r from-amber-50 to-white border border-amber-100/50 shadow-lg mb-8">
+          <CardHeader>
+            <div className="flex items-center justify-center mb-4">
+              <Star className="text-temple-gold mr-2" size={20} />
+              <h2 className="text-xl font-semibold">{t('poshakSeva.whyImportant')}</h2>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-none text-left space-y-3">
+              {reasons.map((reason, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="inline-block w-6 h-6 bg-temple-gold/20 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm">
+                    {index + 1}
+                  </span>
+                  <span className="text-gray-700">{reason}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-semibold mb-6">{t('poshakSeva.bookTitle')}</h2>
+      <div className="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-amber-100 animate-fade-in">
+        <div className="flex items-center justify-center mb-6">
+          <div className="p-3 bg-temple-maroon/10 rounded-full">
+            <Calendar size={26} className="text-temple-maroon" />
+          </div>
+        </div>
+        <h2 className="text-2xl font-semibold mb-8 text-center">{t('poshakSeva.bookTitle')}</h2>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -137,90 +161,115 @@ const PoshakSevaSection = () => {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.fullName')}</FormLabel>
+                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.fullName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('poshakSeva.formLabels.fullName')} {...field} />
+                    <Input 
+                      placeholder={t('poshakSeva.formLabels.fullName')} 
+                      {...field} 
+                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.email')}</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="example@mail.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="mobileNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.mobile')}</FormLabel>
-                  <FormControl>
-                    <Input placeholder="9XXXXXXXXX" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="sevaDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.date')}</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="poshakType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.poshakType')}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.email')}</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder={language === 'en' ? "Select poshak type" : "पोशाक प्रकार चुनें"} />
-                      </SelectTrigger>
+                      <Input 
+                        type="email" 
+                        placeholder="example@mail.com" 
+                        {...field} 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      />
                     </FormControl>
-                    <SelectContent>
-                      {poshakTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="mobileNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.mobile')}</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="9XXXXXXXXX" 
+                        {...field} 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="sevaDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.date')}</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="date" 
+                        {...field} 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="poshakType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.poshakType')}</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="border-amber-200 focus:ring-temple-gold/20">
+                          <SelectValue placeholder={language === 'en' ? "Select poshak type" : "पोशाक प्रकार चुनें"} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {poshakTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               control={form.control}
               name="occasion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.occasion')}</FormLabel>
+                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.occasion')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={language === 'en' ? "e.g., Birthday, Anniversary" : "जैसे, जन्मदिन, वर्षगांठ"} {...field} />
+                    <Input 
+                      placeholder={language === 'en' ? "e.g., Birthday, Anniversary" : "जैसे, जन्मदिन, वर्षगांठ"} 
+                      {...field} 
+                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -232,16 +281,24 @@ const PoshakSevaSection = () => {
               name="additionalNotes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('poshakSeva.formLabels.notes')}</FormLabel>
+                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.notes')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={language === 'en' ? "Any special requests or notes" : "कोई विशेष अनुरोध या नोट्स"} {...field} />
+                    <Textarea 
+                      placeholder={language === 'en' ? "Any special requests or notes" : "कोई विशेष अनुरोध या नोट्स"} 
+                      {...field} 
+                      className="min-h-[100px] border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button 
+              type="submit" 
+              className="w-full bg-temple-gold hover:bg-temple-gold/90 text-primary-foreground transition-transform hover:scale-[1.02] py-6"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? t('poshakSeva.submitting') : t('poshakSeva.submitButton')}
             </Button>
           </form>
@@ -249,13 +306,16 @@ const PoshakSevaSection = () => {
       </div>
 
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-md border-temple-gold/20 bg-gradient-to-b from-white to-amber-50">
           <DialogHeader>
-            <DialogTitle>{t('poshakSeva.successTitle')}</DialogTitle>
+            <div className="mx-auto p-3 bg-temple-gold/10 rounded-full mb-4">
+              <Star size={26} className="text-temple-gold" />
+            </div>
+            <DialogTitle className="text-center text-temple-maroon text-xl">{t('poshakSeva.successTitle')}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <p>{t('poshakSeva.successMessage')}</p>
-            <p>{t('poshakSeva.blessing')}</p>
+          <div className="space-y-4 text-center">
+            <p className="text-gray-700">{t('poshakSeva.successMessage')}</p>
+            <p className="text-temple-maroon font-serif text-lg">{t('poshakSeva.blessing')}</p>
           </div>
         </DialogContent>
       </Dialog>
