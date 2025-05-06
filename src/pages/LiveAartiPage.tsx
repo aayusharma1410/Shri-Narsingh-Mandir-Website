@@ -99,30 +99,22 @@ const LiveAartiPage = () => {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-temple-cream via-amber-50/70 to-white relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-temple-gold/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-temple-gold/5 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/3 left-1/4 w-40 h-40 bg-temple-maroon/3 rounded-full blur-2xl"></div>
-      
+    <div className="min-h-screen">
       <Navbar />
-      <div className="pt-24 pb-12 relative z-10">
+      <div className="pt-24 pb-12">
         <div className="container mx-auto px-4 text-center mb-6">
-          <div className="inline-block p-1 bg-gradient-to-r from-temple-gold/30 via-temple-gold to-temple-gold/30 rounded-lg mb-3">
-            <h1 className="text-3xl md:text-4xl font-serif font-bold text-temple-maroon mb-0 px-6 py-2 bg-white/80 rounded-md backdrop-blur-sm">
-              {language === 'en' ? "Live Aarti Darshan" : "लाइव आरती दर्शन"}
-            </h1>
-          </div>
-          <div className="w-32 h-0.5 bg-gradient-to-r from-temple-gold/30 via-temple-gold to-temple-gold/30 mx-auto mb-4"></div>
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-temple-maroon mb-3">
+            {language === 'en' ? "Live Aarti Darshan" : "लाइव आरती दर्शन"}
+          </h1>
           {isLiveNow ? (
-            <p className="text-lg font-medium bg-gradient-to-r from-temple-gold/20 via-temple-gold/30 to-temple-gold/20 inline-block px-6 py-2 rounded-full animate-pulse shadow-md">
-              <span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse shadow-lg shadow-red-500/30"></span>
+            <p className="text-lg font-medium bg-temple-gold/20 inline-block px-4 py-1 rounded-full animate-pulse">
+              <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span>
               {language === 'en' ? "Live Now" : "अभी लाइव"}
             </p>
           ) : (
-            <p className="text-lg font-medium text-temple-maroon bg-temple-cream/50 px-6 py-2 rounded-full inline-block shadow-sm">
+            <p className="text-lg font-medium text-temple-gold">
               {language === 'en' ? "Next Aarti: " : "अगली आरती: "} 
-              <span className="font-bold text-temple-gold">{nextAartiTime}</span>
+              <span className="font-bold">{nextAartiTime}</span>
             </p>
           )}
         </div>
