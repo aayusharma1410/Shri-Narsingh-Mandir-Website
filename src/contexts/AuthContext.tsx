@@ -104,24 +104,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           // If no profile exists, create one
           if (!existingProfile) {
             console.log("No existing profile found, creating new profile");
-            const { error: profileError } = await supabase
+            
+            // Explicitly include all fields in the profile record
+            const profileData = {
+              id: userId,
+              username: uniqueUsername,
+              full_name: fullName,
+              phone_number: phoneNumber || null,  // Use null instead of empty string for optional fields
+              city: city || null,
+              state: state || null,
+              country: country || null
+            };
+            
+            console.log("Inserting profile data:", profileData);
+            
+            const { error: profileError, data: profileData } = await supabase
               .from('user_profiles')
-              .insert([
-                {
-                  id: userId,
-                  username: uniqueUsername,
-                  full_name: fullName,
-                  phone_number: phoneNumber || '',
-                  city: city || '',
-                  state: state || '',
-                  country: country || '',
-                }
-              ]);
+              .insert([profileData])
+              .select();
             
             if (profileError) {
               console.error("Error creating user profile:", profileError);
             } else {
-              console.log("User profile created successfully");
+              console.log("User profile created successfully:", profileData);
             }
           } else {
             console.log("Profile already exists, skipping creation");
