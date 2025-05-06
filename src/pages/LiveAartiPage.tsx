@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const LiveAartiPage = () => {
   const { language } = useLanguage();
   const [nextAartiTime, setNextAartiTime] = useState<string>("");
+  const [isLiveNow, setIsLiveNow] = useState<boolean>(false);
 
   useEffect(() => {
     document.title = language === 'en' 
@@ -33,10 +34,37 @@ const LiveAartiPage = () => {
     const calculateNextAarti = () => {
       const now = new Date();
       const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
       const currentMonth = now.getMonth();
       
       // Summer schedule (April to October) - months 3-9
       const isSummer = currentMonth >= 3 && currentMonth <= 9;
+      
+      // Check if we're within the aarti time window (15 minute window)
+      const checkIfLiveNow = () => {
+        if (isSummer) {
+          // Morning aarti at 5:15 AM
+          if (currentHour === 5 && currentMinute >= 0 && currentMinute <= 30) {
+            return true;
+          }
+          // Evening aarti at 7:15 PM
+          if (currentHour === 19 && currentMinute >= 0 && currentMinute <= 30) {
+            return true;
+          }
+        } else {
+          // Morning aarti at 5:30 AM
+          if (currentHour === 5 && currentMinute >= 15 && currentMinute <= 45) {
+            return true;
+          }
+          // Evening aarti at 6:15 PM
+          if (currentHour === 18 && currentMinute >= 0 && currentMinute <= 30) {
+            return true;
+          }
+        }
+        return false;
+      };
+      
+      setIsLiveNow(checkIfLiveNow());
       
       // Summer schedule
       if (isSummer) {
@@ -78,10 +106,17 @@ const LiveAartiPage = () => {
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-temple-maroon mb-3">
             {language === 'en' ? "Live Aarti Darshan" : "लाइव आरती दर्शन"}
           </h1>
-          <p className="text-lg font-medium text-temple-gold">
-            {language === 'en' ? "Next Aarti: " : "अगली आरती: "} 
-            <span className="font-bold">{nextAartiTime}</span>
-          </p>
+          {isLiveNow ? (
+            <p className="text-lg font-medium bg-temple-gold/20 inline-block px-4 py-1 rounded-full animate-pulse">
+              <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span>
+              {language === 'en' ? "Live Now" : "अभी लाइव"}
+            </p>
+          ) : (
+            <p className="text-lg font-medium text-temple-gold">
+              {language === 'en' ? "Next Aarti: " : "अगली आरती: "} 
+              <span className="font-bold">{nextAartiTime}</span>
+            </p>
+          )}
         </div>
         <LiveAarti />
       </div>

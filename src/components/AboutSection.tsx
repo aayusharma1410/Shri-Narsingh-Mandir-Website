@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,22 +21,22 @@ const AboutSection = () => {
           onValueChange={setActiveTab} 
           className="w-full"
         >
-          <TabsList className="grid grid-cols-3 mb-10 bg-gradient-to-r from-amber-50/80 via-white/90 to-amber-50/80 border border-amber-100/50 p-1 rounded-xl shadow-md">
+          <TabsList className="grid grid-cols-3 mb-10 bg-gradient-to-r from-amber-50/80 via-white/90 to-amber-50/80 border border-amber-100/50 p-1 rounded-xl shadow-lg">
             <TabsTrigger 
               value="history" 
-              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md"
+              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md hover:bg-amber-50 hover:shadow-inner transform hover:-translate-y-0.5"
             >
               {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
             </TabsTrigger>
             <TabsTrigger 
               value="narsingh" 
-              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md"
+              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md hover:bg-amber-50 hover:shadow-inner transform hover:-translate-y-0.5"
             >
               {language === 'en' ? 'Narsingh Avatar' : 'नृसिंह अवतार'}
             </TabsTrigger>
             <TabsTrigger 
               value="features" 
-              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md"
+              className="text-sm md:text-base transition-all duration-300 data-[state=active]:bg-gradient-to-b data-[state=active]:from-temple-gold data-[state=active]:to-amber-500 data-[state=active]:text-white rounded-lg data-[state=active]:shadow-md hover:bg-amber-50 hover:shadow-inner transform hover:-translate-y-0.5"
             >
               {language === 'en' ? 'Temple Features' : 'मंदिर की विशेषताएं'}
             </TabsTrigger>
