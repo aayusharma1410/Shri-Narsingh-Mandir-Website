@@ -16,12 +16,11 @@ const AuthPage = () => {
 
   // Use useEffect for navigation instead of redirecting during render
   useEffect(() => {
+    // Only navigate if user exists to prevent unnecessary redirects
     if (user) {
       navigate('/');
     }
   }, [user, navigate]);
-
-  // Remove early return that was causing issue
   
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
