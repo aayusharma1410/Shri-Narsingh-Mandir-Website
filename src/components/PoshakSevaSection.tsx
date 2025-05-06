@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +25,7 @@ import {
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Shirt, Star, Calendar } from 'lucide-react';
+import { Shirt, Star, Calendar, HandHeart } from 'lucide-react';
 
 const formSchema = z.object({
   fullName: z.string().min(3, 'Name must be at least 3 characters'),
@@ -113,32 +112,34 @@ const PoshakSevaSection = () => {
     : t('poshakSeva.reasons').split(',').map(item => item.trim());
 
   return (
-    <div className="container mx-auto px-4 space-y-10 relative z-10">
+    <div className="container mx-auto px-4 space-y-12 relative z-10">
       <div className="max-w-3xl mx-auto text-center">
         <div className="flex justify-center mb-6">
-          <div className="p-3 bg-temple-gold/10 rounded-full">
-            <Shirt size={30} className="text-temple-gold" />
+          <div className="p-4 bg-gradient-to-br from-temple-gold/30 to-amber-100/50 rounded-full shadow-inner">
+            <Shirt size={32} className="text-temple-gold drop-shadow-sm" />
           </div>
         </div>
         <h1 className="text-3xl font-bold mb-8 text-temple-maroon">{t('poshakSeva.title')}</h1>
         <p className="text-lg mb-8 leading-relaxed text-gray-700">
           {t('poshakSeva.description')}
         </p>
-        <Card className="bg-gradient-to-r from-amber-50 to-white border border-amber-100/50 shadow-lg mb-8">
+        <Card className="bg-gradient-to-r from-amber-50/80 to-white border border-amber-100/50 shadow-xl mb-12 transform hover:shadow-2xl transition-all duration-300">
           <CardHeader>
             <div className="flex items-center justify-center mb-4">
-              <Star className="text-temple-gold mr-2" size={20} />
-              <h2 className="text-xl font-semibold">{t('poshakSeva.whyImportant')}</h2>
+              <div className="p-3 bg-temple-gold/10 rounded-full mr-2">
+                <HandHeart className="text-temple-maroon" size={24} />
+              </div>
+              <h2 className="text-xl font-semibold text-temple-maroon">{t('poshakSeva.whyImportant')}</h2>
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="list-none text-left space-y-3">
+            <ul className="list-none text-left space-y-4">
               {reasons.map((reason, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="inline-block w-6 h-6 bg-temple-gold/20 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm">
+                <li key={index} className="flex items-start group">
+                  <span className="inline-block w-7 h-7 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full flex items-center justify-center mr-3 mt-0.5 text-temple-maroon font-semibold text-sm group-hover:from-temple-gold/30 group-hover:to-amber-100/70 transition-colors duration-300">
                     {index + 1}
                   </span>
-                  <span className="text-gray-700">{reason}</span>
+                  <span className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300">{reason}</span>
                 </li>
               ))}
             </ul>
@@ -146,13 +147,13 @@ const PoshakSevaSection = () => {
         </Card>
       </div>
 
-      <div className="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-amber-100 animate-fade-in">
-        <div className="flex items-center justify-center mb-6">
-          <div className="p-3 bg-temple-maroon/10 rounded-full">
-            <Calendar size={26} className="text-temple-maroon" />
+      <div className="max-w-xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-amber-100/80 animate-fade-in hover:shadow-2xl transition-shadow duration-300">
+        <div className="flex items-center justify-center mb-8">
+          <div className="p-3 bg-gradient-to-br from-temple-maroon/20 to-temple-maroon/5 rounded-full">
+            <Calendar size={28} className="text-temple-maroon" />
           </div>
         </div>
-        <h2 className="text-2xl font-semibold mb-8 text-center">{t('poshakSeva.bookTitle')}</h2>
+        <h2 className="text-2xl font-semibold mb-8 text-center text-temple-maroon">{t('poshakSeva.bookTitle')}</h2>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -161,12 +162,12 @@ const PoshakSevaSection = () => {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.fullName')}</FormLabel>
+                  <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.fullName')}</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder={t('poshakSeva.formLabels.fullName')} 
                       {...field} 
-                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                     />
                   </FormControl>
                   <FormMessage />
@@ -180,13 +181,13 @@ const PoshakSevaSection = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.email')}</FormLabel>
+                    <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.email')}</FormLabel>
                     <FormControl>
                       <Input 
                         type="email" 
                         placeholder="example@mail.com" 
                         {...field} 
-                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                       />
                     </FormControl>
                     <FormMessage />
@@ -199,12 +200,12 @@ const PoshakSevaSection = () => {
                 name="mobileNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.mobile')}</FormLabel>
+                    <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.mobile')}</FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="9XXXXXXXXX" 
                         {...field} 
-                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                       />
                     </FormControl>
                     <FormMessage />
@@ -219,12 +220,12 @@ const PoshakSevaSection = () => {
                 name="sevaDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.date')}</FormLabel>
+                    <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.date')}</FormLabel>
                     <FormControl>
                       <Input 
                         type="date" 
                         {...field} 
-                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                        className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                       />
                     </FormControl>
                     <FormMessage />
@@ -237,10 +238,10 @@ const PoshakSevaSection = () => {
                 name="poshakType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-medium">{t('poshakSeva.formLabels.poshakType')}</FormLabel>
+                    <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.poshakType')}</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="border-amber-200 focus:ring-temple-gold/20">
+                        <SelectTrigger className="border-amber-200 focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm">
                           <SelectValue placeholder={language === 'en' ? "Select poshak type" : "पोशाक प्रकार चुनें"} />
                         </SelectTrigger>
                       </FormControl>
@@ -263,12 +264,12 @@ const PoshakSevaSection = () => {
               name="occasion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.occasion')}</FormLabel>
+                  <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.occasion')}</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder={language === 'en' ? "e.g., Birthday, Anniversary" : "जैसे, जन्मदिन, वर्षगांठ"} 
                       {...field} 
-                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      className="border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                     />
                   </FormControl>
                   <FormMessage />
@@ -281,12 +282,12 @@ const PoshakSevaSection = () => {
               name="additionalNotes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('poshakSeva.formLabels.notes')}</FormLabel>
+                  <FormLabel className="font-medium text-gray-700">{t('poshakSeva.formLabels.notes')}</FormLabel>
                   <FormControl>
                     <Textarea 
                       placeholder={language === 'en' ? "Any special requests or notes" : "कोई विशेष अनुरोध या नोट्स"} 
                       {...field} 
-                      className="min-h-[100px] border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20" 
+                      className="min-h-[100px] border-amber-200 focus:border-temple-gold focus:ring-temple-gold/20 transition-shadow duration-200 hover:shadow-sm" 
                     />
                   </FormControl>
                   <FormMessage />
@@ -296,7 +297,7 @@ const PoshakSevaSection = () => {
 
             <Button 
               type="submit" 
-              className="w-full bg-temple-gold hover:bg-temple-gold/90 text-primary-foreground transition-transform hover:scale-[1.02] py-6"
+              className="w-full bg-gradient-to-r from-temple-gold to-amber-500 hover:from-amber-500 hover:to-temple-gold text-primary-foreground transition-all duration-300 hover:shadow-md py-6 rounded-lg"
               disabled={isSubmitting}
             >
               {isSubmitting ? t('poshakSeva.submitting') : t('poshakSeva.submitButton')}
@@ -306,12 +307,12 @@ const PoshakSevaSection = () => {
       </div>
 
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
-        <DialogContent className="sm:max-w-md border-temple-gold/20 bg-gradient-to-b from-white to-amber-50">
+        <DialogContent className="sm:max-w-md border-temple-gold/30 bg-gradient-to-b from-white/80 to-amber-50/90 backdrop-blur-sm">
           <DialogHeader>
-            <div className="mx-auto p-3 bg-temple-gold/10 rounded-full mb-4">
-              <Star size={26} className="text-temple-gold" />
+            <div className="mx-auto p-4 bg-gradient-to-br from-temple-gold/20 to-amber-100/50 rounded-full mb-4">
+              <Star size={26} className="text-temple-gold drop-shadow-sm" />
             </div>
-            <DialogTitle className="text-center text-temple-maroon text-xl">{t('poshakSeva.successTitle')}</DialogTitle>
+            <DialogTitle className="text-center text-temple-maroon text-xl font-serif">{t('poshakSeva.successTitle')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 text-center">
             <p className="text-gray-700">{t('poshakSeva.successMessage')}</p>
