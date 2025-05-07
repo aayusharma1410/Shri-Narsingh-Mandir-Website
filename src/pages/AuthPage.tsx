@@ -9,7 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import Navbar from '@/components/Navbar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { InfoIcon, User, Mail, Lock, Phone, MapPin, UserCheck } from 'lucide-react';
+import { InfoIcon, User, Mail, Lock, Phone, UserCheck } from 'lucide-react';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,9 +21,6 @@ const AuthPage = () => {
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
   
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
@@ -59,8 +56,11 @@ const AuthPage = () => {
         await signIn(email, password);
       } else {
         // Make sure all values are passed correctly to the signUp function
+        // Set default empty strings for removed fields
+        const emptyLocation = '';
+        
         console.log("Signing up with these details:", {
-          email, username, fullName, phoneNumber, city, state, country
+          email, username, fullName, phoneNumber
         });
         
         await signUp(
@@ -69,9 +69,9 @@ const AuthPage = () => {
           username,
           fullName,
           phoneNumber,
-          city,
-          state,
-          country
+          emptyLocation, // city
+          emptyLocation, // state
+          emptyLocation  // country
         );
       }
       navigate('/');
@@ -180,39 +180,6 @@ const AuthPage = () => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                      />
-                    </div>
-                  </div>
-                )}
-                
-                {!isLogin && (
-                  <div className="grid grid-cols-1 gap-3 animate-fade-in">
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
-                      <Input
-                        type="text"
-                        placeholder={language === 'en' ? "Country" : "देश"}
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        className="pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <Input
-                        type="text"
-                        placeholder={language === 'en' ? "State" : "राज्य"}
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
-                      />
-                      
-                      <Input
-                        type="text"
-                        placeholder={language === 'en' ? "City" : "शहर"}
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        className="border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80"
                       />
                     </div>
                   </div>

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,19 +19,19 @@ const AboutSection = () => {
           <TabsList className="grid grid-cols-3 mb-8">
             <TabsTrigger 
               value="history" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
+              className="text-sm md:text-base transition-all duration-300 hover:bg-temple-gold hover:text-white transform hover:-translate-y-1"
             >
               {language === 'en' ? 'Temple History' : 'मंदिर का इतिहास'}
             </TabsTrigger>
             <TabsTrigger 
               value="narsingh" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
+              className="text-sm md:text-base transition-all duration-300 hover:bg-temple-gold hover:text-white transform hover:-translate-y-1"
             >
               {language === 'en' ? 'Narsingh Avatar' : 'नृसिंह अवतार'}
             </TabsTrigger>
             <TabsTrigger 
               value="features" 
-              className="text-sm md:text-base transition-colors duration-300 hover:bg-yellow-400 hover:text-black"
+              className="text-sm md:text-base transition-all duration-300 hover:bg-temple-gold hover:text-white transform hover:-translate-y-1"
             >
               {language === 'en' ? 'Temple Features' : 'मंदिर की विशेषताएं'}
             </TabsTrigger>
