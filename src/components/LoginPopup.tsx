@@ -9,19 +9,20 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const LoginPopup = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { language } = useLanguage();
 
   useEffect(() => {
     // Only show popup for non-logged in users after 15 seconds
-    if (!user) {
+    // Make sure we're not in a loading state and the user is definitely not authenticated
+    if (!user && !loading) {
       const timer = setTimeout(() => {
         setOpen(true);
       }, 15000);
       
       return () => clearTimeout(timer);
     }
-  }, [user]);
+  }, [user, loading]);
 
   const handleLogin = () => {
     navigate('/auth');
