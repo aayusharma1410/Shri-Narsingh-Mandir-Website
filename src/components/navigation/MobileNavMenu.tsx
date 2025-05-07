@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LogOut, Menu, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,16 +25,29 @@ export const MobileNavMenu = ({ isScrolled, navLinks }: MobileNavMenuProps) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleLanguage = () => {
+  // Memoize language toggle function
+  const toggleLanguage = useCallback(() => {
     setLanguage(language === 'en' ? 'hi' : 'en');
-  };
+  }, [language, setLanguage]);
   
+  // Handle location changes to close menu
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
+  // Memoize open toggle to prevent recreation on renders
+  const handleOpenChange = useCallback((open: boolean) => {
+    setIsOpen(open);
+  }, []);
+
+  // Memoize signout handler
+  const handleSignOut = useCallback(() => {
+    signOut();
+    setIsOpen(false);
+  }, [signOut]);
+
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -42,7 +55,6 @@ export const MobileNavMenu = ({ isScrolled, navLinks }: MobileNavMenuProps) => {
           className={`md:hidden ${
             isScrolled ? "text-gray-700" : "text-white"
           }`}
-          onClick={() => setIsOpen(true)}
         >
           <Menu className="h-6 w-6" />
         </Button>
@@ -65,10 +77,7 @@ export const MobileNavMenu = ({ isScrolled, navLinks }: MobileNavMenuProps) => {
 
           {user && (
             <Button 
-              onClick={() => {
-                signOut();
-                setIsOpen(false);
-              }}
+              onClick={handleSignOut}
               variant="outline"
               className="w-full justify-start gap-2"
             >

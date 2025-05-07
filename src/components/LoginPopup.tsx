@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
@@ -9,22 +9,40 @@ const LoginPopup = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Clear timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
+  // Set up timer only when component mounts and user is not logged in
   useEffect(() => {
     // Only show popup for non-logged in users after 15 seconds
-    if (!user) {
-      const timer = setTimeout(() => {
+    if (!user && !timerRef.current) {
+      timerRef.current = setTimeout(() => {
         setOpen(true);
       }, 15000);
-      
-      return () => clearTimeout(timer);
     }
+    
+    // Clean up timer if user logs in
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [user]);
 
-  const handleLogin = () => {
+  // Memoize the handler to prevent recreation on render
+  const handleLogin = useCallback(() => {
     navigate('/auth');
     setOpen(false);
-  };
+  }, [navigate]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
