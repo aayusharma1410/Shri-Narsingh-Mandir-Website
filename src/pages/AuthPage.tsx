@@ -14,13 +14,12 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   
+  // Only navigate when the auth state has been fully determined and user exists
   useEffect(() => {
-    // Only navigate if user exists and is authenticated
-    // Also make sure we're not in a loading state to avoid premature redirects
     if (user && !loading) {
       navigate('/', { replace: true });
     }
-  }, [user, navigate, loading]); // Only re-run when these dependencies change
+  }, [user, navigate, loading]);
   
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
@@ -30,7 +29,7 @@ const AuthPage = () => {
     ? (language === 'en' ? 'Welcome Back' : 'वापस स्वागत है') 
     : (language === 'en' ? 'Create Account' : 'खाता बनाएं');
 
-  // If we're still loading the auth state, show a loading indicator
+  // Show loading indicator when auth state is being determined
   if (loading) {
     return (
       <>

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
@@ -11,17 +11,22 @@ const LoginPopup = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
   const { language } = useLanguage();
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Only show popup for non-logged in users after 15 seconds
-    // Make sure we're not in a loading state and the user is definitely not authenticated
-    if (!user && !loading) {
-      const timer = setTimeout(() => {
+    // Only set the timer if we know the user is not logged in
+    if (!loading && !user) {
+      timerRef.current = setTimeout(() => {
         setOpen(true);
       }, 15000);
-      
-      return () => clearTimeout(timer);
     }
+    
+    // Clear timer on unmount or when auth state changes
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
   }, [user, loading]);
 
   const handleLogin = () => {

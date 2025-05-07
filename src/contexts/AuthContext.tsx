@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from '@supabase/supabase-js';
@@ -19,17 +20,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener first
+    // Set up auth state listener first to prevent missing auth events
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         console.log("Auth state changed:", event);
+        
+        // Handle state updates synchronously, don't make any Supabase calls here
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         setLoading(false);
       }
     );
 
-    // Check for existing session
+    // Check for existing session after setting up the listener
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       console.log("Got session:", currentSession ? "exists" : "none");
       setSession(currentSession);
@@ -37,16 +40,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
+    // Cleanup subscription when component unmounts
     return () => subscription.unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
     console.log("Signing in with:", email);
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error("Sign in error:", error);
+      setLoading(false);
+      throw error;
+    }
   };
 
   const generateUniqueUsername = (baseUsername: string): string => {
@@ -60,21 +71,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log("Signing up with:", email);
     console.log("Additional info:", { username, fullName, phoneNumber, city, state, country });
     
-    // Generate a unique username to avoid conflicts
-    const uniqueUsername = generateUniqueUsername(username);
-    console.log("Generated unique username:", uniqueUsername);
-    
-    // Ensure all fields are defined before sending to Supabase
-    const userData = {
-      username: uniqueUsername,
-      full_name: fullName,
-      phone_number: phoneNumber || '',
-      city: city || '',
-      state: state || '',
-      country: country || '',
-    };
+    setLoading(true);
     
     try {
+      // Generate a unique username to avoid conflicts
+      const uniqueUsername = generateUniqueUsername(username);
+      console.log("Generated unique username:", uniqueUsername);
+      
+      // Ensure all fields are defined before sending to Supabase
+      const userData = {
+        username: uniqueUsername,
+        full_name: fullName,
+        phone_number: phoneNumber || '',
+        city: city || '',
+        state: state || '',
+        country: country || '',
+      };
+      
       const { error, data } = await supabase.auth.signUp({
         email,
         password,
@@ -139,18 +152,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Error in signup process:", error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const signOut = async () => {
     console.log("Signing out");
-    const { error } = await supabase.auth.signOut();
-    console.log("Signout result:", error ? `Error: ${error.message}` : "Success");
-    if (error) throw error;
-    
-    // Force clear the user and session state
-    setUser(null);
-    setSession(null);
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signOut();
+      console.log("Signout result:", error ? `Error: ${error.message}` : "Success");
+      if (error) throw error;
+      
+      // Force clear the user and session state
+      setUser(null);
+      setSession(null);
+    } catch (error) {
+      console.error("Sign out error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
