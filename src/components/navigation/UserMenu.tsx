@@ -34,6 +34,9 @@ export const UserMenu = ({ user, language, isScrolled }: UserMenuProps) => {
     }
   };
   
+  // Get username from user metadata
+  const username = user.user_metadata?.username || user.email?.split('@')[0] || 'Profile';
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,7 +53,7 @@ export const UserMenu = ({ user, language, isScrolled }: UserMenuProps) => {
             }
           `}
         >
-          {user.user_metadata.username || 'Profile'}
+          {username}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">

@@ -3,17 +3,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { supabase } from '@/integrations/supabase/client';
 import { saveUserToDatabase } from '@/utils/userDatabaseUtils';
 import { useLanguage } from './LanguageContext';
-
-interface User {
-  id: string;
-  email?: string;
-  user_metadata?: {
-    username?: string;
-    language?: string;
-    phone_number?: string;
-    full_name?: string;
-  };
-}
+import { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
