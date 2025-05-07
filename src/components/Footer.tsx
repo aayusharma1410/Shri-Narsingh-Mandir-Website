@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
@@ -45,6 +46,18 @@ const Footer = () => {
                     }}
                   >
                     +91 91193 89603
+                  </a>
+                  <br />
+                  <a 
+                    href="tel:+917597866205" 
+                    className="hover:text-temple-gold transition-colors font-medium underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2 cursor-pointer"
+                    aria-label="Call secondary temple phone number"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = "tel:+917597866205";
+                    }}
+                  >
+                    +91 75978 66205
                   </a>
                   <br />
                   <a 
