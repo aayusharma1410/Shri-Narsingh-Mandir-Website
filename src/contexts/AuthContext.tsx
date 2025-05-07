@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { saveUserToDatabase } from '@/utils/userDatabaseUtils';
@@ -9,6 +10,8 @@ interface User {
   user_metadata?: {
     username?: string;
     language?: string;
+    phone_number?: string;
+    full_name?: string;
   };
 }
 
@@ -34,23 +37,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { language } = useLanguage();
 
   useEffect(() => {
-    const session = supabase.auth.getSession();
+    async function getSession() {
+      const { data, error } = await supabase.auth.getSession();
+      if (data && data.session) {
+        setUser(data.session.user);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    }
+    
+    getSession();
 
-    supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session?.session?.user) {
-        setUser(session.session.user);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setUser(session.user);
       } else {
         setUser(null);
       }
       setLoading(false);
     });
 
-    if (session) {
-      setUser(session.data.session?.user ?? null);
-    } else {
-      setUser(null);
-    }
-    setLoading(false);
+    return () => subscription.unsubscribe();
   }, []);
 
   const signUp = async (

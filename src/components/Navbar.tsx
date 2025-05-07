@@ -88,7 +88,7 @@ const Navbar = () => {
 
             {user && (
               <UserMenu 
-                user={user} 
+                user={user}
                 language={language} 
                 isScrolled={isScrolled} 
               />
