@@ -12,10 +12,13 @@ const LoginPopup = () => {
   const { user, loading } = useAuth();
   const { language } = useLanguage();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const hasSetTimerRef = useRef(false);
 
   useEffect(() => {
     // Only set the timer if we know the user is not logged in
-    if (!loading && !user) {
+    // and we haven't already set the timer
+    if (!loading && !user && !hasSetTimerRef.current) {
+      hasSetTimerRef.current = true;
       timerRef.current = setTimeout(() => {
         setOpen(true);
       }, 15000);
@@ -34,8 +37,13 @@ const LoginPopup = () => {
     setOpen(false);
   };
 
+  // Stable onOpenChange handler that doesn't get recreated on every render
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl text-temple-maroon">

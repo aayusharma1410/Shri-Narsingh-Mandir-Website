@@ -16,10 +16,10 @@ const AuthPage = () => {
   
   // Only navigate when the auth state has been fully determined and user exists
   useEffect(() => {
-    if (user && !loading) {
+    if (!loading && user) {
       navigate('/', { replace: true });
     }
-  }, [user, navigate, loading]);
+  }, [user, loading, navigate]);
   
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);

@@ -18,6 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener first to prevent missing auth events
@@ -25,20 +26,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       (event, currentSession) => {
         console.log("Auth state changed:", event);
         
-        // Handle state updates synchronously, don't make any Supabase calls here
+        // Handle state updates synchronously
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
-        setLoading(false);
+        
+        // Only update loading state after initialization
+        if (authInitialized) {
+          setLoading(false);
+        }
       }
     );
 
     // Check for existing session after setting up the listener
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      console.log("Got session:", currentSession ? "exists" : "none");
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        console.log("Got session:", currentSession ? "exists" : "none");
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+      } catch (error) {
+        console.error("Error retrieving session:", error);
+      } finally {
+        setLoading(false);
+        setAuthInitialized(true);
+      }
+    };
+
+    initializeAuth();
 
     // Cleanup subscription when component unmounts
     return () => subscription.unsubscribe();
