@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Clock, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
@@ -7,6 +6,15 @@ import SuggestionForm from "./SuggestionForm";
 const Footer = () => {
   const { language } = useLanguage();
   
+  const quick_links = [
+    { name: language === 'en' ? 'Home' : 'होम', path: '/' },
+    { name: language === 'en' ? 'About Us' : 'हमारे बारे में', path: '/about' },
+    { name: language === 'en' ? 'Aarti Timings' : 'आरती का समय', path: '/timings' },
+    { name: language === 'en' ? 'Gallery' : 'गैलरी', path: '/gallery' },
+    { name: language === 'en' ? 'Live Aarti' : 'लाइव आरती', path: '/live-aarti' },
+    { name: language === 'en' ? 'Poshak Seva' : 'पोशक सेवा', path: '/poshak-seva' },
+  ];
+
   return (
     <footer className="bg-temple-maroon text-white pt-16 pb-6">
       <div className="container mx-auto px-6">
@@ -115,42 +123,14 @@ const Footer = () => {
               {language === "en" ? "Quick Links" : "त्वरित लिंक"}
             </h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="/" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "Home" : "होम"}
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "About" : "परिचय"}
-                </Link>
-              </li>
-              <li>
-                <Link to="/gallery" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "Gallery" : "गैलरी"}
-                </Link>
-              </li>
-              <li>
-                <Link to="/live-aarti" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "Live Aarti" : "लाइव आरती"}
-                </Link>
-              </li>
-              <li>
-                <Link to="/poshak-seva" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "Poshak Seva" : "पोशाक सेवा"}
-                </Link>
-              </li>
-              <li>
-                <Link to="/policies" className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
-                  <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                  {language === "en" ? "Temple Policies" : "मंदिर नियम"}
-                </Link>
-              </li>
+              {quick_links.map((link, index) => (
+                <li key={index}>
+                  <Link to={link.path} className="hover:text-temple-gold transition-colors font-medium relative hover:pl-4 group hover:underline decoration-temple-gold/30 hover:decoration-temple-gold decoration-2 underline-offset-2">
+                    <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           

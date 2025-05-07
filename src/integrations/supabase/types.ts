@@ -195,43 +195,34 @@ export type Database = {
       user_profiles: {
         Row: {
           avatar_url: string | null
-          city: string | null
-          country: string | null
           created_at: string | null
           full_name: string | null
           id: string
           is_admin: boolean | null
           language_preference: string | null
           phone_number: string | null
-          state: string | null
           updated_at: string | null
           username: string
         }
         Insert: {
           avatar_url?: string | null
-          city?: string | null
-          country?: string | null
           created_at?: string | null
           full_name?: string | null
           id: string
           is_admin?: boolean | null
           language_preference?: string | null
           phone_number?: string | null
-          state?: string | null
           updated_at?: string | null
           username: string
         }
         Update: {
           avatar_url?: string | null
-          city?: string | null
-          country?: string | null
           created_at?: string | null
           full_name?: string | null
           id?: string
           is_admin?: boolean | null
           language_preference?: string | null
           phone_number?: string | null
-          state?: string | null
           updated_at?: string | null
           username?: string
         }

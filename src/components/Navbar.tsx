@@ -35,7 +35,7 @@ const Navbar = () => {
     if (isLoginPage) {
       return 'text-temple-maroon';
     }
-    return isScrolled ? 'text-temple-maroon' : 'text-temple-gold';
+    return isScrolled ? 'text-temple-maroon' : 'text-[#F97316]';
   };
 
   const navLinks = [

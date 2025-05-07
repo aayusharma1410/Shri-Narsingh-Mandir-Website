@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -55,10 +54,6 @@ const AuthPage = () => {
       if (isLogin) {
         await signIn(email, password);
       } else {
-        // Make sure all values are passed correctly to the signUp function
-        // Set default empty strings for removed fields
-        const emptyLocation = '';
-        
         console.log("Signing up with these details:", {
           email, username, fullName, phoneNumber
         });
@@ -68,10 +63,7 @@ const AuthPage = () => {
           password,
           username,
           fullName,
-          phoneNumber,
-          emptyLocation, // city
-          emptyLocation, // state
-          emptyLocation  // country
+          phoneNumber
         );
       }
       navigate('/');
