@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -14,8 +14,6 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   
-  // Fix the infinite re-render issue by using useEffect properly
-  // and checking the loading state to avoid premature navigation
   useEffect(() => {
     // Only navigate if user exists and is authenticated
     // Also make sure we're not in a loading state to avoid premature redirects

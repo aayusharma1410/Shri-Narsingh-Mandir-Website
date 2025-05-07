@@ -1,95 +1,89 @@
 
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { LogOut, Menu, Globe } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage } from '@/contexts/LanguageContext';
-import { NavLink } from "@/components/navigation/NavLink";
 
 interface MobileNavMenuProps {
   isScrolled: boolean;
-  navLinks: Array<{ name: string; path: string }>;
+  navLinks: { name: string; path: string }[];
 }
 
 export const MobileNavMenu = ({ isScrolled, navLinks }: MobileNavMenuProps) => {
-  const { language, setLanguage } = useLanguage();
-  const { user, signOut } = useAuth();
-  const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { user } = useAuth();
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'hi' : 'en');
+  const getTextColorClass = (isScrolled: boolean) => {
+    return isScrolled ? "text-temple-maroon" : "text-temple-gold";
   };
-  
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`md:hidden ${
-            isScrolled ? "text-gray-700" : "text-white"
-          }`}
-          onClick={() => setIsOpen(true)}
-        >
-          <Menu className="h-6 w-6" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[80%]">
-        <SheetHeader>
-          <SheetTitle>श्री नृसिंह मंदिर</SheetTitle>
-        </SheetHeader>
-        <div className="mt-6 flex flex-col space-y-4">
-          {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className="px-4 py-2 text-base hover:bg-gray-100 rounded-md"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-
-          {user && (
-            <Button 
-              onClick={() => {
-                signOut();
-                setIsOpen(false);
-              }}
-              variant="outline"
-              className="w-full justify-start gap-2"
-            >
-              <LogOut className="h-4 w-4" />
-              <span>{language === 'en' ? 'Logout' : 'लॉग आउट'}</span>
-            </Button>
-          )}
-
+    <div className="md:hidden">
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
           <Button 
-            onClick={() => {
-              toggleLanguage();
-              setIsOpen(false);
-            }}
-            variant="outline"
-            className="w-full justify-start gap-2 bg-temple-gold/10 text-temple-maroon hover:bg-temple-gold/20"
+            variant="ghost" 
+            size="icon" 
+            className={getTextColorClass(isScrolled)}
           >
-            <Globe className="h-4 w-4" />
-            <span>{language === 'en' ? 'हिंदी में देखें' : 'View in English'}</span>
+            <Menu className="h-6 w-6" />
           </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
+        </SheetTrigger>
+        <SheetContent 
+          side="right" 
+          className="w-full max-w-[300px] bg-gradient-to-b from-temple-cream/95 to-white p-0"
+        >
+          <div className="flex flex-col h-full">
+            <div className="p-4 flex justify-end">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-temple-maroon"
+                onClick={() => setOpen(false)}
+              >
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+            
+            <div className="flex-1 overflow-auto py-2">
+              <nav className="flex flex-col space-y-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="py-2 px-4 hover:bg-temple-gold/10 text-temple-maroon font-medium text-lg"
+                    onClick={handleLinkClick}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                
+                {!user && (
+                  <Link
+                    to="/auth"
+                    className="py-2 px-4 mt-2 bg-temple-maroon/5 text-temple-maroon font-medium text-lg"
+                    onClick={handleLinkClick}
+                  >
+                    Sign In / Sign Up
+                  </Link>
+                )}
+              </nav>
+            </div>
+            
+            <div className="p-4 border-t border-temple-gold/20">
+              <div className="text-center text-temple-maroon/70 text-sm">
+                © 2023 श्री नृसिंह मंदिर
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 };

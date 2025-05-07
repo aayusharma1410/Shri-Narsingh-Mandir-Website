@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { useAuthFormValidation } from '@/hooks/useAuthFormValidation';
 
 interface LoginFormProps {
@@ -19,6 +19,7 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
   const { language } = useLanguage();
   
   const emailRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   
   const {
@@ -29,6 +30,7 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
     focusFirstError
   } = useAuthFormValidation({
     email: '',
+    username: '',
     password: '',
   });
 
@@ -43,6 +45,7 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
     setLoading(true);
 
     try {
+      // We'll use email for login, but also support showing the username field
       await signIn(values.email, values.password);
       toast({
         title: language === 'en' ? 'Welcome back!' : 'वापस स्वागत है!',
@@ -60,6 +63,7 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
   };
 
   const emailProps = register('email', { required: true, email: true }, emailRef);
+  const usernameProps = register('username', {}, usernameRef);
   const passwordProps = register('password', { required: true }, passwordRef);
 
   return (
@@ -78,6 +82,24 @@ const LoginForm = ({ onSwitchMode }: LoginFormProps) => {
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+          )}
+        </div>
+      </div>
+      
+      <div className="space-y-3">
+        <div className="relative">
+          <User className="absolute left-3 top-2.5 h-5 w-5 text-temple-maroon/70" />
+          <Input
+            ref={usernameRef}
+            type="text"
+            placeholder={language === 'en' ? "Username (optional)" : "उपयोगकर्ता नाम (वैकल्पिक)"}
+            className={`pl-10 border-temple-gold/30 focus:border-temple-gold transition-all duration-300 bg-white/80 ${
+              errors.username ? 'border-red-500' : ''
+            }`}
+            {...usernameProps}
+          />
+          {errors.username && (
+            <p className="text-red-500 text-xs mt-1">{errors.username}</p>
           )}
         </div>
       </div>
