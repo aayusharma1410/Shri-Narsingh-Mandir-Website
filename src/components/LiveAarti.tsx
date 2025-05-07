@@ -42,8 +42,6 @@ const LiveAarti = () => {
     };
   }, []);
 
-  // This function will open the temple's Facebook page where live streaming happens
-  // This can be modified to use a direct embedded stream when available
   const togglePlay = () => {
     window.open('https://www.facebook.com/profile.php?id=61571381196072', '_blank');
     setIsPlaying(true);

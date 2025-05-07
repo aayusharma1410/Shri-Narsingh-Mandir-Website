@@ -16,7 +16,7 @@ const Navbar = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const isAuthPage = location.pathname === '/auth';
+  const isLoginPage = location.pathname === '/auth';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,13 +32,12 @@ const Navbar = () => {
   }, []);
 
   const getTextColorClass = (isScrolled: boolean) => {
-    if (isAuthPage) {
+    if (isLoginPage) {
       return 'text-temple-maroon';
     }
     return isScrolled ? 'text-temple-maroon' : 'text-temple-gold';
   };
 
-  // Update the navLinks array to remove the login link
   const navLinks = [
     { name: language === 'en' ? 'Home' : 'होम', path: "/" },
     { name: language === 'en' ? 'About' : 'परिचय', path: "/about" },
@@ -46,6 +45,7 @@ const Navbar = () => {
     { name: language === 'en' ? 'Timings' : 'समय सारणी', path: "/timings" },
     { name: language === 'en' ? 'Gallery' : 'गैलरी', path: "/gallery" },
     { name: language === 'en' ? 'Poshak Seva' : 'पोशाक सेवा', path: "/poshak-seva" },
+    { name: language === 'en' ? 'Login' : 'लॉग इन', path: "/auth" },
   ];
 
   return (
@@ -55,7 +55,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
-            {isAuthPage && (
+            {isLoginPage && (
               <Button
                 variant="ghost"
                 size="icon"
@@ -75,7 +75,7 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            {navLinks.map((link) => (
+            {navLinks.filter(link => !user || link.path !== '/auth').map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
