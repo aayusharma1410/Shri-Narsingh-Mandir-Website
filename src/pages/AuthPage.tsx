@@ -13,14 +13,14 @@ const AuthPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { language } = useLanguage();
-
-  // Use useEffect for navigation instead of redirecting during render
+  
+  // Fix the infinite re-render issue by using useEffect properly
   useEffect(() => {
-    // Only navigate if user exists to prevent unnecessary redirects
+    // Only navigate if user exists and is authenticated
     if (user) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [user, navigate]); // Only re-run when these dependencies change
   
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
