@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { saveUserToDatabase } from '@/utils/userDatabaseUtils';
@@ -78,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (data.user) {
         const userId = data.user.id;
-        await saveUserToDatabase(userId, email, username, language);
+        await saveUserToDatabase(userId, email, username, language, phoneNumber, fullName);
       }
     } catch (error: any) {
       console.error('Error signing up:', error.message);

@@ -31,19 +31,20 @@ const PoshakSevaPage = () => {
   }, [language]);
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-white via-temple-cream/20 to-white">
       <Navbar />
       <PraktotsavScheduleDialog />
-      <div className="pt-24 pb-12">
-        <div className="container mx-auto px-4 text-center mb-6">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-temple-maroon mb-3">
+      <div className="pt-24 pb-16">
+        <div className="container mx-auto px-4 text-center mb-8">
+          <h1 className="text-3xl md:text-5xl font-serif font-bold text-temple-maroon mb-3 animate-fade-in">
             {language === 'en' ? "Poshak Seva Booking" : "पोशाक सेवा बुकिंग"}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto animate-fade-in">
             {language === 'en' 
               ? "Offer divine clothing service to Lord Narsingh and receive blessings. Book your seva dates online." 
               : "भगवान नृसिंह को दिव्य पोशाक सेवा अर्पित करें और आशीर्वाद प्राप्त करें। अपनी सेवा तिथियां ऑनलाइन बुक करें।"}
           </p>
+          <div className="w-24 h-1 bg-temple-gold mx-auto mt-4 mb-8 rounded-full"></div>
         </div>
         <PoshakSevaSection />
       </div>
