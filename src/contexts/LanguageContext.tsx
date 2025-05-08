@@ -99,9 +99,9 @@ const translations = {
     },
     poshakSeva: {
       title: 'Poshak Seva',
-      description: 'Poshak Seva is one of the most sacred and heartfelt offerings a devotee can make at Shri Lakshmi Narsingh Mandir, Hasampur.',
+      description: 'Poshak Seva is one of the most sacred and heartfelt offerings a devotee can make at Shri Narsingh Mandir, Hasampur.',
       whyImportant: 'Why Poshak Seva is Important:',
-      reasons: 'Offering new garments to the deity is a time-honored tradition that signifies respect, devotion, and reverence, It is believed that Poshak Seva helps in fulfilling wishes, removing obstacles, and bringing divine blessings, Devotees perform this seva to mark special occasions in their lives, such as birthdays, anniversaries, or spiritual milestones, Bhagwan Narsingh is known as the divine protector. Offering poshak is a way to seek his blessings for strength, courage, and protection from all forms of negativity, Performing this seva not only pleases the deity but also purifies the heart of the devotee and strengthens the connection between the soul and the divine',
+      reasons: 'Offering new garments (Poshak Seva) to the deity is a sacred and age-old tradition that reflects deep respect, devotion, and reverence. It is believed that this seva fulfills heartfelt wishes, removes life’s obstacles, and invokes divine blessings. Devotees often perform Poshak Seva to commemorate special moments such as birthdays, anniversaries, or spiritual milestones. Lord Narsingh, revered as the divine protector, is believed to bless his devotees with strength, courage, and protection from all forms of negativity through this offering. Engaging in this seva not only pleases the deity but also purifies the devotee’s heart, nurturing a stronger bond between the soul and the divine. It is a beautiful expression of faith and surrender, inviting grace and spiritual upliftment.',
       bookTitle: 'Book Poshak Seva',
       formLabels: {
         fullName: 'Full Name',
@@ -217,9 +217,9 @@ const translations = {
     },
     poshakSeva: {
       title: 'पोशाक सेवा',
-      description: 'पोशाक सेवा श्री लक्ष्मी नरसिंह मंदिर, हसमपुर में एक भक्त द्वारा किया जा सकने वाला सबसे पवित्र और हृदयस्पर्शी चढ़ावा है।',
+      description: 'पोशाक सेवा श्री नृसिंह  मंदिर, हसामपुर में एक भक्त द्वारा किया जा सकने वाला सबसे पवित्र और हृदयस्पर्शी चढ़ावा है।',
       whyImportant: 'पोशाक सेवा क्यों महत्वपूर्ण है:',
-      reasons: 'देवता को नए वस्त्र अर्पित करना एक समय-सम्मानित परंपरा है जो सम्मान, भक्ति और श्रद्धा का प्रतीक है, यह माना जाता है कि पोशाक सेवा इच्छाओं को पूरा करने, बाधाओं को दूर करने और दिव्य आशीर्वाद लाने में मदद करती है, भक्त अपने जीवन के विशेष अवसरों, जैसे जन्मदिन, वर्षगांठ, या आध्यात्मिक मील के पत्थर पर यह सेवा करते हैं, भगवान नरसिंह को दिव्य रक्षक के रूप में जाना जाता है। पोशाक चढ़ाना शक्ति, साहस और सभी प्रकार की नकारात्मकता से सुरक्षा के लिए उनका आशीर्वाद लेने का एक तरीका है, इस सेवा को करने से न केवल देवता प्रसन्न होते हैं बल्कि भक्त का हृदय भी शुद्ध होता है और आत्मा और दिव्य के बीच संबंध मजबूत होता है',
+      reasons: 'देवता को नए वस्त्र अर्पित करना (पोशाक सेवा) एक पवित्र और प्राचीन परंपरा है, जो गहन श्रद्धा, भक्ति और सम्मान का प्रतीक है। ऐसा माना जाता है कि यह सेवा मनोकामनाओं की पूर्ति करती है, जीवन की बाधाओं को दूर करती है और दिव्य आशीर्वाद प्रदान करती है। भक्तगण अपने जीवन के विशेष अवसरों जैसे जन्मदिन, वर्षगांठ या आध्यात्मिक उपलब्धियों के उपलक्ष्य में यह सेवा करते हैं। भगवान नृसिंह, जिन्हें दिव्य रक्षक के रूप में पूजा जाता है, इस सेवा के माध्यम से अपने भक्तों को शक्ति, साहस और हर प्रकार की नकारात्मकता से सुरक्षा प्रदान करते हैं। इस सेवा में भाग लेना न केवल भगवान को प्रसन्न करता है, बल्कि भक्त के हृदय को भी शुद्ध करता है और आत्मा व परमात्मा के बीच संबंध को और अधिक प्रगाढ़ बनाता है। यह विश्वास और समर्पण की एक सुंदर अभिव्यक्ति है, जो कृपा और आध्यात्मिक उत्थान को आमंत्रित करती है।',
       bookTitle: 'पोशाक सेवा बुक करें',
       formLabels: {
         fullName: 'पूरा नाम',
